@@ -1,6 +1,6 @@
 const db = require('./db');
-var bcrypt = require('bcryptjs');
-var salt = bcrypt.genSaltSync(5);
+const bcrypt = require('bcryptjs');
+const salt = bcrypt.genSaltSync(5);
 
 
 function getAllUsers(req, res) {
@@ -41,7 +41,7 @@ function userNameAvailable(req, res) {
 }
 
 function createUser(req, res) {
-  var psw = bcrypt.hashSync(req.body.password, salt);
+  let psw = bcrypt.hashSync(req.body.password, salt);
   db.none('insert into users(username, password)'
         + 'values($1, $2)',
         [req.body.username, psw])
@@ -67,10 +67,10 @@ function createUser(req, res) {
 }
 
 function login(req, res){
-  var submittedPsw = req.body.password;
+  let submittedPsw = req.body.password;
   db.one('select * from users where username = $1', [req.body.username])
     .then(function(data) {
-        var verified = bcrypt.compareSync(submittedPsw, data.password);
+       	let verified = bcrypt.compareSync(submittedPsw, data.password);
 
         if (verified){
           delete data.password;
@@ -93,9 +93,48 @@ function login(req, res){
     })
 }
 
+function deleteUser(req, res) {
+ let submittedPsw = req.body.password;
+  db.one('select * from users where username = $1', [req.body.username])
+    .then(function(data) {
+       	let verified = bcrypt.compareSync(submittedPsw, data.password);
+
+        if (verified){
+          delete data.password;
+          deleteByUserId(data.userid);
+          res.status(200)
+          	 .json({
+			    username: req.body.username,
+			    deleted_at: new Date(),
+			    message: 'user deleted'
+	         })
+   
+        } else {
+          res.status(400)
+            .json({
+              message: 'entered wrong password'
+            })
+        }
+    })
+    .catch(function(err){
+      res.status(500).send(err.message);
+    })
+}
+
+function deleteByUserId(userid){
+	db.none('delete from users where userid = $1', userid)
+          	.then(function() {
+          		return 'success';
+          	})
+          	.catch(function(error) {
+          		console.log("row 130" + error.message);
+          	})
+}
+
 module.exports = {
 	getAllUsers: getAllUsers,
 	createUser: createUser,
 	login: login,
-	userNameAvailable: userNameAvailable
+	userNameAvailable: userNameAvailable,
+	deleteUser, deleteUser
 }

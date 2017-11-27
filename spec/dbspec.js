@@ -81,4 +81,43 @@ describe('DBqueries', function() {
         });
     });
 
+
+    describe('Username available', () => {
+    	var data = {};
+    	beforeAll((done) => {
+	        Request.post({url:'http://localhost:3002/database/user-name-available',
+	                    form: {'username': 'ennooOlemas' }},
+	                    (error, response, body) => {
+	                          data.status = response.statusCode;
+	                          data.body = body;
+	                          done();
+	                    });
+        });
+
+        it('should respond Status 200', () => {
+            expect(data.status).toBe(200);
+        });
+        it('Should be able to login', () => {
+            expect(data.body).toBe('true');
+        });
+    });
+
+    describe('Remove user', () => {
+    	var data = {};
+    	beforeAll((done) => {
+	        Request.post({url:'http://localhost:3002/database/delete-user',
+	                    form: {'username': 'jasmineTestUser', 'password': 'asdfg'}},
+	                    (error, response, body) => {
+	                          data.status = response.statusCode;
+	                          data.body = JSON.parse(body);
+	                          done();
+	                    });
+        });
+        it('should respond Status 200', () => {
+            expect(data.status).toBe(200);
+        });
+        it('Should be able to login', () => {
+            expect(data.body.message).toBe('user deleted');
+        });
+    });
 });
