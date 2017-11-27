@@ -1,8 +1,9 @@
-const express = require('express');
-const path = require('path');
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
-const spotify = require('./spotify');
+const express 		= require('express');
+const path 			= require('path');
+const morgan 		= require('morgan');
+const bodyParser 	= require('body-parser');
+const spotify 		= require('./spotify');
+const db              = require('./queries')
 
 const app = express();
 
@@ -16,6 +17,8 @@ app.use(morgan('dev'));
 app.use(express.static('client/src'));
 
 app.get('/spotify/access-token', spotify.accessToken);
+
+app.get('/test', db.getAllUsers);
 
 app.use(function(req, res) {
   res.status(404).send('url not found')
