@@ -15,8 +15,7 @@ app.use(morgan('dev'));
 
 app.use(express.static('client/src'));
 
-app.get('/searchArtist', spotify.searchArtist);
-app.get('/searchAlbum', spotify.searchAlbum);
+app.get('/spotify/access-token', spotify.accessToken);
 
 app.use(function(req, res) {
   res.status(404).send('url not found')
