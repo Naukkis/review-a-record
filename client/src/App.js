@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { searchAlbum, searchArtist } from './spotify';
+import { searchAlbum, searchArtist, getAccessToken} from './spotify';
 
 class App extends Component {
 
@@ -9,7 +9,7 @@ class App extends Component {
     super(props);
     this.handleAlbums = this.handleAlbums.bind(this);
     this.handleArtists = this.handleArtists.bind(this);
-
+    this.requestAccessToken = this.requestAccessToken.bind(this);
   }
 
   handleAlbums() {
@@ -18,6 +18,10 @@ class App extends Component {
 
   handleArtists() {
     searchArtist('Metallica');
+  }
+
+  requestAccessToken() {
+    getAccessToken();
   }
 
   render() {
@@ -32,6 +36,7 @@ class App extends Component {
         </p>
         <div><button onClick={this.handleArtists}>search Metallica</button></div>
         <div><button onClick={this.handleAlbums}>search Punainen tiili</button></div>
+        <div><button onClick={this.requestAccessToken}>get token</button></div>
       </div>
     );
   }
