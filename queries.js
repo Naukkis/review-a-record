@@ -121,6 +121,58 @@ function deleteUser(req, res) {
     })
 }
 
+
+function saveReview(req, res) {
+	let data = req.body;
+	db.none('insert into reviews (userID, artist_name, album_name,' 
+			+ 'spotify_artist_id, spotify_album_id, review_text)'
+			+ 'values ($1, $2, $3, $4, $5, $6)',
+			[data.user_id, data.artist_name, data.album_name,
+			data.spotify_artist_id, data.spotify_album_id, data.review_text])
+
+		.then(function() {
+		    res.status(200)
+		       .json({
+			        status: 'success',
+			        created_at: new Date(),
+			        message: 'saved new review',
+			        user: req.body.username
+			    });
+			 })
+		.catch(function(err) {
+		    res.status(500)
+		        .json({
+		          username: req.body.username,
+		          status: 'fail',
+		          time: new Date(),
+		          message: 'Failed to save review: ' + err.message,
+		    })
+		});
+}
+
+function getAllReviews(req, res) {
+	db.any('select * from reviews')
+
+		.then(function (data) {
+	      res.status(200)
+	        .json({
+	          status: 'success',
+	          data: data,
+	          received_at: new Date(),
+	          message: 'Retrieved ALL reviews'
+	        });
+	    })
+	    .catch(function(err) {
+	      res.status(500)
+	        .json({
+	          status: 'fail',
+	          time: new Date(),
+	          message: 'Failed to get reviews',
+	        })
+	    });
+} 
+
+
 function deleteByUserId(userid){
 	db.none('delete from users where userid = $1', userid)
           	.then(function() {
@@ -136,5 +188,7 @@ module.exports = {
 	createUser: createUser,
 	login: login,
 	userNameAvailable: userNameAvailable,
-	deleteUser, deleteUser
+	deleteUser, deleteUser,
+	saveReview, saveReview,
+	getAllReviews, getAllReviews
 }

@@ -23,7 +23,8 @@ app.post('/database/create-user', db.createUser);
 app.get('/database/get-all-users', db.getAllUsers);
 app.post('/database/user-name-available', db.userNameAvailable);
 app.post('/database/delete-user', db.deleteUser);
-
+app.post('/database/save-review', db.saveReview);
+app.get('/database/get-all-reviews', db.getAllReviews);
 
 app.use(function(req, res) {
   res.status(404).send('url not found')
