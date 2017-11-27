@@ -18,7 +18,11 @@ app.use(express.static('client/src'));
 
 app.get('/spotify/access-token', spotify.accessToken);
 
-app.get('/test', db.getAllUsers);
+app.post('/login', db.login);
+app.post('/database/create-user', db.createUser);
+app.get('/database/get-all-users', db.getAllUsers);
+app.post('/database/user-name-available', db.userNameAvailable);
+
 
 app.use(function(req, res) {
   res.status(404).send('url not found')
