@@ -5,8 +5,8 @@ CREATE DATABASE record_app;
 
 CREATE TABLE users(
 	userID SERIAL PRIMARY KEY,
-	userName TEXT,
-	password TEXT
+	userName TEXT NOT NULL,
+	password TEXT NOT NULL
 );
 
 CREATE TABLE reviews(
