@@ -4,7 +4,7 @@ const salt = bcrypt.genSaltSync(5);
 const jwt = require('jsonwebtoken');
 
 
-function getAllUsers(req, res) {
+function getAllUsers(req, res, next) {
   db.any('select * from users')
     .then(function (data) {
       res.status(200)
@@ -16,17 +16,11 @@ function getAllUsers(req, res) {
         });
     })
     .catch(function(err) {
-      res.status(500)
-        .json({
-          username: req.body.username,
-          status: 'fail',
-          time: new Date(),
-          message: 'Failed to get Users',
-        })
+      return next(err);
     });
 }
 
-function userNameAvailable(req, res) {
+function userNameAvailable(req, res, next) {
 	db.any('select 1 from users where username = $1', [req.body.username])
 	  .then(function(data) {
 	  		if (data.length == 0) {
@@ -36,12 +30,15 @@ function userNameAvailable(req, res) {
 	  		}
 	  })
 	  .catch(function(err) {
-	  	res.status(500)
-	  		.send(err.message);
+	  	 return next(err);
 	  })
 }
 
-function createUser(req, res) {
+function createUser(req, res, next) {
+  if (!req.body.password) {
+    return next(new Error("Empty password"))
+  }
+
   let psw = bcrypt.hashSync(req.body.password, salt);
   db.none('insert into users(username, password)'
         + 'values($1, $2)',
@@ -56,18 +53,11 @@ function createUser(req, res) {
 	    });
 	 })
     .catch(function(err) {
-      res.status(500)
-         .json({
-          username: req.body.username,
-          pass: psw,
-          status: 'fail',
-          time: new Date(),
-          message: 'Failed to create user',
-        })
+      return next(err);
     });
 }
 
-function login(req, res){
+function login(req, res, next){
   let submittedPsw = req.body.password;
   db.one('select * from users where username = $1', [req.body.username])
     .then(function(data) {
@@ -92,7 +82,7 @@ function login(req, res){
         }
     })
     .catch(function(err){
-      res.status(500).send(err.message);
+      return next(err);
     })
 }
 
@@ -148,7 +138,7 @@ function deleteUser(req, res) {
         }
     })
     .catch(function(err){
-      res.status(500).send(err.message);
+      return next(err);
     })
 }
 
@@ -171,13 +161,7 @@ function saveReview(req, res) {
 			    });
 			 })
 		.catch(function(err) {
-		    res.status(500)
-		        .json({
-		          username: req.body.username,
-		          status: 'fail',
-		          time: new Date(),
-		          message: 'Failed to save review: ' + err.message,
-		    })
+		    return next(err);
 		});
 }
 
@@ -194,12 +178,7 @@ function getAllReviews(req, res) {
 	        });
 	    })
 	    .catch(function(err) {
-	      res.status(500)
-	        .json({
-	          status: 'fail',
-	          time: new Date(),
-	          message: 'Failed to get reviews',
-	        })
+	      return next(err);
 	    });
 }
 
@@ -209,8 +188,8 @@ function deleteByUserId(userid){
           	.then(function() {
           		return 'success';
           	})
-          	.catch(function(error) {
-          		console.log("row 130" + error.message);
+          	.catch(function(err) {
+          		return next(err);
           	})
 }
 

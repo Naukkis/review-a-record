@@ -30,12 +30,19 @@ app.post('/database/delete-user', db.deleteUser);
 app.post('/database/save-review', db.saveReview);
 app.get('/database/get-all-reviews', db.getAllReviews);
 
-app.use(function(req, res) {
-  res.status(404).send('url not found');
-});
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'client', 'public', 'index.html'));
+});
+
+app.use(function(err, req, res, next) {
+  res.status(err.status || 404)
+  .json({
+    status: 'error',
+	time: new Date(),
+	message: err.message
+  });
+  console.log(err.message);
 });
 
 app.listen(3002,  function () {
