@@ -8,7 +8,7 @@ class Main extends Component {
 
   render() {
     return(
-
+      <p>Keijot asuu luolassa</p>
     )
   }
 }

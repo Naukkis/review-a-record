@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import { searchAlbum, searchArtist, getAccessToken} from './spotify';
 import { Button } from 'react-bootstrap';
+import Main from './components/main.js';
 
 class App extends Component {
 
@@ -35,6 +36,7 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
+        <div><Main/></div>
         <div><button onClick={this.handleArtists}>search Metallica</button></div>
         <div><button onClick={this.handleAlbums}>search Punainen tiili</button></div>
         <div><button onClick={this.requestAccessToken}>get token</button></div>
