@@ -116,7 +116,7 @@ describe('DBqueries', function() {
         it('should respond Status 200', () => {
             expect(data.status).toBe(200);
         });
-        it('Should be able to login', () => {
+        it('Should be able to remove user', () => {
             expect(data.body.message).toBe('user deleted');
         });
     });
