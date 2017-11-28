@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { searchAlbum, searchArtist, getAccessToken} from './spotify';
+import { Button } from 'react-bootstrap';
 
 class App extends Component {
 
@@ -37,6 +38,7 @@ class App extends Component {
         <div><button onClick={this.handleArtists}>search Metallica</button></div>
         <div><button onClick={this.handleAlbums}>search Punainen tiili</button></div>
         <div><button onClick={this.requestAccessToken}>get token</button></div>
+        <div><Button bsStyle="success">Hello</Button></div>
       </div>
     );
   }
