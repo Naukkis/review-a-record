@@ -17,8 +17,9 @@ const reducer = (state= initialState, action) => {
       const B = R.compose(
         R.assocPath([action.field], action.payload))(state)
       return B
+    default: return state;
   }
-  return state;
+
 }
 
 export {reducer};
