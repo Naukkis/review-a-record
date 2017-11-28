@@ -1,6 +1,7 @@
 const db = require('./db');
 const bcrypt = require('bcryptjs');
 const salt = bcrypt.genSaltSync(5);
+const jwt = require('jsonwebtoken');
 
 
 function getAllUsers(req, res) {
@@ -71,13 +72,15 @@ function login(req, res){
   db.one('select * from users where username = $1', [req.body.username])
     .then(function(data) {
        	let verified = bcrypt.compareSync(submittedPsw, data.password);
-
+        var token = jwt.sign({data: data}, process.env.SECRET_KEY, {
+          expiresIn: 60*60
+        })
         if (verified){
           delete data.password;
           res.status(200)
           	 .json({
 	            username: req.body.username,
-	            token: 'leikkitoken',
+	            token: token,
 	            login_at: new Date(),
 	            message: 'login successful'
           	 })
@@ -91,6 +94,34 @@ function login(req, res){
     .catch(function(err){
       res.status(500).send(err.message);
     })
+}
+
+function testToken(req, res){
+  var token = req.body.token || req.headers['token'];
+
+  if (token) {
+    jwt.verify(token, process.env.SECRET_KEY, function(err, decoded){
+      if (err){
+        res.status(401)
+          .json({
+            data: false,
+            message: "Token was invalid"
+          })
+      } else {
+        res.status(200)
+          .json({
+            data: true
+          })
+
+      }
+    })
+  } else {
+    res.status(401)
+      .json({
+        data: false,
+        message: "There is no token"
+      })
+  }
 }
 
 function deleteUser(req, res) {
@@ -108,7 +139,7 @@ function deleteUser(req, res) {
 			    deleted_at: new Date(),
 			    message: 'user deleted'
 	         })
-   
+
         } else {
           res.status(400)
             .json({
@@ -124,7 +155,7 @@ function deleteUser(req, res) {
 
 function saveReview(req, res) {
 	let data = req.body;
-	db.none('insert into reviews (userID, artist_name, album_name,' 
+	db.none('insert into reviews (userID, artist_name, album_name,'
 			+ 'spotify_artist_id, spotify_album_id, review_text)'
 			+ 'values ($1, $2, $3, $4, $5, $6)',
 			[data.user_id, data.artist_name, data.album_name,
@@ -170,7 +201,7 @@ function getAllReviews(req, res) {
 	          message: 'Failed to get reviews',
 	        })
 	    });
-} 
+}
 
 
 function deleteByUserId(userid){
@@ -188,7 +219,8 @@ module.exports = {
 	createUser: createUser,
 	login: login,
 	userNameAvailable: userNameAvailable,
-	deleteUser, deleteUser,
-	saveReview, saveReview,
-	getAllReviews, getAllReviews
+	deleteUser: deleteUser,
+	saveReview: saveReview,
+	getAllReviews: getAllReviews,
+  testToken: testToken
 }
