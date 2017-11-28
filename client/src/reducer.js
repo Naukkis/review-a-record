@@ -9,14 +9,19 @@ const initialState = {
 const reducer = (state= initialState, action) => {
   switch (action.type) {
     case 'LOAD_ALBUM':
-      const C = R.compose(
+      const A = R.compose(
         R.assocPath([action.field], action.payload))(state)
-      return C
+      return A
 
     case 'LOAD_ARTIST':
       const B = R.compose(
         R.assocPath([action.field], action.payload))(state)
       return B
+
+    case 'CHANGE_REDIRECT':
+      const C = R.compose(
+        R.assocPath([action.field], action.payload))(state)
+      return C
     default: return state;
   }
 
