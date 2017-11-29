@@ -3,8 +3,8 @@ const path 			= require('path');
 const morgan 		= require('morgan');
 const bodyParser 	= require('body-parser');
 const spotify 		= require('./spotify');
-const db              = require('./queries');
-const router = require('./router');
+const db            = require('./queries');
+const router 		= require('./router');
 
 const app = express();
 
