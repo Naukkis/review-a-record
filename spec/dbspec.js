@@ -10,7 +10,7 @@ describe('DBqueries', function() {
     describe('Create user', () => {
     var data = {};
     beforeAll((done) => {
-        Request.post({url:'http://localhost:3002/database/create-user',
+        Request.post({url:'http://localhost:3002/users/create-user',
                     form: {'username': 'jasmineTestUser', 'password': 'asdfg'}},
                     (error, response, body) => {
                         data.status = response.statusCode;
@@ -29,7 +29,7 @@ describe('DBqueries', function() {
     describe('GET all users/', () => {
     var data = {};
     beforeAll((done) => {
-        Request.get('http://localhost:3002/database/get-all-users', (error, response, body) => {
+        Request.get('http://localhost:3002/users/get-all-users', (error, response, body) => {
             data.status = response.statusCode;
             data.body = JSON.parse(body);
             done();
@@ -70,7 +70,7 @@ describe('DBqueries', function() {
     describe('Username', () => {
     	var data = {};
     	beforeAll((done) => {
-	        Request.get('http://localhost:3002/database/user-name-available/jasmineTestUser',
+	        Request.get('http://localhost:3002/users/user-name-available/jasmineTestUser',
 	                    (error, response, body) => {
 	                        data.status = response.statusCode;
 	                        data.body = body;
@@ -90,7 +90,7 @@ describe('DBqueries', function() {
     describe('Username', () => {
     	var data = {};
     	beforeAll((done) => {
-            Request.get('http://localhost:3002/database/user-name-available/dumdumddum',
+            Request.get('http://localhost:3002/users/user-name-available/dumdumddum',
                         (error, response, body) => {
                             data.status = response.statusCode;
                             data.body = body;
@@ -109,7 +109,7 @@ describe('DBqueries', function() {
     describe('Secure get-all-users', () => {
     	var data = {};
     	beforeAll((done) => {
-	        Request.get({url:'http://localhost:3002/secure/database/get-all-users',
+	        Request.get({url:'http://localhost:3002/secure/users/get-all-users',
 	                    headers: {'token': token}},
 	                    (error, response, body) => {
 	                        data.status = response.statusCode;
@@ -130,7 +130,7 @@ describe('DBqueries', function() {
     describe('Remove user', () => {
     	var data = {};
     	beforeAll((done) => {
-	        Request.post({url:'http://localhost:3002/database/delete-user',
+	        Request.post({url:'http://localhost:3002/users/delete-user',
 	                    form: {'username': 'jasmineTestUser', 'password': 'asdfg'}},
 	                    (error, response, body) => {
 	                        data.status = response.statusCode;
