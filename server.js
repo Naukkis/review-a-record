@@ -21,12 +21,15 @@ app.use(express.static('client/src'));
 app.use('/secure/', router);
 
 app.get('/spotify/access-token', spotify.accessToken);
+
 app.post('/login', db.login);
 app.post('/test-token', db.testToken);
-app.post('/database/create-user', db.createUser);
-app.get('/database/get-all-users', db.getAllUsers);
-app.get('/database/user-name-available/:username', db.userNameAvailable);
-app.post('/database/delete-user', db.deleteUser);
+
+app.get('/users/get-all-users', db.getAllUsers);
+app.get('/users/get-userid/:username', db.getUserId);
+app.get('/users/user-name-available/:username', db.userNameAvailable);
+app.post('/users/create-user', db.createUser);
+app.post('/users/delete-user', db.deleteUser);
 
 app.post('/reviews/save-review', db.saveReview);
 app.get('/reviews/artist/:spotifyid', db.getArtistReviews);
