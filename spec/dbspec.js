@@ -67,11 +67,10 @@ describe('DBqueries', function() {
         })
     });
 
-    describe('Username not available', () => {
+    describe('Username', () => {
     	var data = {};
     	beforeAll((done) => {
-	        Request.post({url:'http://localhost:3002/database/user-name-available',
-	                    form: {'username': 'jasmineTestUser' }},
+	        Request.get('http://localhost:3002/database/user-name-available/jasmineTestUser',
 	                    (error, response, body) => {
 	                        data.status = response.statusCode;
 	                        data.body = body;
@@ -82,28 +81,27 @@ describe('DBqueries', function() {
         it('should respond Status 200', () => {
             expect(data.status).toBe(200);
         });
-        it('Should not be avaialble', () => {
+        it('Should not be available', () => {
             expect(data.body).toBe('false');
         });
     });
 
 
-    describe('Username available', () => {
+    describe('Username', () => {
     	var data = {};
     	beforeAll((done) => {
-	        Request.post({url:'http://localhost:3002/database/user-name-available',
-	                    form: {'username': 'ennooOlemas' }},
-	                    (error, response, body) => {
-	                        data.status = response.statusCode;
-	                        data.body = body;
-	                        done();
-	                    });
+            Request.get('http://localhost:3002/database/user-name-available/dumdumddum',
+                        (error, response, body) => {
+                            data.status = response.statusCode;
+                            data.body = body;
+                            done();
+                        });
         });
 
         it('should respond Status 200', () => {
             expect(data.status).toBe(200);
         });
-        it('Should be able to login', () => {
+        it('Should be available', () => {
             expect(data.body).toBe('true');
         });
     });
@@ -147,4 +145,70 @@ describe('DBqueries', function() {
             expect(data.body.message).toBe('user deleted');
         });
     });
+
+    describe('Get all reviews by artist', () => {
+        var data = {};
+        beforeAll((done) => {
+        Request.get('http://localhost:3002/reviews/artist/2ye2Wgw4gimLv2eAKyk1NB',
+                    (error, response, body) => {
+                        data.status = response.statusCode;
+                        data.body = JSON.parse(body);
+                        done();
+                    });
+        });
+        it('should respond Status 200', () => {
+
+            expect(data.status).toBe(200);
+        });
+        it('Should receive reviews', () => {
+            expect(data.body.message).toBe('received all reviews by artist');
+        });
+        it('Should contain review data', () => {
+            expect(data.body.data[0].review_text).toBeTruthy();
+        })
+    });
+
+    describe('Get all reviews by album', () => {
+        var data = {};
+        beforeAll((done) => {
+        Request.get('http://localhost:3002/reviews/album/5rFZcoCvmCaJ1gxTMU4JTm',
+                    (error, response, body) => {
+                        data.status = response.statusCode;
+                        data.body = JSON.parse(body);
+                        done();
+                    });
+        });
+        it('should respond Status 200', () => {
+
+            expect(data.status).toBe(200);
+        });
+        it('Should receive reviews', () => {
+            expect(data.body.message).toBe('received all reviews by album');
+        });
+        it('Should contain review data', () => {         
+            expect(data.body.data[0].review_text).toBeTruthy();
+        })
+    });
+
+    describe('Get all reviews by user', () => {
+        var data = {};
+        beforeAll((done) => {
+        Request.get('http://localhost:3002/reviews/1',
+                    (error, response, body) => {
+                        data.status = response.statusCode;
+                        data.body = JSON.parse(body);
+                        done();
+                    });
+        });
+        it('should respond Status 200', () => {
+            expect(data.status).toBe(200);
+        });
+        it('Should receive reviews', () => {
+            expect(data.body.message).toBe('received all reviews by user');
+        });
+        it('Should contain review data', () => {         
+            expect(data.body.data[0].review_text).toBeTruthy();
+        })
+    });
+
 });

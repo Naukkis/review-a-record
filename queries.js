@@ -20,8 +20,26 @@ function getAllUsers(req, res, next) {
     });
 }
 
+/**
+ * @api {get} /user-name-available/:username Check if username is available. Responses with 'false' if Username is in use.
+ * @apiName user-name-available
+ * @apiGroup User
+ *
+ * @apiParam {String} Users username.
+ *
+ * @apiSuccess {String} response is true
+
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *        'true'
+ *     }
+ *
+ */
 function userNameAvailable(req, res, next) {
-	db.any('select 1 from users where username = $1', [req.body.username])
+  console.log(req.params.username);
+	db.any('select 1 from users where username = $1', [req.params.username])
 	  .then(function(data) {
 	  		if (data.length == 0) {
 	  			res.status(200).send('true')
@@ -114,7 +132,7 @@ function testToken(req, res){
   }
 }
 
-function deleteUser(req, res) {
+function deleteUser(req, res, next) {
  let submittedPsw = req.body.password;
   db.one('select * from users where username = $1', [req.body.username])
     .then(function(data) {
@@ -143,7 +161,7 @@ function deleteUser(req, res) {
 }
 
 
-function saveReview(req, res) {
+function saveReview(req, res, next) {
 	let data = req.body;
 	db.none('insert into reviews (userID, artist_name, album_name,'
 			+ 'spotify_artist_id, spotify_album_id, review_text)'
@@ -165,7 +183,7 @@ function saveReview(req, res) {
 		});
 }
 
-function getAllReviews(req, res) {
+function getAllReviews(req, res, next) {
 	db.any('select * from reviews')
 
 		.then(function (data) {
@@ -182,6 +200,55 @@ function getAllReviews(req, res) {
 	    });
 }
 
+function getArtistReviews(req, res, next) {
+  db.any('select * from reviews where spotify_artist_id = $1', [req.params.spotifyid])
+    .then(function(data) {
+      res.status(200)
+        .json({
+         status: 'success',
+         data: data,
+         requested_at: new Date(),
+         message: 'received all reviews by artist',
+        });
+    })
+    .catch(function(err) {
+      return next(err);
+    })
+}
+
+function getAlbumReviews(req, res, next) {
+  db.any('select * from reviews where spotify_album_id = $1', [req.params.spotifyid])
+    .then(function(data) {
+      res.status(200)
+        .json({
+         status: 'success',
+         data: data,
+         requested_at: new Date(),
+         message: 'received all reviews by album',
+        });
+    })
+    .catch(function(err) {
+      return next(err);
+    })
+}
+
+
+function getUserReviews(req, res, next) {
+  let userid = parseInt(req.params.userid);
+  db.any('select * from reviews where userid = $1', [userid])
+    .then(function(data) {
+      res.status(200)
+        .json({
+         status: 'success',
+         data: data,
+         requested_at: new Date(),
+         message: 'received all reviews by user',
+        });
+    })
+    .catch(function(err) {
+      return next(err);
+    })
+}
 
 function deleteByUserId(userid){
 	db.none('delete from users where userid = $1', userid)
@@ -194,12 +261,15 @@ function deleteByUserId(userid){
 }
 
 module.exports = {
-	getAllUsers: getAllUsers,
-	createUser: createUser,
-	login: login,
-	userNameAvailable: userNameAvailable,
-	deleteUser: deleteUser,
-	saveReview: saveReview,
-	getAllReviews: getAllReviews,
-  testToken: testToken
+	getAllUsers,
+	createUser,
+	login,
+	userNameAvailable,
+	deleteUser,
+	saveReview,
+	getAllReviews,
+  getArtistReviews,
+  getAlbumReviews,
+  getUserReviews,
+  testToken
 }
