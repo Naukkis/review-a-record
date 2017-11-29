@@ -21,6 +21,8 @@ app.use(express.static('client/src'));
 app.use('/secure/', router);
 
 app.get('/spotify/access-token', spotify.accessToken);
+app.get('/spotify/auth', spotify.requestAuthorization);
+app.get('/spotify/authcallback', spotify.authCallback);
 
 app.post('/login', db.login);
 app.post('/test-token', db.testToken);
@@ -38,6 +40,10 @@ app.get('/reviews/:userid', db.getUserReviews);
 
 app.get('/database/get-all-reviews', db.getAllReviews);
 
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'client', 'public', 'index.html'));
+});
+
 app.use(function(err, req, res, next) {
   res.status(err.status || 404)
   .json({
@@ -46,10 +52,6 @@ app.use(function(err, req, res, next) {
 	message: err.message + " " + err.stack
   });
   console.log(err.message);
-});
-
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'client', 'public', 'index.html'));
 });
 
 app.listen(3002,  function () {
