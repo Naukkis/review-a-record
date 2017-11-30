@@ -4,24 +4,24 @@ export default class Footer extends Component {
   render(){
     return (
       <div>
-      <div class="container">
+      <div className="container">
         <p>On muuten vitun karmeeta kuraa</p>
-        <span class="time-right">11:00</span>
+        <span className="time-right">11:00</span>
       </div>
 
-      <div class="container darker">
+      <div className="container darker">
         <p>Kusta ja kakkaa</p>
-        <span class="time-left">11:01</span>
+        <span className="time-left">11:01</span>
       </div>
 
-      <div class="container">
+      <div className="container">
         <p>Parasta ikinä...</p>
-        <span class="time-right">11:02</span>
+        <span className="time-right">11:02</span>
       </div>
 
-      <div class="container darker">
+      <div className="container darker">
         <p>joopajoooooo</p>
-        <span class="time-left">11:05</span>
+        <span className="time-left">11:05</span>
       </div>
       </div>
     );
