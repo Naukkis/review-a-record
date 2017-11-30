@@ -11,12 +11,14 @@ class Login extends Component {
   }
 
   onSubmit(e) {
+    this.props.closeModal();
     e.preventDefault();
     axios.post(
       '/login',
       this.state
     )
     .then((res) => {
+      
       localStorage.setItem("token", res.data.token);
       store.dispatch({type: "CHANGE_REDIRECT", field: "config", payload: {redirect: "false"}});
 
