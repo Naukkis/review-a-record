@@ -20,8 +20,54 @@ function getAllUsers(req, res, next) {
     });
 }
 
+/**
+ * @api {get} /users/:username Request users user ID
+ * @apiName Request User ID
+ * @apiGroup User
+ *
+ * @apiParam {String} username User's username.
+ *
+ * @apiSuccess {Number} userid user's id
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+      {
+          "userid": 3
+      }
+ *
+ */
+function getUserId(req, res, next) {
+  db.one('select userID from users where username = $1', [req.params.username])
+    .then(function(data) {     
+        res.status(200)
+          .json({
+            userid: data.userid
+          })  
+    })
+    .catch(function(err) {
+      return next(err);
+    });
+}
+
+/**
+ * @api {get} users/user-name-available/:username Check if username is available
+ * @apiName user-name-available
+ * @apiGroup User
+ *
+ * @apiParam {String} username User's username.
+ *
+ * @apiSuccess {String} response is true for username available or false if already in use.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *        'true'
+ *     }
+ *
+ */
 function userNameAvailable(req, res, next) {
-	db.any('select 1 from users where username = $1', [req.body.username])
+  console.log(req.params.username);
+	db.any('select 1 from users where username = $1', [req.params.username])
 	  .then(function(data) {
 	  		if (data.length == 0) {
 	  			res.status(200).send('true')
@@ -31,9 +77,29 @@ function userNameAvailable(req, res, next) {
 	  })
 	  .catch(function(err) {
 	  	 return next(err);
-	  })
+	  });
 }
 
+/**
+ * @api {post} users/create-user Create new user.
+ * @apiName Create new user
+ * @apiGroup User
+ *
+ * @apiParam {String} username username.
+ * @apiParam {String} password password.
+ *
+ * @apiSuccess {json} Created new User
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+    {
+        "status": "success",
+        "created_at": "2017-11-29T12:49:46.495Z",
+        "message": "created new user",
+        "user": "username"
+    }
+ *
+ */
 function createUser(req, res, next) {
   if (!req.body.password) {
     return next(new Error("Empty password"))
@@ -114,7 +180,7 @@ function testToken(req, res){
   }
 }
 
-function deleteUser(req, res) {
+function deleteUser(req, res, next) {
  let submittedPsw = req.body.password;
   db.one('select * from users where username = $1', [req.body.username])
     .then(function(data) {
@@ -142,8 +208,31 @@ function deleteUser(req, res) {
     })
 }
 
-
-function saveReview(req, res) {
+/**
+ * @api {post} reviews/save-review Save new review.
+ * @apiName Create new user
+ * @apiGroup User
+ *
+ * @apiParam {Number} user_id user id.
+ * @apiParam {String} artist_name Name of the artist.
+ * @apiParam {String} album_name Name of the album.
+ * @apiParam {String} spotify_artist_id spotify artist id.
+ * @apiParam {String} spotify_album_id spotify album id.
+ * @apiParam {String} review_text Review text.
+ *
+ * @apiSuccess {json} Created new User
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+    {
+        "status": "success",
+        "created_at": "2017-11-29T12:49:46.495Z",
+        "message": "created new user",
+        "user": "username"
+    }
+ *
+ */
+function saveReview(req, res, next) {
 	let data = req.body;
 	db.none('insert into reviews (userID, artist_name, album_name,'
 			+ 'spotify_artist_id, spotify_album_id, review_text)'
@@ -165,7 +254,7 @@ function saveReview(req, res) {
 		});
 }
 
-function getAllReviews(req, res) {
+function getAllReviews(req, res, next) {
 	db.any('select * from reviews')
 
 		.then(function (data) {
@@ -182,6 +271,240 @@ function getAllReviews(req, res) {
 	    });
 }
 
+/**
+ * @api {get} /reviews/:artist Request reviews by artist
+ * @apiName GetReviewsByArtist
+ * @apiGroup Reviews
+ *
+ * @apiParam {String} Artist spotify id
+ *
+ * @apiSuccess {string} status query status.
+ * @apiSuccess {Array} data Search results.
+ * @apiSuccess {Date} date time of request
+ * @apiSuccess {message} message result description.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+    {
+        "status": "success",
+        "data": [
+            {
+                "reviewid": 1,
+                "userid": 1,
+                "artist_name": "Metallica",
+                "album_name": "Ride the Lightning",
+                "spotify_artist_id": "2ye2Wgw4gimLv2eAKyk1NB",
+                "spotify_album_id": "5rFZcoCvmCaJ1gxTMU4JTm",
+                "review_text": "On muuten mahtavaa musaa"
+            }
+        ],
+        "requested_at": "2017-11-29T12:00:47.571Z",
+        "message": "received all reviews by artist"
+    }
+ *
+ *
+ * @apiError NotFound. No reviews found
+ *
+ * @apiErrorExample No reviews found:
+ *     HTTP/1.1 200 Not OK
+  {
+      "status": "fail",
+      "requested_at": "2017-11-29T12:33:29.197Z",
+      "message": "No reviews found"
+  }
+
+ * @apiError InvalidRequest Invalid request
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not OK
+  {
+      "status": "error",
+      "time": "2017-11-29T12:15:30.486Z",
+      "message": "Error message"
+  }
+ */
+function getArtistReviews(req, res, next) {
+  db.any('select * from reviews where spotify_artist_id = $1', [req.params.spotifyid])
+    .then(function(data) {
+      if (data.length > 0) {
+         res.status(200)
+          .json({
+           status: 'success',
+           data: data,
+           requested_at: new Date(),
+           message: 'received all reviews by artist',
+          });
+      } else {
+        res.status(200)
+          .json({
+           status: 'fail',
+           requested_at: new Date(),
+           message: 'No reviews found',
+          });
+      }
+      
+    })
+    .catch(function(err) {
+      return next(err);
+    })
+}
+
+
+/**
+ * @api {get} /reviews/:album Request reviews by album
+ * @apiName GetReviewsByAlbum
+ * @apiGroup Reviews
+ *
+ * @apiParam {String} Album spotify id
+ *
+ * @apiSuccess {string} status query status.
+ * @apiSuccess {Array} data Search results.
+ * @apiSuccess {Date} date time of request
+ * @apiSuccess {message} message result description.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+    {
+        "status": "success",
+        "data": [
+            {
+                "reviewid": 1,
+                "userid": 1,
+                "artist_name": "Metallica",
+                "album_name": "Ride the Lightning",
+                "spotify_artist_id": "2ye2Wgw4gimLv2eAKyk1NB",
+                "spotify_album_id": "5rFZcoCvmCaJ1gxTMU4JTm",
+                "review_text": "On muuten mahtavaa musaa"
+            }
+        ],
+        "requested_at": "2017-11-29T12:00:47.571Z",
+        "message": "received all reviews by artist"
+    }
+ *
+ *
+ * @apiError NotFound. No reviews found
+ *
+ * @apiErrorExample No reviews found:
+ *     HTTP/1.1 200 Not OK
+  {
+      "status": "fail",
+      "requested_at": "2017-11-29T12:33:29.197Z",
+      "message": "No reviews found"
+  }
+
+ * @apiError InvalidRequest Invalid request
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not OK
+  {
+      "status": "error",
+      "time": "2017-11-29T12:15:30.486Z",
+      "message": "Error message"
+  }
+ */
+function getAlbumReviews(req, res, next) {
+  db.any('select * from reviews where spotify_album_id = $1', [req.params.spotifyid])
+    .then(function(data) {
+
+      if (data.length > 0) {
+         res.status(200)
+          .json({
+           status: 'success',
+           data: data,
+           requested_at: new Date(),
+           message: 'received all reviews by album',
+          });
+      } else {
+        res.status(200)
+          .json({
+           status: 'fail',
+           requested_at: new Date(),
+           message: 'No reviews found',
+          });
+      }
+    })
+    .catch(function(err) {
+      return next(err);
+    })
+}
+
+/**
+ * @api {get} /reviews/:userid Request reviews by user
+ * @apiName GetReviewsByUser
+ * @apiGroup Reviews
+ *
+ * @apiParam {Number} Userid
+ *
+ * @apiSuccess {string} status query status.
+ * @apiSuccess {Array} data Search results.
+ * @apiSuccess {Date} date time of request
+ * @apiSuccess {message} message result description.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+    {
+        "status": "success",
+        "data": [
+            {
+                "reviewid": 1,
+                "userid": 1,
+                "artist_name": "Metallica",
+                "album_name": "Ride the Lightning",
+                "spotify_artist_id": "2ye2Wgw4gimLv2eAKyk1NB",
+                "spotify_album_id": "5rFZcoCvmCaJ1gxTMU4JTm",
+                "review_text": "On muuten mahtavaa musaa"
+            }
+        ],
+        "requested_at": "2017-11-29T12:00:47.571Z",
+        "message": "received all reviews by artist"
+    }
+ *
+ *
+ * @apiError NotFound. No reviews found
+ *
+ * @apiErrorExample No reviews found:
+ *     HTTP/1.1 200 Not OK
+  {
+      "status": "fail",
+      "requested_at": "2017-11-29T12:33:29.197Z",
+      "message": "No reviews found"
+  }
+
+ * @apiError InvalidRequest Invalid request
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not OK
+  {
+      "status": "error",
+      "time": "2017-11-29T12:15:30.486Z",
+      "message": "Error message"
+  }
+ */
+function getUserReviews(req, res, next) {
+  let userid = parseInt(req.params.userid);
+  db.any('select * from reviews where userid = $1', [userid])
+    .then(function(data) {
+      if (data.length > 0) {
+         res.status(200)
+          .json({
+           status: 'success',
+           data: data,
+           requested_at: new Date(),
+           message: 'received all reviews by user',
+          });
+      } else {
+        res.status(200)
+          .json({
+           status: 'fail',
+           requested_at: new Date(),
+           message: 'No reviews found',
+          });
+      }
+    })
+    .catch(function(err) {
+      return next(err);
+    })
+}
 
 function deleteByUserId(userid){
 	db.none('delete from users where userid = $1', userid)
@@ -194,12 +517,16 @@ function deleteByUserId(userid){
 }
 
 module.exports = {
-	getAllUsers: getAllUsers,
-	createUser: createUser,
-	login: login,
-	userNameAvailable: userNameAvailable,
-	deleteUser: deleteUser,
-	saveReview: saveReview,
-	getAllReviews: getAllReviews,
-  testToken: testToken
+	getAllUsers,
+  getUserId,
+	createUser,
+	login,
+	userNameAvailable,
+	deleteUser,
+	saveReview,
+	getAllReviews,
+  getArtistReviews,
+  getAlbumReviews,
+  getUserReviews,
+  testToken
 }
