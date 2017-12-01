@@ -4,22 +4,25 @@ import Login from './login';
 import AccountInfo from './AccountInfo';
 import { Link } from 'react-router-dom'
 import { Modal, Button } from 'react-bootstrap';
-
+import Search from './Search';
 export default class Navigationbar extends Component {
   constructor(props){
     super(props);
-    this.state = {showRegister: false, showAccountInfo: false};
+    this.state = {showRegister: false, showAccountInfo: false, searchField: ''};
     this.accountInfo = this.accountInfo.bind(this);
     this.closeAccountInfo = this.closeAccountInfo.bind(this);
 
     this.register = this.register.bind(this);
     this.closeRegister = this.closeRegister.bind(this);
+
   }
 
   register() { this.setState({showRegister: true}) }
   closeRegister() { this.setState({showRegister: false}) }
   accountInfo() { this.setState({showAccountInfo: true}) }
   closeAccountInfo() { this.setState({showAccountInfo: false}) }
+
+
 
   render(){
     return (
@@ -30,7 +33,7 @@ export default class Navigationbar extends Component {
           <li><Link to='/artist'>Artist</Link></li>
           <li><Link to='/artist/reviews'>Reviews</Link></li>
           <li><Link to='/'>Home</Link></li>
-          <li><input type="text" name="searchbox" placeholder="Search..."></input></li>
+          <li><Search /></li>
           {localStorage.getItem("token") ?
             <li> <Button bsStyle="info" onClick={this.accountInfo}>Account info / Log out</Button></li> :
             <li> <Button bsStyle="info" onClick={this.register}>Login / Register</Button>  </li>
