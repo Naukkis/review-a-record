@@ -41,7 +41,7 @@ export default class Navigationbar extends Component {
         >
         <Register closeModal={this.closeRegister}/>
         <p>Or login</p>
-        <Login closeModal={this.props.closeModal}/>
+        <Login closeModal={this.closeRegister}/>
         </Modal>
 
         <Modal
