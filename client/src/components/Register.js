@@ -7,7 +7,7 @@ class Register extends React.Component {
     this.state = {username: '', password: '' };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    }
+  	}
 
   handleSubmit(e) {
   	this.close();
@@ -21,13 +21,14 @@ class Register extends React.Component {
   		})
   }
 
-   handleChange(e) {
+  handleChange(e) {
     this.setState({[e.target.name]: e.target.value});
   }
 
- componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) {
  	this.setState({showModal: nextProps.showModal})
- }
+  }
+
   render () {
   	return (
   		<div>
@@ -43,8 +44,7 @@ class Register extends React.Component {
 			</label>
 			<input type="submit" value="Submit" />
 			</form>				
-			</div>
-		
+			</div>	
   	);
   }
 }

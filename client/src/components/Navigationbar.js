@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import Register from './Register';
 import Login from './login';
 import AccountInfo from './AccountInfo';
-
-import { Modal } from 'react-bootstrap';
+import { Link } from 'react-router-dom'
+import { Modal, Button } from 'react-bootstrap';
 
 export default class Navigationbar extends Component {
   constructor(props){
@@ -26,13 +26,14 @@ export default class Navigationbar extends Component {
       <div className="navigation-bar">
         <ul>
           <li><a className="active" href="">This is testbar</a></li>
-          <li><a href="">Test</a></li>
-          <li><a href="">Test</a></li>
-          <li><a href="">Test</a></li>
+          <li><Link to='/'>Home</Link></li>
+          <li><Link to='/artist'>Artist</Link></li>
+          <li><Link to='/artist/reviews'>Reviews</Link></li>
+          <li><Link to='/'>Home</Link></li>
           <li><input type="text" name="searchbox" placeholder="Search..."></input></li>
           {localStorage.getItem("token") ?
-            <li style={{color: "white"}} onClick={this.accountInfo}>Account info / Log out</li> :
-            <li style={{color: "white"}} onClick={this.register}>Login / Register </li>
+            <li> <Button bsStyle="info" onClick={this.accountInfo}>Account info / Log out</Button></li> :
+            <li> <Button bsStyle="info" onClick={this.register}>Login / Register</Button>  </li>
            }
         </ul>
         <Modal
