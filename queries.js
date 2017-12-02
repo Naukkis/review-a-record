@@ -66,13 +66,15 @@ function getUserId(req, res, next) {
  *
  */
 function userNameAvailable(req, res, next) {
-  console.log(req.params.username);
+  if (!req.params.username) {
+    return next(new Error("Empty username"))
+  }
 	db.any('select 1 from users where username = $1', [req.params.username])
 	  .then(function(data) {
 	  		if (data.length == 0) {
-	  			res.status(200).send('true')
+	  			res.status(200).send(true);
 	  		} else {
-	  			res.status(200).send('false')
+	  			res.status(200).send(false);
 	  		}
 	  })
 	  .catch(function(err) {
@@ -101,9 +103,10 @@ function userNameAvailable(req, res, next) {
  *
  */
 function createUser(req, res, next) {
-  if (!req.body.password) {
-    return next(new Error("Empty password"))
+  if (!req.body.password || !req.body.username) {
+    return next(new Error("Invalid input!"));
   }
+
 
   let psw = bcrypt.hashSync(req.body.password, salt);
   db.none('insert into users(username, password)'

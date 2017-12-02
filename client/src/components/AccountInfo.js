@@ -1,4 +1,5 @@
 import React from 'react';
+import Logout from './logout';
 
 class AccountInfo extends React.Component {
 	constructor(props) {
@@ -15,7 +16,7 @@ class AccountInfo extends React.Component {
 		return (
 			<div>
 	        	<p>{this.props.username}</p>
-	        	<button onClick={this.logout}>Log out</button>
+	        	<Logout closeModal={this.props.closeModal}/>
 	    	</div>
 		)
 	}
