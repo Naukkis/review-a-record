@@ -33,12 +33,14 @@ app.get('/users/user-name-available/:username', db.userNameAvailable);
 app.post('/users/create-user', db.createUser);
 app.post('/users/delete-user', db.deleteUser);
 
+
+app.get('/reviews/get-all-reviews', db.getAllReviews);
 app.post('/reviews/save-review', db.saveReview);
 app.get('/reviews/artist/:spotifyid', db.getArtistReviews);
 app.get('/reviews/album/:spotifyid', db.getAlbumReviews);
 app.get('/reviews/:userid', db.getUserReviews);
 
-app.get('/database/get-all-reviews', db.getAllReviews);
+
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'client', 'public', 'index.html'));

@@ -235,8 +235,8 @@ function deleteUser(req, res, next) {
 function saveReview(req, res, next) {
 	let data = req.body;
 	db.none('insert into reviews (userID, artist_name, album_name,'
-			+ 'spotify_artist_id, spotify_album_id, review_text)'
-			+ 'values ($1, $2, $3, $4, $5, $6)',
+			+ 'spotify_artist_id, spotify_album_id, review_text, date_time)'
+			+ 'values ($1, $2, $3, $4, $5, $6, current_timestamp)',
 			[data.user_id, data.artist_name, data.album_name,
 			data.spotify_artist_id, data.spotify_album_id, data.review_text])
 
