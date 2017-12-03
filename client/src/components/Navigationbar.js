@@ -26,17 +26,15 @@ export default class Navigationbar extends Component {
 
   render(){
     return (
-      <div className="navigation-bar">
-        <ul>
-          <li><a className="active" href="">This is testbar</a></li>
+      <div>
+        <ul className="topnav">
           <li><Link to='/'>Home</Link></li>
           <li><Link to='/artist'>Artist</Link></li>
           <li><Link to='/artist/reviews'>Reviews</Link></li>
-          <li><Link to='/'>Home</Link></li>
-          <li><Search /></li>
+          <Search />
           {localStorage.getItem("token") ?
-            <li> <Button bsStyle="info" onClick={this.accountInfo}>Account info / Log out</Button></li> :
-            <li> <Button bsStyle="info" onClick={this.register}>Login / Register</Button>  </li>
+            <li style={{float: 'right'}} onClick={this.accountInfo}><a>Account info / Log out</a></li> :
+            <li style={{float: 'right'}} onClick={this.register}><a>Login / Register</a>  </li>
            }
         </ul>
         <Modal

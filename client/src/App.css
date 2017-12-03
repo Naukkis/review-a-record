@@ -1,70 +1,51 @@
-.App {
+  .App {
   text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }
 header {
     background-color: #333;
-    color: white;
-    border: solid;
-    border-color: red;
-    text-align: center;
+    height: 10px;
+    width: 100%;
 }
-
-ul {
+.searchbar{
+  width: 100%;
+  height: ;
+}
+ul.topnav {
+    text-align: center;
     list-style-type: none;
-    margin: 0;
-    padding: 0;
+    margin: 0 auto;
+    padding: 2px;
     overflow: hidden;
     background-color: #333;
-    border: solid;
-    border-color: red;
 }
-
-li {
-    float: left;
+ul.topnav li {
+  float: left;
 }
-
-li a {
-    display: block;
+ul.topnav li a {
+    display: inline-block;
     color: white;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
 }
-
-li a:hover {
-    background-color: #111;
+ul.topnav li a:hover:not(.active) {
+  background-color: #111;
+}
+ul.topnav li.right {
+  float: right;
+}
+@media screen and (max-width: 600px){
+    ul.topnav li.right,
+    ul.topnav li {float: none;}
 }
 
 #searchResults {
   display: inline;
 }
-input[type=text] {
-    width: 130px;
+
+#searchbox {
+    width: 440px;
+    height: 40px;
     box-sizing: border-box;
     border: 2px solid #ccc;
     border-radius: 4px;
@@ -77,8 +58,8 @@ input[type=text] {
     transition: width 0.4s ease-in-out;
 }
 
-input[type=text]:focus {
-    width: 100%;
+#searchbox:focus {
+    width: 50%;
 }
 
 #formInput {
@@ -92,16 +73,11 @@ input[type=text]:focus {
     background-repeat: no-repeat;
     padding: 12px 20px 12px 40px;
 }
-
-img{
-  width: 100%;
-  height: auto;
-}
 #artist-display {
   background-color: #333;
   color: white;
   width: 300px;
-  height: 400px;
+  height: 1220px;
   float: left;
   text-align: center;
   border: solid;

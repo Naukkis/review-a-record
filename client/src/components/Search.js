@@ -22,16 +22,14 @@ class Search extends React.Component {
   	}
 	render() {
 		return (
-			<div>
-				<form onSubmit={this.handleSubmit}>
-				<input type="text" name="searchbox" placeholder="Search..." value={this.state.value}
+			<form className="searchbar" onSubmit={this.handleSubmit}>
+				<input type="text" id="searchbox" placeholder="Search..." value={this.state.value}
 						onChange={this.handleChange} onSubmit={this.handleSubmit}>
 				</input>
-				</form>
 				{this.state.fireRedirect && (
 	          		<Redirect to='/search-results' />
 	        	)}
-        	</div>
+			</form>
 		);
 	}
 }
