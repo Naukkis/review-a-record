@@ -59,6 +59,10 @@ li a {
 li a:hover {
     background-color: #111;
 }
+
+#searchResults {
+  display: inline;
+}
 input[type=text] {
     width: 130px;
     box-sizing: border-box;
