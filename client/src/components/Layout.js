@@ -18,7 +18,7 @@ export default class Layout extends Component{
           <Route path='/artist' component={Artistdisplay}/>
           <Route path='/artist' component={Reviews}/>
           <Route path='/search-results' component={SearchResults}/>
-          <Route path='/' component={Home}/>
+          <Route exact path='/' component={Home}/>
           <Route path='/' component={Footer}/>
         </div>
       );

@@ -21,6 +21,7 @@ class Search extends React.Component {
     	this.setState({ value: '', fireRedirect: true });
   	}
 	render() {
+
 		return (
 			<div>
 				<form className="search" onSubmit={this.handleSubmit}>
@@ -28,7 +29,7 @@ class Search extends React.Component {
 						onChange={this.handleChange} onSubmit={this.handleSubmit}>
 				</input>
 				</form>
-				{this.state.fireRedirect && (
+				{this.state.fireRedirect && window.location.pathname !== '/search-results' && (
 	          		<Redirect to='/search-results' />
 	        	)}
         	</div>
