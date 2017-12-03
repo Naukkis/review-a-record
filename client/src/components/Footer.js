@@ -4,7 +4,8 @@ export default class Footer extends Component {
   render(){
     return (
       <div id="f">
-	</div>
+      <a>Site under construction</a>
+	    </div>
     );
   }
 }

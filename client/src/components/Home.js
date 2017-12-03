@@ -16,6 +16,7 @@ export default class Reviews extends Component {
 				<br></br>
 				<h3>Rewiew your favorite artists</h3>
         <br></br>
+        <a>Start by using search bar</a>
         <br></br>
 				<br></br>
 				<br></br>

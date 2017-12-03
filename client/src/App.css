@@ -10,6 +10,8 @@ body {
     -webkit-overflow-scrolling: touch;
 }
 header {
+  position: fixed;
+  width: 100%;
     background-color: #222;
     height: 6px;
     width: 100%;
@@ -132,6 +134,8 @@ a:after {
 }
 
 ul.topnav {
+    position: fixed;
+    width: 100%;
     text-align: center;
     list-style-type: none;
     margin: 0 auto;
@@ -212,7 +216,6 @@ ul.topnav li.right {
     background-color: #333;
     padding: 10px;
     margin: 0 auto;
-    position: relative;
 }
 
 .darker {
