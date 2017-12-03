@@ -28,10 +28,10 @@ export default class Navigationbar extends Component {
     return (
       <div>
         <ul className="topnav">
-          <li><Link to='/'>Home</Link></li>
-          <li><Link to='/artist'>Artist</Link></li>
-          <li><Link to='/artist/reviews'>Reviews</Link></li>
-          <Search />
+          <li style={{float: 'left'}}><Link to='/'>Home</Link></li>
+          <li style={{float: 'left'}}><Link to='/artist'>Artist</Link></li>
+          <li style={{float: 'left'}}><Link to='/artist/reviews'>Reviews</Link></li>
+          <li id="searchbar"><Search /></li>
           {localStorage.getItem("token") ?
             <li style={{float: 'right'}} onClick={this.accountInfo}><a>Account info / Log out</a></li> :
             <li style={{float: 'right'}} onClick={this.register}><a>Login / Register</a>  </li>

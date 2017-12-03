@@ -20,10 +20,10 @@ export default class Reviews extends Component {
       <div>
 
 
-        {mock.map((x) => 
+        {mock.map((x) =>
           <div className="container" key={x.name}>
             <p>{x.name}</p>
-            <span className="time-right">{x.time}</span>       
+            <span className="time-right">{x.time}</span>
           </div>
         )}
       </div>
