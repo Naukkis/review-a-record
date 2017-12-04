@@ -22,8 +22,6 @@ export default class Navigationbar extends Component {
   accountInfo() { this.setState({showAccountInfo: true}) }
   closeAccountInfo() { this.setState({showAccountInfo: false}) }
 
-
-
   render(){
     return (
       <div>

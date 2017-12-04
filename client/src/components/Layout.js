@@ -15,7 +15,7 @@ export default class Layout extends Component{
         <div className="Header">
           <Route path='/' component={Header}/>
           <Route path='/' component={Navigationbar}/>
-          <Route path='/artist' component={Artistdisplay}/>
+          <Route path='/artist/:id' component={Artistdisplay}/>
           <Route path='/artist' component={Reviews}/>
           <Route path='/search-results' component={SearchResults}/>
           <Route exact path='/' component={Home}/>
