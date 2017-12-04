@@ -14,8 +14,8 @@ export default class Artistdisplay extends Component {
   render(){
     return (
       <div id="artist-display">
-        <img src={'../img/gitgud.jpg'} width="200" height="200" alt="gitgud"></img>
-        <p>{this.state.name}</p>
+        <img src={this.props.location.state.image[0].url} width="200" height="200" alt="gitgud"></img>
+        <p>{this.props.location.state.name}</p>
       </div>
     );
   }
