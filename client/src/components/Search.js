@@ -9,17 +9,22 @@ class Search extends React.Component {
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
-	handleChange(e) {
-    	this.setState({ value: e.target.value, fireRedirect: false});
-  	}
 
-  	handleSubmit(e) {
-    	e.preventDefault();
-    	e.target.value = '';
-    	searchArtist(this.state.value);
-    	searchAlbum(this.state.value);
-    	this.setState({ value: '', fireRedirect: true });
-  	}
+	componentWillReceiveProps(nextProps) {
+    this.setState({ fireRedirect: false })
+  }
+
+	handleChange(e) {
+    this.setState({ value: e.target.value, fireRedirect: false});
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    e.target.value = '';
+    searchArtist(this.state.value);
+    searchAlbum(this.state.value);
+    this.setState({ value: '', fireRedirect: true });
+  }
 	render() {
 
 		return (
