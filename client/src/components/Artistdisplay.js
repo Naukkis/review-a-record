@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { store } from '../store.js';
-import axios from 'axios';
 
 export default class Artistdisplay extends Component {
 	constructor(props){
