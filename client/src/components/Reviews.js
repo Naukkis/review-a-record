@@ -22,7 +22,7 @@ export default class Reviews extends Component {
 
         {mock.map((x) =>
           <div className="container" key={x.name}>
-            <p>{x.name}</p>
+            <p style={{color: "white" }}>{x.name}</p>
             <span className="time-right">{x.time}</span>
           </div>
         )}

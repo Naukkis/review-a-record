@@ -8,7 +8,7 @@ export default class Reviews extends Component {
       <div id="headerwrap">
 		<div className="container">
 			<br></br>
-			<div class="row">
+			<div className="row">
 				<br></br>
 				<br></br>
 				<br></br>
@@ -20,7 +20,7 @@ export default class Reviews extends Component {
         <br></br>
 				<br></br>
 				<br></br>
-				<div class="col-lg-6 col-lg-offset-3">
+				<div className="col-lg-6 col-lg-offset-3">
 				</div>
 			</div>
 		</div>
