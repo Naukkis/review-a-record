@@ -5,15 +5,14 @@ class SearchResults extends React.Component {
 
 	render() {
 		return (
-			<div>	
-			{ store.getState().artists.items && 	
-			<div>	
-				<h2>Artists</h2>
+			<div>
+			{ store.getState().artists.items &&
+			<div id="artist">
 				<ul id="searchResults">
 				{ store.getState().artists.items.map((data) =>
 					<li key={data.id}>
 		               <p>{data.name}</p>
-		               { data.images.length > 0 && 
+		               { data.images.length > 0 &&
 		              	<img src={data.images[0].url} alt={data.name} />
 		               }
 		            </li>
@@ -22,18 +21,18 @@ class SearchResults extends React.Component {
 			</div>
 			}
 			{ store.getState().albums.items &&
-			<div>
+			<div id="albums">
 				<h2>Albums</h2>
 				<ul id="searchResults">
 				{ store.getState().albums.items.map((data) =>
 					<li key={data.id}>
 		               <p>{data.name}</p>
-		               { data.images.length > 0 && 
+		               { data.images.length > 0 &&
 		              	<img src={data.images[0].url} alt={data.name} />
 		               }
 		            </li>
 				)}
-				</ul> 
+				</ul>
 			</div>
 			}
 
