@@ -12,10 +12,6 @@ class SearchResults extends React.Component {
 				<ul id="searchResults">
 				{ store.getState().artists.items.map((data) =>
 					<li key={data.id}>
-<<<<<<< HEAD
-		               <p>{data.name}</p>
-		               { data.images.length > 0 &&
-=======
 		               <Link to={{
 											pathname: `/artist/${data.id}`,
 											state: {
@@ -23,8 +19,7 @@ class SearchResults extends React.Component {
 												image: data.images
 											}
 					}}>{data.name}</Link>
-		               { data.images.length > 0 && 
->>>>>>> d93ab9bf2350c052ee27218a12918151a33a19db
+		               { data.images.length > 0 &&
 		              	<img src={data.images[0].url} alt={data.name} />
 		               }
 		            </li>

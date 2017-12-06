@@ -13,19 +13,36 @@ export default class Reviews extends Component {
         time: "12:00"
       },
       {
+        name: "diudiudiu2",
+        time: "12:00"
+      },
+      {
+        name: "diudiudiu2",
+        time: "12:00"
+      },
+      {
+        name: "diudiudiu2",
+        time: "12:00"
+      },
+      {
+        name: "diudiudiu2",
+        time: "12:00"
+      },
+      {
         name: "diudiudiu3",
         time: "12:00"
       }]
     return (
-      <div>
-
+      <div id="headerwrap">
+        <div className="review-container">
 
         {mock.map((x) =>
-          <div className="container" key={x.name}>
+          <div className="review" key={x.name}>
             <p style={{color: "white" }}>{x.name}</p>
             <span className="time-right">{x.time}</span>
           </div>
         )}
+        </div>
       </div>
     );
   }
