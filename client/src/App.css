@@ -274,17 +274,13 @@ ul.topnav li.right {
 .review {
     background-color: #555;
     border: 2px solid #666;
-    padding: 10px;
-    margin: 20px 0;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 15px 0;
     width: 100%;
 }
 
 .time-right {
     float: right;
     color: #aaa;
-}
-
-.time-left {
-    float: left;
-    color: #999;
 }
