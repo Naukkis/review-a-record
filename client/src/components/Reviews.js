@@ -24,7 +24,7 @@ export default class Reviews extends Component {
   render(){
     console.log(store.getState().writereview);
     return (
-      <div id="headerwrap">
+      <div>
         <div className="review-container">
         {
           store.getState().reviews.data &&
