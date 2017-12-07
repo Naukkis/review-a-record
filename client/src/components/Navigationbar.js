@@ -38,7 +38,7 @@ export default class Navigationbar extends Component {
           onHide={this.closeRegister}
         >
         <Register closeModal={this.closeRegister}/>
-        <p>Or login</p>
+        <p id="register-header">Or login</p>
         <Login closeModal={this.closeRegister}/>
         </Modal>
 

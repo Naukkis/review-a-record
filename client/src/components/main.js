@@ -32,18 +32,18 @@ class Main extends Component {
   render() {
     if(store.getState().config.redirect === "true") {
       return(
-        <div className="login">
+        <div className="login-screen">
           <Login/>
         </div>
       )
     } else {
       return(
-        <div className="Logout">
+        <div className="logout-screen">
          <Logout/>
         </div>
       )
     }
-    
+
   }
 }
 

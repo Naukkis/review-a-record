@@ -37,16 +37,12 @@ class Login extends Component {
 
     return (
 
-      <form name="loginForm" onSubmit={this.onSubmit}>
-        <div>
-          <label>Username</label>
+      <form className="login-form" name="loginForm" onSubmit={this.onSubmit}>
+          <label id="login-register-label">Username:</label>
           <input id="formInput" type="text" name="username" onChange={this.handleChange} value={this.state.username} required/>
-        </div>
-        <div>
-          <label>Password</label>
+          <label  id="login-register-label">Password:</label>
           <input id="formInput" type="password" name="password" onChange={this.handleChange} value={this.state.password} required/>
-        </div>
-        <input type="submit" value="Login" />
+        <input type="submit" value="Login" id="login-screen-button" />
       </form>
     );
   }
