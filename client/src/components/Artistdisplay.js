@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { getArtistAlbums } from '../spotify';
 import { store } from '../store';
+import { Link } from 'react-router-dom';
 
 export default class Artistdisplay extends Component {
 	constructor(props){
@@ -41,7 +42,7 @@ export default class Artistdisplay extends Component {
 											<p>{data.name}</p>
 										</div>
 									 }
-									 
+
 								</li>
 				)}
 				</ul>
