@@ -71,7 +71,7 @@ class Register extends React.Component {
 			</label>
 			<label>
 				Password:
-				<input id="formInput" type="password" name="password" onChange={this.handleChange} required/>
+				<input id="formInput" type="password" name="password" title="Password must be atleast 4 characters" onChange={this.handleChange} pattern=".{4,}" required/>
 			</label>
 			<input type="submit" value="Register" id="mySubmit"/>
 			</form>				
