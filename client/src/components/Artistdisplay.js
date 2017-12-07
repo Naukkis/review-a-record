@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getArtistAlbumsTwo } from '../spotify';
+import { getArtistAlbums } from '../spotify';
 import { store } from '../store';
 import { Link } from 'react-router-dom';
 
@@ -7,7 +7,7 @@ export default class Artistdisplay extends Component {
 	constructor(props){
 		super(props);
 		this.state = {id: '', name: '', image: ''};
-		getArtistAlbumsTwo(this.props.match.params.id)
+		getArtistAlbums(this.props.match.params.id)
 	}
 
 	componentDidMount() {
