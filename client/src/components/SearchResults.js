@@ -15,7 +15,8 @@ class SearchResults extends React.Component {
 						 pathname: `/artist/${data.id}`,
 						 state: {
 							 name: data.name,
-							 image: data.images
+							 image: data.images,
+							 genres: data.genres
 						 }
  				 	}}>{
 						<li key={data.id}>
