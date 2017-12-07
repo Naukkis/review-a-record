@@ -29,11 +29,11 @@ export default class Artistdisplay extends Component {
 				)}
       </div>
 			<div>
-			{ store.getState().albums.items &&
+			{ store.getState().artistalbums.items &&
 			<div id="albums">
 				<h2>Albums</h2>
 				<ul id="searchResults">
-				{ store.getState().albums.items.map((data) =>
+				{ store.getState().artistalbums.items.map((data) =>
 					<Link to={{
 						 pathname: `/album/${data.id}`,
 						 state: {
