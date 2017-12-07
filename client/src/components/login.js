@@ -12,14 +12,15 @@ class Login extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-   
+
     axios.post('/login',{
-      username: this.state.username, 
+      username: this.state.username,
       password: this.state.password }
       )
     .then((res) => {
       this.props.closeModal();
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("username", res.data.username);
       store.dispatch({type: "CHANGE_REDIRECT", field: "config", payload: {redirect: "false"}});
     })
     .catch(function (err) {

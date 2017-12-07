@@ -48,6 +48,16 @@ class SearchResults extends React.Component {
 				<h2>Albums</h2>
 				<ul id="searchResults">
 				{ store.getState().albums.items.map((data) =>
+					<Link to={{
+						pathname: `/album/${data.id}`,
+						state: {
+							image: data.images[0].url,
+							artistname: data.artists[0].name,
+							artistid: data.artists[0].id,
+							albumname: data.name,
+							albumid: data.id
+						}
+					}}>
 					<li key={data.id}>
 
 		               { data.images.length > 0 &&
@@ -63,7 +73,9 @@ class SearchResults extends React.Component {
 		 									<p>{data.name}</p>
 		 								</div>
 		 							}
-		            </li>
+					</li>
+					</Link>
+
 				)}
 				</ul>
 			</div>
