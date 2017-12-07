@@ -34,16 +34,30 @@ export default class Artistdisplay extends Component {
 				<h2>Albums</h2>
 				<ul id="searchResults">
 				{ store.getState().albums.items.map((data) =>
-					<li key={data.id}>
+					<Link to={{
+						 pathname: `/album/${data.id}`,
+						 state: {
+							image: data.images[0].url,
+ 							artistname: data.artists[0].name,
+ 							artistid: data.artists[0].id,
+ 							albumname: data.name,
+ 							albumid: data.id
+						 }
+ 				 	}}>
+					{
+						<li key={data.id}>
 
-									 { data.images.length > 0 &&
-										<div>
-											<img src={data.images[0].url} alt={data.name} />
-											<p>{data.name}</p>
-										</div>
-									 }
+										 { data.images.length > 0 &&
+											<div>
+												<img src={data.images[0].url} alt={data.name} />
+												<p>{data.name}</p>
+											</div>
+										 }
 
-								</li>
+						</li>
+					}
+					</Link>
+
 				)}
 				</ul>
 				</div>
