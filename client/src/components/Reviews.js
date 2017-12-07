@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
+import Makereview from "./Makereview";
 
 export default class Reviews extends Component {
 
   constructor(props){
     super(props);
-    this.state = {name: ''};
+    this.state = {name: "", review: ""};
+    this.onSubmit = this.onSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+    e.target.name = '';
+    e.target.review = '';
+    this.setState({ name: '', review: ''});
   }
 
   handleChange(e) {
-    this.setState({ name: e.target.value});
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-    e.target.value = '';
-    this.setState({ name: ''});
+    this.setState({[e.target.name]: e.target.value});
   }
 
   render(){
@@ -60,14 +62,8 @@ export default class Reviews extends Component {
             <span className="time-right">{x.time}</span>
           </div>
         )}
-        <div>
-        <form className="search" onSubmit={this.handleSubmit}>
-				<input type="text" id="searchbox" placeholder="Search..." name={this.state.value}
-						onChange={this.handleChange} onSubmit={this.handleSubmit}>
-				</input>
-				</form>
         </div>
-        </div>
+        <Makereview />
       </div>
     );
   }

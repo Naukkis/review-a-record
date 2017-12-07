@@ -7,7 +7,7 @@ import Navigationbar from "./Navigationbar";
 import SearchResults from "./SearchResults";
 import { Route } from 'react-router-dom';
 import Home from "./Home";
-//import Makereview from "./Makereview";
+
 
 export default class Layout extends Component{
     render() {

@@ -279,6 +279,42 @@ ul.topnav li.right {
     margin: 15px 0;
     width: 100%;
 }
+.user-review {
+  float: right;
+  text-align: center;
+}
+.user-review-container {
+  background-color: #333;
+  padding: 0px auto;
+  margin: 0 auto;
+  padding-top: 15px;
+  width: 75%;
+  height: 180px;
+  border: solid;
+  border-color: #999;
+  float: right;
+}
+#comment-area {
+  resize: none;
+  overflow-x: hidden;
+  width: 800px;
+  height: 120px;
+  box-sizing: border-box;
+  border: 2px solid #555;
+  border-radius: 4px;
+  font-size: 16px;
+  color: white;
+  background-color: #555;
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  padding: 12px 20px 12px 40px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+
+
+}
+#review-form{
+}
 
 .time-right {
     float: right;
