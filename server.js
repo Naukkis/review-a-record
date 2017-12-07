@@ -41,6 +41,13 @@ app.get('/reviews/album/:spotifyid', db.getAlbumReviews);
 app.get('/reviews/:userid', db.getUserReviews);
 
 
+app.get('/spotify/access', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'client', 'public', 'auth.html'));
+});
+
+app.get('/spotify/player', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'client', 'public', 'player.html'));
+});
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'client', 'public', 'index.html'));

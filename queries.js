@@ -212,9 +212,9 @@ function deleteUser(req, res, next) {
 }
 
 /**
- * @api {post} reviews/save-review Save new review.
- * @apiName Create new user
- * @apiGroup User
+ * @api {post} reviews/save-review Save new review
+ * @apiName Save-review
+ * @apiGroup Reviews
  *
  * @apiParam {Number} user_id user id.
  * @apiParam {String} artist_name Name of the artist.
