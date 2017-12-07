@@ -3,6 +3,7 @@ const R = require('ramda');
 const initialState = {
   artists: "",
   albums: "",
+  artistalbums: "",
   config: "",
   reviews: "",
   writereview: ""
