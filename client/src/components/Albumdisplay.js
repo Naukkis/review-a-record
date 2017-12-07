@@ -9,21 +9,19 @@ export default class AlbumDisplay extends Component {
 
   render(){
     return(
-      <div>
+      <div id="headerwrap">
       <div id="album-display">
         {this.props.location.state.albumname &&
           <div>
-            <img src={this.props.location.state.image} />
+            <img id="album-img" src={this.props.location.state.image} />
             <p>{this.props.location.state.albumname}</p>
             <p>by {this.props.location.state.artistname}</p>
-            <div>
-              <Reviews state={this.props.location.state} />
-            </div>
           </div>
         }
       </div>
-
+        <Reviews state={this.props.location.state} />
       </div>
+
     );
   }
 }

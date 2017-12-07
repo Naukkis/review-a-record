@@ -52,7 +52,7 @@ export default class Reviews extends Component {
         time: "12:00"
       }]
     return (
-      <div id="headerwrap">
+      <div>
         <div className="review-container">
 
         {mock.map((x) =>
