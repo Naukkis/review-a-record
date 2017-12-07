@@ -38,11 +38,11 @@ function getAllUsers(req, res, next) {
  */
 function getUserId(req, res, next) {
   db.one('select userID from users where username = $1', [req.params.username])
-    .then(function(data) {     
+    .then(function(data) {
         res.status(200)
           .json({
             userid: data.userid
-          })  
+          })
     })
     .catch(function(err) {
       return next(err);
@@ -139,6 +139,7 @@ function login(req, res, next){
           res.status(200)
           	 .json({
 	            username: req.body.username,
+              userid: data.userid,
 	            token: token,
 	            login_at: new Date(),
 	            message: 'login successful'
@@ -240,7 +241,7 @@ function saveReview(req, res, next) {
 	db.none('insert into reviews (userID, artist_name, album_name,'
 			+ 'spotify_artist_id, spotify_album_id, review_text, date_time)'
 			+ 'values ($1, $2, $3, $4, $5, $6, current_timestamp)',
-			[data.user_id, data.artist_name, data.album_name,
+			[parseInt(data.user_id), data.artist_name, data.album_name,
 			data.spotify_artist_id, data.spotify_album_id, data.review_text])
 
 		.then(function() {
@@ -345,7 +346,7 @@ function getArtistReviews(req, res, next) {
            message: 'No reviews found',
           });
       }
-      
+
     })
     .catch(function(err) {
       return next(err);

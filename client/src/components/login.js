@@ -21,6 +21,7 @@ class Login extends Component {
       this.props.closeModal();
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("username", res.data.username);
+      localStorage.setItem("userid", res.data.userid);
       store.dispatch({type: "CHANGE_REDIRECT", field: "config", payload: {redirect: "false"}});
     })
     .catch(function (err) {
