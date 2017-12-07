@@ -13,13 +13,12 @@ export default class Layout extends Component{
     render() {
       return(
         <div className="Header">
-          <Route path='/' component={Header}/>
-          <Route path='/' component={Navigationbar}/>
+          <Header/>
+          <Navigationbar/>
           <Route path='/artist/:id' component={Artistdisplay}/>
-          <Route path='/artist' component={Reviews}/>
           <Route path='/search-results' component={SearchResults}/>
           <Route exact path='/' component={Home}/>
-          <Route path='/' component={Footer}/>
+          <Footer/>
         </div>
       );
     }
