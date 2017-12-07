@@ -1,19 +1,19 @@
+/* Main body parts*/
 body {
-  background-color: #f2f2f2;
-  text-align: center;
+    background-color: #f2f2f2;
+    text-align: center;
     font-family: 'EB Garamond', serif;
     font-weight: 300;
     font-size: 16px;
     color: #333;
-
-    -webkit-font-smoothing: antialiased;
-    -webkit-overflow-scrolling: touch;
+      -webkit-font-smoothing: antialiased;
+      -webkit-overflow-scrolling: touch;
 }
 header {
-  position: fixed;
-  width: 100%;
+    position: fixed;
+    width: 100%;
     background-color: #222;
-    height: 6px;
+    height: 8px;
     width: 100%;
 }
 h1, h2, h3, h4, h5, h6 {
@@ -26,35 +26,28 @@ p {
     line-height: 28px;
     margin-bottom: 25px;
 }
-
 /* Links */
 a {
     color: #f85c37;
     word-wrap: break-word;
-
-    -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
-    -moz-transition: color 0.1s ease-in, background 0.1s ease-in;
-    -ms-transition: color 0.1s ease-in, background 0.1s ease-in;
-    -o-transition: color 0.1s ease-in, background 0.1s ease-in;
-    transition: color 0.1s ease-in, background 0.1s ease-in;
+      -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
+      -moz-transition: color 0.1s ease-in, background 0.1s ease-in;
+      -ms-transition: color 0.1s ease-in, background 0.1s ease-in;
+      -o-transition: color 0.1s ease-in, background 0.1s ease-in;
+      transition: color 0.1s ease-in, background 0.1s ease-in;
 }
-
-a:hover,
-a:focus {
+a:hover, a:focus {
     color: #7b7b7b;
     text-decoration: none;
     outline: 0;
 }
-
-a:before,
-a:after {
+a:before, a:after {
     -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
     -moz-transition: color 0.1s ease-in, background 0.1s ease-in;
     -ms-transition: color 0.1s ease-in, background 0.1s ease-in;
     -o-transition: color 0.1s ease-in, background 0.1s ease-in;
     transition: color 0.1s ease-in, background 0.1s ease-in;
 }
-
  hr {
     display: block;
     height: 1px;
@@ -63,8 +56,6 @@ a:after {
     margin: 1em 0;
     padding: 0;
 }
-
-
 /* ==========================================================================
    Wrap Sections
    ========================================================================== */
@@ -91,7 +82,7 @@ a:after {
    	margin-top: 0px;
    	padding-top:20px;
    	text-align:center;
-     background-color: #333;
+    background-color: #333;
    	min-height: 800px;
    	width: 100%;
 
@@ -169,15 +160,16 @@ a:after {
 #f img {
 	text-align: center;
 }
-
-
-
+/*********************************
+        Navigation bar
+ *********************************/
 ul.topnav {
     position: fixed;
     width: 100%;
     text-align: center;
     list-style-type: none;
     margin: 0 auto;
+    margin-top: 2px;
     padding: 4px;
     overflow: hidden;
     background-color: #222;
@@ -194,33 +186,38 @@ ul.topnav li a {
     text-decoration: none;
 }
 ul.topnav li a:hover:not(.active) {
-  background-color: #111;
+  background-color: #333;
+  border-radius: 10px;
 }
-ul.topnav li.right {
+#nav-left{
+  float: left;
+  width: 31.33333%;
+  text-align: left;
+}
+#nav-middle{
+  float:left;
+  width: 37.33333%;
+  text-align: center;
+}
+#nav-right{
   float: right;
-}
-@media screen and (max-width: 600px){
-    ul.topnav li.right,
-    ul.topnav li {float: none;}
-}
-
-#searchResults {
-  display: inline;
-  color: white;
+  width: 31.33333%;
+  text-align: right;
 }
 ::-webkit-input-placeholder {
   color: white;
 }
 #searchbox {
-    width: 600px;
+    width: 500px;
     height: 40px;
     box-sizing: border-box;
     border: 2px solid #555;
     border-radius: 4px;
     font-size: 16px;
-    color: white;
     background-color: #555;
-    background-position: 10px 10px;
+    background-image: url('./img/search-icon.png');
+    background-size: 20px;
+    background-position: 9px 8px;
     background-repeat: no-repeat;
     padding: 12px 20px 12px 40px;
     -webkit-transition: width 0.4s ease-in-out;
@@ -228,7 +225,7 @@ ul.topnav li.right {
 }
 
 #searchbox:focus {
-    width: 100%;
+    width: 101%;
 }
 
 #formInput {
@@ -251,6 +248,11 @@ ul.topnav li.right {
   width: 100%;
   padding-top: 30px;
 
+}
+
+#searchResults {
+  display: inline;
+  color: white;
 }
 .container {
     background-color: #333;

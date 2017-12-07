@@ -26,13 +26,11 @@ export default class Navigationbar extends Component {
     return (
       <div>
         <ul className="topnav">
-          <li style={{float: 'left'}}><Link to='/'>Home</Link></li>
-          <li style={{float: 'left'}}><Link to='/artist'>Artist</Link></li>
-          <li style={{float: 'left'}}><Link to='/artist/reviews'>Reviews</Link></li>
-          <li id="searchbar"><Search /></li>
+          <li id="nav-left"><Link to='/'>Home</Link></li>
+          <li id="nav-middle"><Search /></li>
           {localStorage.getItem("token") ?
-            <li style={{float: 'right'}} onClick={this.accountInfo}><a>Account info / Log out</a></li> :
-            <li style={{float: 'right'}} onClick={this.register}><a>Login / Register</a>  </li>
+            <li id="nav-right" onClick={this.accountInfo}><a>Account info / Log out</a></li> :
+            <li id="nav-right" onClick={this.register}><a>Login / Register</a>  </li>
            }
         </ul>
         <Modal
