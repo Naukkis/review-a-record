@@ -57,7 +57,19 @@
     player.connect();
 
     document.getElementById("play").onclick = function() {
-     player.togglePlay();
+      let token = localStorage.getItem('spotifyaccesstoken');
+      let data = JSON.stringify({"context_uri": "spotify:album:5rFZcoCvmCaJ1gxTMU4JTm"});
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200) {
+          console.log(this.responseText);
+        }
+      }
+      xhr.open("PUT", "https://api.spotify.com/v1/me/player/play");
+      xhr.setRequestHeader(`Content-type`, `application/x-www-form-urlencoded`);
+      xhr.setRequestHeader(`Authorization`, `Bearer ${token}`);
+      xhr.send(data);
+
     }
   }
   </script>
