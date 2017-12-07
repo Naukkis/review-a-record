@@ -170,6 +170,8 @@ a:after {
 	text-align: center;
 }
 
+
+
 ul.topnav {
     position: fixed;
     width: 100%;
@@ -204,6 +206,7 @@ ul.topnav li.right {
 
 #searchResults {
   display: inline;
+  color: white;
 }
 ::-webkit-input-placeholder {
   color: white;
@@ -242,12 +245,12 @@ ul.topnav li.right {
 #artist-display {
   background-color: #333;
   color: white;
-  width: 300px;
   height: 1220px;
-  float: left;
+  float: top;
   text-align: center;
-  border: solid;
-  border-color: red;
+  width: 100%;
+  padding-top: 30px;
+
 }
 .container {
     background-color: #333;

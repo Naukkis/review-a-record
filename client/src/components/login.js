@@ -23,7 +23,7 @@ class Login extends Component {
       store.dispatch({type: "CHANGE_REDIRECT", field: "config", payload: {redirect: "false"}});
     })
     .catch(function (err) {
-      alert("Username not found");
+      alert("Username or password is wrong");
     })
   }
 
@@ -38,11 +38,11 @@ class Login extends Component {
       <form name="loginForm" onSubmit={this.onSubmit}>
         <div>
           <label>Username</label>
-          <input id="formInput" type="text" name="username" onChange={this.handleChange} value={this.state.username}/>
+          <input id="formInput" type="text" name="username" onChange={this.handleChange} value={this.state.username} required/>
         </div>
         <div>
           <label>Password</label>
-          <input id="formInput" type="password" name="password" onChange={this.handleChange} value={this.state.password}/>
+          <input id="formInput" type="password" name="password" onChange={this.handleChange} value={this.state.password} required/>
         </div>
         <input type="submit" value="Login" />
       </form>
