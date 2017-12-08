@@ -83,7 +83,7 @@ function userNameAvailable(req, res, next) {
 }
 
 /**
- * @api {post} users/create-user Create new user.
+ * @api {post} users/create-user Create new user
  * @apiName Create new user
  * @apiGroup User
  *
@@ -126,6 +126,32 @@ function createUser(req, res, next) {
     });
 }
 
+/**
+ * @api {post} /login Login
+ * @apiName Login
+ * @apiGroup User
+ *
+ * @apiParam {String} username username.
+ * @apiParam {String} password password.
+ *
+ * @apiSuccess {String} username username
+ * @apiSuccess {String} userid user ID
+ * @apiSuccess {String} token token
+ * @apiSuccess {Date} Date time of login
+ * @apiSuccess {String} Message message
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+    {
+        "username": "username",
+        "userid:" "user id",
+        "token": token,
+        "login_at": "2017-11-29T12:49:46.495Z",
+        "message": "login successful",
+        
+    }
+ *
+ */
 function login(req, res, next){
   let submittedPsw = req.body.password;
   db.one('select * from users where username = $1', [req.body.username])
@@ -373,11 +399,9 @@ function getArtistReviews(req, res, next) {
         "data": [
             {
                 "reviewid": 1,
-                "userid": 1,
-                "artist_name": "Metallica",
-                "album_name": "Ride the Lightning",
-                "spotify_artist_id": "2ye2Wgw4gimLv2eAKyk1NB",
-                "spotify_album_id": "5rFZcoCvmCaJ1gxTMU4JTm",
+                "spotify_album_id": "0M8Ki2Dc3MkuIS0OLBKUrK",
+                "username": "test",
+                "date_time": "2017-11-29T12:00:47.571Z",
                 "review_text": "On muuten mahtavaa musaa"
             }
         ],
@@ -407,7 +431,7 @@ function getArtistReviews(req, res, next) {
   }
  */
 function getAlbumReviews(req, res, next) {
-  db.any('select reviews.reviewid, reviews.review_text, reviews.date_time, users.username '
+  db.any('select reviews.reviewid, reviews.spotify_album_id, reviews.review_text, reviews.date_time, users.username '
         + 'from reviews '
         + 'left join users on reviews.userid = users.userid '
         + 'where reviews.spotify_album_id = $1', [req.params.spotifyid])

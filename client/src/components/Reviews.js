@@ -34,7 +34,7 @@ export default class Reviews extends Component {
       <div>
         <div className="review-container">
         {
-          store.getState().reviews.data &&
+          store.getState().reviews.data && store.getState().reviews.data[0].spotify_album_id === this.props.state.albumid &&
           <div id="revies">
             {
               store.getState().reviews.data.map(x =>
@@ -49,6 +49,7 @@ export default class Reviews extends Component {
         }
 
         </div>
+
         <Makereview state={this.props.state}/>
       </div>
     );
