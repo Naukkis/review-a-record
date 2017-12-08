@@ -24,14 +24,14 @@ class SearchResults extends React.Component {
 							{
 								data.images.length > 0 &&
 								<div id="spacing-info">
-								<img id="album-img" src={data.images[0].url} alt={data.name} />
+								<img id="artist-img" src={data.images[0].url} alt={data.name} />
 								<p id="search-info-text">{data.name}</p>
 								</div>
 							}
 							{
 								data.images.length === 0 &&
 								<div id="spacing-info">
-									<img id="album-img" src={'../img/question-mark.jpg'} alt="404"/>
+									<img id="artist-img" src={'../img/question-mark.jpg'} alt="404"/>
 									<p id="search-info-text">{data.name}</p>
 								</div>
 							}
