@@ -25,7 +25,7 @@ export default class Artistdisplay extends Component {
 				}
 				<p>{this.props.location.state.name}</p>
 				{this.props.location.state.genres.map(x =>
-					<p className="artist-genres">{x}</p>
+					<p key={x} className="artist-genres">{x}</p>
 				)}
       </div>
 			<div>
@@ -43,7 +43,7 @@ export default class Artistdisplay extends Component {
  							albumname: data.name,
  							albumid: data.id
 						 }
- 				 	}}>
+ 				 	}} key={data.id}>
 					{
 						<li key={data.id}>
 

@@ -18,7 +18,7 @@ class SearchResults extends React.Component {
 							 image: data.images,
 							 genres: data.genres
 						 }
- 				 	}}>{
+ 				 	}} key={data.id}>{
 						<li id="li" key={data.id}>
 							{
 								data.images.length > 0 &&
@@ -28,9 +28,9 @@ class SearchResults extends React.Component {
 								</div>
 							}
 							{
-								data.images.length == 0 &&
+								data.images.length === 0 &&
 								<div id="spacing-info">
-									<img id="album-img" src={'../img/question-mark.jpg'} />
+									<img id="album-img" src={'../img/question-mark.jpg'} alt="404"/>
 									<p>{data.name}</p>
 								</div>
 							}
@@ -57,7 +57,7 @@ class SearchResults extends React.Component {
 							albumname: data.name,
 							albumid: data.id
 						}
-					}}>
+					}} key={data.id}>
 					<li id="li" key={data.id}>
 
 		               { data.images.length > 0 &&
@@ -67,9 +67,9 @@ class SearchResults extends React.Component {
 		 								</div>
 		               }
 									 {
-		 								data.images.length == 0 &&
+		 								data.images.length === 0 &&
 		 								<div id="spacing-info">
-		 									<img src={'../img/question-mark.jpg'} />
+		 									<img src={'../img/question-mark.jpg'}  alt="404"/>
 		 									<p>{data.name}</p>
 		 								</div>
 		 							}

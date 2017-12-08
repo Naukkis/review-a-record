@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import Artistdisplay from "./Artistdisplay";
-import Reviews from "./Reviews";
 import Navigationbar from "./Navigationbar";
 import SearchResults from "./SearchResults";
 import AlbumDisplay from "./Albumdisplay";

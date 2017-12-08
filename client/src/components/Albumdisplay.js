@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Reviews from './Reviews';
-import axios from 'axios';
 
 export default class AlbumDisplay extends Component {
   constructor(props) {
@@ -22,7 +21,7 @@ export default class AlbumDisplay extends Component {
       <div id="album-display">
         {this.props.location.state.albumname &&
           <div>
-            <img id="album-img" src={this.props.location.state.image} />
+            <img id="album-img" src={this.props.location.state.image} alt="album"/>
             <p>{this.props.location.state.albumname}</p>
             <p>by {this.props.location.state.artistname}</p>
             <a href="localhost:3002/spotify/auth" onClick={this.openPlayer}>Play album</a>
