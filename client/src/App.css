@@ -19,7 +19,7 @@ header {
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Oswald', sans-serif;
     font-weight: 300;
-    color: #333;
+    color: white;
 }
 /* Paragraph & Typographic */
 p {
@@ -60,11 +60,11 @@ a:before, a:after {
    Wrap Sections
    ========================================================================== */
    #albums{
-   	margin-top: 0px;
-   	padding-top:20px;
+   	padding-top:30px;
+    padding-bottom: 30px;
    	text-align:center;
-     background-color: #333;
-   	min-height: 800px;
+    background-color: #333;
+   	min-height: 200px;
    	width: 100%;
 
        -webkit-background-size: 100%;
@@ -78,16 +78,15 @@ a:before, a:after {
        background-size: cover;
    }
    #spacing-info{
-     padding: 20px;
+     display: block;
+     text-align: center;
    }
 
    #artist {
-   	margin-top: 0px;
-   	padding-top:150px;
-    padding-left: 20px;
-   	text-align:center;
+   	padding-top: 70px;
+   	text-align: center;
     background-color: #333;
-   	min-height: 800px;
+   	min-height: 200px;
    	width: 100%;
 
        -webkit-background-size: 100%;
@@ -274,14 +273,56 @@ input:-webkit-autofill {
   padding-top: 30px;
 
 }
-
+::-webkit-scrollbar{
+  width: 0px;
+  background: transparent;
+}
 #searchResults {
-  list-style-type: none;
-  margin-left: 10px;
-  float: left;
+  overflow: auto;
+  white-space: nowrap;
+  overflow-x: scroll;
+  width: 95%;
+  margin: auto;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 2.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 #li{
   display: inline-block;
+  text-align: center;
+  padding: 50px 20px 5px 10px;
+  margin-left: -10px;
+}
+#search-info-text{
+  font-family: 'EB Garamond', serif;
+  font-size: 20px;
+  font-weight: 300;
+  color: white;
+  padding: 10px;
+
+  word-wrap: break-word;
+    -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
+    -moz-transition: color 0.1s ease-in, background 0.1s ease-in;
+    -ms-transition: color 0.1s ease-in, background 0.1s ease-in;
+    -o-transition: color 0.1s ease-in, background 0.1s ease-in;
+    transition: color 0.1s ease-in, background 0.1s ease-in;
+}
+#search-info-text:hover, #search-info-text:focus {
+  color: #f85c37;
+  text-decoration: none;
+  outline: 0;
+}
+#search-info-text:before, #search-info-text:after {
+  -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
+  -moz-transition: color 0.1s ease-in, background 0.1s ease-in;
+  -ms-transition: color 0.1s ease-in, background 0.1s ease-in;
+  -o-transition: color 0.1s ease-in, background 0.1s ease-in;
+  transition: color 0.1s ease-in, background 0.1s ease-in;
+}
+#search-info-text-header{
+  font-family: 'Oswald', sans-serif;
+  font-size: 70px;
+  font-weight: 700;
+  color: white;
+  padding: 10px;
 }
 .container {
     background-color: #333;
@@ -361,8 +402,6 @@ input:-webkit-autofill {
   width: 300px;
   height: 300px;
   border-radius: 50%;
-  border: solid;
-  border-color: #333;
 }
 #album-img {
   width: 300px;

@@ -9,6 +9,7 @@ class SearchResults extends React.Component {
 			<div className="artist-binder">
 			{ store.getState().artists.items &&
 			<div id="artist">
+			<h1  id="search-info-text-header">Artists</h1>
 				<ul id="searchResults">
 				{ store.getState().artists.items.map((data) =>
 					<Link to={{
@@ -24,14 +25,14 @@ class SearchResults extends React.Component {
 								data.images.length > 0 &&
 								<div id="spacing-info">
 								<img id="album-img" src={data.images[0].url} alt={data.name} />
-								<p>{data.name}</p>
+								<p id="search-info-text">{data.name}</p>
 								</div>
 							}
 							{
 								data.images.length == 0 &&
 								<div id="spacing-info">
 									<img id="album-img" src={'../img/question-mark.jpg'} />
-									<p>{data.name}</p>
+									<p id="search-info-text">{data.name}</p>
 								</div>
 							}
 
@@ -45,7 +46,7 @@ class SearchResults extends React.Component {
 			}
 			{ store.getState().albums.items &&
 			<div id="albums">
-				<h2>Albums</h2>
+				<h1  id="search-info-text-header">Albums</h1>
 				<ul id="searchResults">
 				{ store.getState().albums.items.map((data) =>
 					<Link to={{
@@ -62,15 +63,15 @@ class SearchResults extends React.Component {
 
 		               { data.images.length > 0 &&
 		 								<div id="spacing-info">
-			 								<img src={data.images[0].url} alt={data.name} />
-											<p>{data.name}</p>
+			 								<img id="album-img" src={data.images[0].url} alt={data.name} />
+											<p  id="search-info-text">{data.name}</p>
 		 								</div>
 		               }
 									 {
 		 								data.images.length == 0 &&
 		 								<div id="spacing-info">
-		 									<img src={'../img/question-mark.jpg'} />
-		 									<p>{data.name}</p>
+		 									<img id="album-img" src={'../img/question-mark.jpg'} />
+		 									<p  id="search-info-text">{data.name}</p>
 		 								</div>
 		 							}
 					</li>
