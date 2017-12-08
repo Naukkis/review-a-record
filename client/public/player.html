@@ -1,7 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Spotify Web Playback SDK Quick Start Tutorial</title>
+  <title>Spotify Web Playback</title>
+  <style>
+    body {
+      background-color: #1bd145;
+    }
+    button {
+      position: fixed;
+      top: 200px;
+      left: 150px;
+      color: black;
+      font-size: 50px;
+    }
+  </style>
 </head>
 <body>
   <h1>Superb Spotify Web Player</h1>
@@ -55,7 +67,6 @@
     player.connect();
     document.getElementById("play").onclick = function() {
       let currentAlbum = localStorage.getItem('currentAlbum');
-      console.log(currentAlbum);
       let token = localStorage.getItem('spotifyaccesstoken');
       let data = JSON.stringify({"context_uri": "spotify:album:" + currentAlbum});
       var xhr = new XMLHttpRequest();
