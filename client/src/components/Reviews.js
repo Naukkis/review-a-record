@@ -22,6 +22,13 @@ export default class Reviews extends Component {
 
 
   render(){
+    const date = (reviewDate) => {
+      let datetime = new Date(reviewDate);
+      let day = datetime.toLocaleDateString();
+      let time = datetime.toLocaleTimeString();
+      return day + " " + time;
+    }
+
     console.log(store.getState().writereview);
     return (
       <div>
@@ -31,9 +38,9 @@ export default class Reviews extends Component {
           <div id="revies">
             {
               store.getState().reviews.data.map(x =>
-                <div className="review" key={x.name}>
+                <div className="review" key={x.reviewid}>
                   <p style={{color: "white" }}>{x.review_text}</p>
-                  <span className="time-right">{x.date_time}</span>
+                  <span className="time-right">{x.username} {date(x.date_time)}</span>
                 </div>
               )
             }

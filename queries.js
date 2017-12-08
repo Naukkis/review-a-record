@@ -407,7 +407,10 @@ function getArtistReviews(req, res, next) {
   }
  */
 function getAlbumReviews(req, res, next) {
-  db.any('select * from reviews where spotify_album_id = $1', [req.params.spotifyid])
+  db.any('select reviews.reviewid, reviews.review_text, reviews.date_time, users.username '
+        + 'from reviews '
+        + 'left join users on reviews.userid = users.userid '
+        + 'where reviews.spotify_album_id = $1', [req.params.spotifyid])
     .then(function(data) {
 
       if (data.length > 0) {
