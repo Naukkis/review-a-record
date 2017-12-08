@@ -86,7 +86,8 @@ a:before, a:after {
    	padding-top: 70px;
    	text-align: center;
     background-color: #333;
-   	min-height: 200px;
+   	min-height: 100px;
+    padding-bottom: 10px;
    	width: 100%;
 
        -webkit-background-size: 100%;
@@ -278,16 +279,16 @@ input:-webkit-autofill {
   background: transparent;
 }
 #searchResults {
-  overflow: auto;
-  white-space: nowrap;
-  overflow-x: scroll;
   width: 95%;
+  padding-bottom: 20px;
   margin: auto;
+  min-height: 100px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 2.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 #li{
   display: inline-block;
   text-align: center;
+  max-height: 100px;
   padding: 50px 20px 5px 10px;
   margin-left: -10px;
 }
@@ -406,9 +407,7 @@ input:-webkit-autofill {
 #album-img {
   width: 300px;
   height: 300px;
-  border-radius: 50%;
-  border: solid;
-  border-color: #333;
+
 }
 
 #review-form{
