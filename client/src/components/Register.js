@@ -16,11 +16,11 @@ class Register extends React.Component {
     if (this.state.validUsername && this.state.available) {
       this.props.closeModal();
     	axios.post('/users/create-user',{
-    		username: this.state.username, 
+    		username: this.state.username,
     		password: this.state.password }
     		)
     		.then(function (response) {
-          if (response.data.status === 'success') { 
+          if (response.data.status === 'success') {
     			 alert("Success, please login");
           } else {
             alert("Something went wrong, try again");
@@ -39,7 +39,7 @@ class Register extends React.Component {
     if (username) {
       axios.get('/users/user-name-available/' + username)
            .then((res) => {
-              this.setState({ available: res.data});       
+              this.setState({ available: res.data});
             })
     }
   }
@@ -56,26 +56,22 @@ class Register extends React.Component {
   render () {
   	return (
   		<div>
-	  		<p>Register</p>
+	  		<p id="register-header">Register as new user</p>
 	  		<form onSubmit={this.handleSubmit}>
-        {this.state.available ? <p style={{color: "green"}}>Username available </p> 
+        {this.state.available ? <p style={{color: "green"}}>Username available </p>
         :
          <p style={{color: "red"}}>Username not available  </p> }
 	      {this.state.validUsername ? <p> </p>
         :
         <p style={{color: "red"}}>Username must be atleast 3 characters, only letters and numbers allowed.</p>
         }
-      <label>
-				Username:
+      <label  id="login-register-label">Username:</label>
 				<input id="formInput" type="text" name="username" onChange={this.handleChange} required/>
-			</label>
-			<label>
-				Password:
+			<label  id="login-register-label">Password:</label>
 				<input id="formInput" type="password" name="password" title="Password must be atleast 4 characters" onChange={this.handleChange} pattern=".{4,}" required/>
-			</label>
-			<input type="submit" value="Register" id="mySubmit"/>
-			</form>				
-			</div>	
+			<input type="submit" value="Register" id="register-screen-button"/>
+			</form>
+			</div>
   	);
   }
 }

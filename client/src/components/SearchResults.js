@@ -6,7 +6,7 @@ class SearchResults extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<div className="artist-binder">
 			{ store.getState().artists.items &&
 			<div id="artist">
 				<ul id="searchResults">
@@ -19,18 +19,18 @@ class SearchResults extends React.Component {
 							 genres: data.genres
 						 }
  				 	}}>{
-						<li key={data.id}>
+						<li id="li" key={data.id}>
 							{
 								data.images.length > 0 &&
-								<div>
-								<img src={data.images[0].url} alt={data.name} />
+								<div id="spacing-info">
+								<img id="album-img" src={data.images[0].url} alt={data.name} />
 								<p>{data.name}</p>
 								</div>
 							}
 							{
 								data.images.length == 0 &&
-								<div>
-									<img src={'../img/question-mark.jpg'} />
+								<div id="spacing-info">
+									<img id="album-img" src={'../img/question-mark.jpg'} />
 									<p>{data.name}</p>
 								</div>
 							}
@@ -58,17 +58,17 @@ class SearchResults extends React.Component {
 							albumid: data.id
 						}
 					}}>
-					<li key={data.id}>
+					<li id="li" key={data.id}>
 
 		               { data.images.length > 0 &&
-		 								<div>
+		 								<div id="spacing-info">
 			 								<img src={data.images[0].url} alt={data.name} />
 											<p>{data.name}</p>
 		 								</div>
 		               }
 									 {
 		 								data.images.length == 0 &&
-		 								<div>
+		 								<div id="spacing-info">
 		 									<img src={'../img/question-mark.jpg'} />
 		 									<p>{data.name}</p>
 		 								</div>

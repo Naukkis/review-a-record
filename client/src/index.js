@@ -5,7 +5,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { store } from './store.js';
 import { BrowserRouter } from 'react-router-dom';
-// import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
+//import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
 
 let render = () => ReactDOM.render((
 	<BrowserRouter>

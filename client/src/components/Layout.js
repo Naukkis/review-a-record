@@ -6,7 +6,8 @@ import Reviews from "./Reviews";
 import Navigationbar from "./Navigationbar";
 import SearchResults from "./SearchResults";
 import AlbumDisplay from "./Albumdisplay";
-import { Route } from 'react-router-dom';
+import Notfound from './Notfound.js';
+import { Route, Switch } from 'react-router-dom';
 import Home from "./Home";
 
 
@@ -16,10 +17,13 @@ export default class Layout extends Component{
         <div className="Header">
           <Header/>
           <Navigationbar/>
-          <Route path='/artist/:id' component={Artistdisplay}/>
-          <Route path='/album/:id' component={AlbumDisplay}/>
-          <Route path='/search-results' component={SearchResults}/>
-          <Route exact path='/' component={Home}/>
+          <Switch>
+            <Route path='/artist/:id' component={Artistdisplay}/>
+            <Route path='/album/:id' component={AlbumDisplay}/>
+            <Route path='/search-results' component={SearchResults}/>
+            <Route exact path='/' component={Home}/>
+            <Route component={Notfound}/>
+          </Switch>
           <Footer/>
         </div>
       );
