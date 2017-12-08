@@ -9,7 +9,7 @@ class SearchResults extends React.Component {
 			<div className="artist-binder">
 			{ store.getState().artists.items &&
 			<div id="artist">
-			<h1  id="search-info-text-header">Artists</h1>
+			<h1 id="search-info-text-header">Artists</h1>
 				<ul id="searchResults">
 				{ store.getState().artists.items.map((data) =>
 					<Link to={{
