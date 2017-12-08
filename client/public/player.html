@@ -4,9 +4,7 @@
   <title>Spotify Web Playback SDK Quick Start Tutorial</title>
 </head>
 <body>
-  <h1>Spotify Web Playback SDK Quick Start Tutorial</h1>
-  <h2>Open your console log: <code>View > Developer > JavaScript Console</code></h2>
-
+  <h1>Superb Spotify Web Player</h1>
   <script src="https://sdk.scdn.co/spotify-player.js"></script>
   <script>
     (function() {
@@ -55,10 +53,11 @@
 
     // Connect to the player!
     player.connect();
-
     document.getElementById("play").onclick = function() {
+      let currentAlbum = localStorage.getItem('currentAlbum');
+      console.log(currentAlbum);
       let token = localStorage.getItem('spotifyaccesstoken');
-      let data = JSON.stringify({"context_uri": "spotify:album:5rFZcoCvmCaJ1gxTMU4JTm"});
+      let data = JSON.stringify({"context_uri": "spotify:album:" + currentAlbum});
       var xhr = new XMLHttpRequest();
       xhr.onreadystatechange = function() {
         if(this.readyState == 4 && this.status == 200) {
@@ -69,11 +68,9 @@
       xhr.setRequestHeader(`Content-type`, `application/x-www-form-urlencoded`);
       xhr.setRequestHeader(`Authorization`, `Bearer ${token}`);
       xhr.send(data);
-
     }
   }
   </script>
   <button id="play">Play</button>
-
 </body>
 </html>

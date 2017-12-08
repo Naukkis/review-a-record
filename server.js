@@ -40,8 +40,7 @@ app.get('/reviews/artist/:spotifyid', db.getArtistReviews);
 app.get('/reviews/album/:spotifyid', db.getAlbumReviews);
 app.get('/reviews/:userid', db.getUserReviews);
 
-
-app.get('/spotify/access', (req, res) => {
+app.get('/spotify/access/*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'client', 'public', 'auth.html'));
 });
 

@@ -1,10 +1,19 @@
 import React, { Component } from 'react';
 import Reviews from './Reviews';
+import axios from 'axios';
 
 export default class AlbumDisplay extends Component {
   constructor(props) {
     super(props);
     console.log(props)
+    this.state = {
+      currentAlbum: this.props.match.params.id
+    }
+    this.openPlayer = this.openPlayer.bind(this);
+  }
+
+  openPlayer(currentAlbum) {
+   window.open('http://localhost:3002/spotify/access/#current_album=' + this.state.currentAlbum, 'Spotify Player','width=400 height=350');
   }
 
   render(){
@@ -16,6 +25,8 @@ export default class AlbumDisplay extends Component {
             <img id="album-img" src={this.props.location.state.image} />
             <p>{this.props.location.state.albumname}</p>
             <p>by {this.props.location.state.artistname}</p>
+            <a href="localhost:3002/spotify/auth" onClick={this.openPlayer}>Play album</a>
+
           </div>
         }
       </div>
