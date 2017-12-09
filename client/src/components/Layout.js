@@ -13,7 +13,7 @@ import Home from "./Home";
 export default class Layout extends Component{
     render() {
       return(
-        <div className="Header">
+        <div>
           <Header/>
           <Navigationbar/>
           <Switch>

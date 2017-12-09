@@ -15,7 +15,7 @@ class AccountInfo extends React.Component {
 	render() {
 		return (
 			<div>
-	        	<p style={{color: "white"}}>Logged in as: {localStorage.getItem('username')}</p>
+	        	<p>Logged in as: {localStorage.getItem('username')}</p>
 	        	<Logout closeModal={this.props.closeModal}/>
 	    	</div>
 		)
