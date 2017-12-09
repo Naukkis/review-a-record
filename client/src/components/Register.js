@@ -57,18 +57,18 @@ class Register extends React.Component {
   	return (
   		<div>
 	  		<p id="register-header">Register as new user</p>
-	  		<form onSubmit={this.handleSubmit}>
+	  		<form autoComplete="off" onSubmit={this.handleSubmit}>
         {this.state.available ? <p style={{color: "green"}}>Username available </p>
         :
          <p style={{color: "red"}}>Username not available  </p> }
 	      {this.state.validUsername ? <p> </p>
         :
-        <p style={{color: "red"}}>Username must be atleast 3 characters, only letters and numbers allowed.</p>
+        <p id="warning-text">Username must be atleast 3 characters, only letters and numbers allowed.</p>
         }
       <label  id="login-register-label">Username:</label>
-				<input id="formInput" type="text" name="username" onChange={this.handleChange} required/>
+				<input className="formInput" type="text" name="username" onChange={this.handleChange} required/>
 			<label  id="login-register-label">Password:</label>
-				<input id="formInput" type="password" name="password" title="Password must be atleast 4 characters" onChange={this.handleChange} pattern=".{4,}" required/>
+				<input className="formInput" type="password" name="password" title="Password must be atleast 4 characters" onChange={this.handleChange} pattern=".{4,}" required/>
 			<input type="submit" value="Register" id="register-screen-button"/>
 			</form>
 			</div>

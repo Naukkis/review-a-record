@@ -5,6 +5,9 @@ import AccountInfo from './AccountInfo';
 import { Link } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
 import Search from './Search';
+import '../navigationbar.css';
+
+
 export default class Navigationbar extends Component {
   constructor(props){
     super(props);
@@ -24,13 +27,13 @@ export default class Navigationbar extends Component {
 
   render(){
     return (
-      <div>
-        <ul className="topnav">
-          <li id="nav-left"><Link to='/'>Home</Link></li>
-          <li id="nav-middle"><Search /></li>
+      <div className="navbar-wrapper-div col-lg-12">
+        <ul className="navbar-elements-wrapper-ul col-lg-12">
+          <li className="navbar-elements-li col-lg-2"><Link to='/'>Home</Link></li>
+          <li className="col-lg-8"><Search /></li>
           {localStorage.getItem("token") ?
-            <li id="nav-right" onClick={this.accountInfo}><a>Account info / Log out</a></li> :
-            <li id="nav-right" onClick={this.register}><a>Login / Register</a>  </li>
+            <li className="navbar-elements-li col-lg-2" onClick={this.accountInfo}><a>Account info / Log out</a></li> :
+            <li className="navbar-elements-li col-lg-2" onClick={this.register}><a>Login / Register</a>  </li>
            }
         </ul>
         <Modal
