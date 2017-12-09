@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
-import './App.css';
 //import { Button } from 'react-bootstrap';
 //import Main from './components/main.js';
 import { getAccessToken} from './spotify';
