@@ -537,6 +537,31 @@ function getUserReviews(req, res, next) {
     })
 }
 
+function getLatestReviews(req, res, next) {
+  db.any('select * from reviews order by date_time desc limit 20')
+    .then(function(data) {
+      if (data.length > 0) {
+       res.status(200)
+          .json({
+           status: 'success',
+           data: data,
+           requested_at: new Date(),
+           message: 'received latest 20 reviews',
+          });
+      } else {
+        res.status(200)
+          .json({
+           status: 'fail',
+           requested_at: new Date(),
+           message: 'No reviews found',
+          });
+      }
+    })
+    .catch(function(err) {
+      return next(err);
+    });
+}
+
 function deleteByUserId(userid){
 	db.none('delete from users where userid = $1', userid)
           	.then(function() {
@@ -559,5 +584,6 @@ module.exports = {
   getArtistReviews,
   getAlbumReviews,
   getUserReviews,
+  getLatestReviews,
   testToken
 }

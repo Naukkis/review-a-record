@@ -38,7 +38,9 @@ app.get('/reviews/get-all-reviews', db.getAllReviews);
 app.post('/reviews/save-review', db.saveReview);
 app.get('/reviews/artist/:spotifyid', db.getArtistReviews);
 app.get('/reviews/album/:spotifyid', db.getAlbumReviews);
+app.get('/reviews/latest', db.getLatestReviews);
 app.get('/reviews/:userid', db.getUserReviews);
+
 
 
 /**
