@@ -12,7 +12,7 @@ export default class AlbumDisplay extends Component {
   }
 
   openPlayer(currentAlbum) {
-   window.open('http://localhost:3002/spotify/access/#current_album=' + this.state.currentAlbum, 'Spotify Player','width=400 height=350');
+   window.open('http://localhost:3002/spotify/access/#current_album=' + this.state.currentAlbum, 'Spotify Player','width=400 height=500');
   }
 
   render(){

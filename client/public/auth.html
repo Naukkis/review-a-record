@@ -3,14 +3,22 @@
 <head>
   <style>
     body {
-      background-color: #1bd145;
+      background-color: #222222;
+    }
+    p {
+      color: white;
     }
     a {
       position: fixed;
-      top: 200px;
+      top: 100px;
       left: 150px;
-      color: black;
-      font-size: 50px;
+      color: #f85c37;
+      word-wrap: break-word;
+      -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
+      -moz-transition: color 0.1s ease-in, background 0.1s ease-in;
+      -ms-transition: color 0.1s ease-in, background 0.1s ease-in;
+      -o-transition: color 0.1s ease-in, background 0.1s ease-in;
+      transition: color 0.1s ease-in, background 0.1s ease-in;
     }
   </style>
 </head>
@@ -34,7 +42,7 @@
     })();
 
   </script>
-  <h1>Login to spotify to play the album</h1>
-	<a href="/spotify/auth">Login</a>
+	<a href="/spotify/auth">Login to Spotify</a>
+  <p>Login to spotify to play the album. Please note that a premium Spotify account is required for the player to work.</p>
 </body>
 </html>
