@@ -1,0 +1,55 @@
+.main-searchresults-wrapper{
+  height: auto;
+  padding-bottom: 180px;
+  background-color: #333;
+}
+.searchresults-artist-wrapper {
+  height: auto;
+  padding-top: 65px;
+}
+.main-searchresults-wrapper h1 {
+	margin-top: 60px;
+  margin-bottom: 20px;
+	color: white;
+	font-size: 70px;
+	font-weight: 700;
+}
+.main-searchresults-wrapper h3 {
+	color: white;
+	font-size: 30px;
+	font-weight: 100;
+  font-family: 'EB Garamond', serif;
+  font-style: oblique;
+}
+.main-searchresults-wrapper p {
+  color: white;
+  margin-top: 25px;
+  font-size: 30px;
+  font-weight: 100;
+  font-family: 'EB Garamond', serif;
+  white-space: nowrap;
+  width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}
+.searchresult-container {
+  list-style-type: none;
+  margin-top: 10px;
+  padding: 12px;
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 2.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.searchresult-container-elements{
+  display: inline-block;
+  padding: 40px;
+}
+.searchresults-artist-img {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+}
+.searchresults-album-img {
+  width: 300px;
+  height: 300px;
+}

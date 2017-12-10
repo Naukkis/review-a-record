@@ -27,7 +27,7 @@ export default class Navigationbar extends Component {
 
   render(){
     return (
-      <div className="navbar-wrapper-div col-lg-12">
+      <div className="navbar-wrapper-div top-bar fixed col-lg-12">
         <ul className="navbar-elements-wrapper-ul col-lg-12">
           <li className="navbar-elements-li col-lg-2"><Link to='/'>Home</Link></li>
           <li className="col-lg-8"><Search /></li>
