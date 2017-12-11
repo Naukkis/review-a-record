@@ -1,7 +1,7 @@
 import React from 'react';
 import { store } from '../store.js';
 import { Link } from 'react-router-dom';
-import '../searchresults.css';
+import '../css/searchresults.css';
 
 class SearchResults extends React.Component {
 

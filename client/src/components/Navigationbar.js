@@ -5,7 +5,7 @@ import AccountInfo from './AccountInfo';
 import { Link } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
 import Search from './Search';
-import '../navigationbar.css';
+import '../css/navigationbar.css';
 
 
 export default class Navigationbar extends Component {

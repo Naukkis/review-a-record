@@ -25,9 +25,13 @@ export default class Artistdisplay extends Component {
 							<div className="component-wrapper col-lg-12">
 								<div className="artist-content">
 									{this.props.location.state.image.length > 0 &&
+										<div className="container-fluid">
 										<img className="artistdisplay-artist-img" src={this.props.location.state.image[0].url} alt="artist"></img>
+										</div>
 									}
+									<div className="container-fluid">
 									<h2>{this.props.location.state.name}</h2>
+									</div>
 										<div className="artist-genres-div-wrapper container">
 											<div className="genres-div">
 												<h3>Genres</h3>
