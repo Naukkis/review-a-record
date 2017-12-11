@@ -6,7 +6,8 @@ const initialState = {
   artistalbums: "",
   config: "",
   reviews: "",
-  writereview: ""
+  writereview: "",
+  redirectbutton: "false"
 }
 
 const reducer = (state= initialState, action) => {

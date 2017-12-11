@@ -16,7 +16,7 @@ export default class Reviews extends Component {
 
  onSubmit(e) {
    e.preventDefault();
-
+   store.dispatch({type: "CHANGE_REDIRECT", field: "redirectbutton", payload: "false"})
    axios.post('/test-token',
    {token: localStorage.getItem("token")})
    .then((response) => {
