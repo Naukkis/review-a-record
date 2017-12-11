@@ -8,7 +8,8 @@ const initialState = {
   reviews: "",
   writereview: "",
   redirectbutton: "false",
-  recentreviews: ""
+  recentreviews: "",
+  loggedIn: "false"
 }
 
 const reducer = (state= initialState, action) => {
