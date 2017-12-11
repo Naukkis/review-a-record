@@ -7,7 +7,8 @@ const initialState = {
   config: "",
   reviews: "",
   writereview: "",
-  redirectbutton: "false"
+  redirectbutton: "false",
+  loggedIn: "false"
 }
 
 const reducer = (state= initialState, action) => {
