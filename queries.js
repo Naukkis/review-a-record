@@ -148,7 +148,7 @@ function createUser(req, res, next) {
         "token": token,
         "login_at": "2017-11-29T12:49:46.495Z",
         "message": "login successful",
-        
+
     }
  *
  */
@@ -187,6 +187,7 @@ function testToken(req, res){
 
   if (token) {
     jwt.verify(token, process.env.SECRET_KEY, function(err, decoded){
+      delete decoded.data.password;
       if (err){
         res.status(401)
           .json({
@@ -196,7 +197,8 @@ function testToken(req, res){
       } else {
         res.status(200)
           .json({
-            data: true
+            data: true,
+            userid: decoded.data.userid
           })
 
       }
@@ -267,7 +269,7 @@ function saveReview(req, res, next) {
 	db.none('insert into reviews (userID, artist_name, album_name,'
 			+ 'spotify_artist_id, spotify_album_id, review_text, date_time)'
 			+ 'values ($1, $2, $3, $4, $5, $6, current_timestamp)',
-			[parseInt(data.user_id), data.artist_name, data.album_name,
+			[data.user_id, data.artist_name, data.album_name,
 			data.spotify_artist_id, data.spotify_album_id, data.review_text])
 
 		.then(function() {
