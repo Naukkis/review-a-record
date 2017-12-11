@@ -21,14 +21,15 @@ export default class Reviews extends Component {
    {token: localStorage.getItem("token")})
    .then((response) => {
 
-     axios.post('/reviews/save-review',{
+     axios.post('/secure/reviews/save-review',{
        user_id: response.data.userid,
        artist_name: this.props.state.artistname,
        album_name: this.props.state.albumname,
        spotify_artist_id: this.props.state.artistid,
        spotify_album_id: this.props.state.albumid,
        review_text: store.getState().writereview.review
-      }
+     },
+     {headers: {token: localStorage.getItem("token")}}
      )
      .then((res) => {
        store.dispatch({type: "WRITE_REVIEW", field: "writereview", payload: {user: localStorage.getItem("username"), review: ""}});
