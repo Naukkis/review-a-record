@@ -1,0 +1,85 @@
+.main-container {
+  height: 100vh;
+  padding-top: 85px;
+  padding-bottom: 85px;
+}
+.main-wrapper {
+  height: 100vh;
+  margin-bottom: 60px;
+  background-color: #333;
+}
+.component-wrapper {
+  height: 100vh;
+  padding-bottom: 180px;
+}
+.artist-content {
+  padding: 12px;
+  min-width: 100%;
+  height: 100%;
+  border: solid;
+  border-radius: 2px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 2.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.artistdisplay-artist-img {
+  margin-top: 15px;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+}
+.artist-content-albums {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  padding: 12px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 2.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.ul-wrapper{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  padding: 12px;
+}
+.artist-content-albums-ul {
+  list-style-type: none;
+  padding: 0;
+}
+.artistdisplay-album-div{
+  height: 150px;
+  text-align: left;
+  line-height: 100px;
+  padding: 12px;
+  margin: 12px;
+  border: solid;
+  border-radius: 2px;
+  border-color: #222;
+}
+.artist-genres-div{
+  overflow: scroll;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 2.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.artist-content-albums p {
+  color: pink;
+  font-size: 70px;
+  font-weight: 700;
+}
+.artistdisplay-album-div p{
+  color: white;
+  margin-top: 10px;
+  padding-left: 30px;
+  font-size: 30px;
+  font-weight: 100;
+  font-family: 'EB Garamond', serif;
+  white-space: nowrap;
+  width: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.artistdisplay-album-img{
+  height: 120px;
+  width: 120px;
+  padding: 3px;
+  float: left;
+}

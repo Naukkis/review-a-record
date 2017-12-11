@@ -4,6 +4,7 @@
 .navbar-wrapper-div{
   background-color: #222;
   position: fixed;
+  z-index: 1;
   width: 100%;
   border: solid;
   border-color: #222;
