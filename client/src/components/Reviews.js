@@ -9,7 +9,7 @@ export default class Reviews extends Component {
 
   constructor(props){
     super(props);
-
+    this.handleClickTrue = this.handleClickTrue.bind(this);
     store.dispatch((dispatch) => {
       axios.get('/reviews/album/' + this.props.state.albumid)
       .then((res) => {
@@ -19,7 +19,9 @@ export default class Reviews extends Component {
   }
 
 
-
+  handleClickTrue() {
+    store.dispatch({type: "CHANGE_REDIRECT", field: "redirectbutton", payload: "true"});
+  }
 
   render(){
     const date = (reviewDate) => {
@@ -30,26 +32,35 @@ export default class Reviews extends Component {
     }
 
     console.log(store.getState().writereview);
-    return (
-      <div>
-        <div className="review-container">
-        {
-          store.getState().reviews.data && store.getState().reviews.data[0].spotify_album_id === this.props.state.albumid &&
-          <div id="revies">
-            {
-              store.getState().reviews.data.map(x =>
-                <div className="review" key={x.reviewid}>
-                  <p style={{color: "white" }}>{x.review_text}</p>
-                  <span className="time-right">{x.username} {date(x.date_time)}</span>
-                </div>
-              )
-            }
+    if(store.getState().redirectbutton === "false" ) {
+      return (
+        <div>
+          <div className="review-container">
+          {
+            store.getState().reviews.data && store.getState().reviews.data[0].spotify_album_id === this.props.state.albumid &&
+            <div id="revies">
+              {
+                store.getState().reviews.data.map(x =>
+                  <div className="review" key={x.reviewid}>
+                    <p style={{color: "white" }}>{x.review_text}</p>
+                    <span className="time-right">{x.username} {date(x.date_time)}</span>
+                  </div>
+                )
+              }
+            </div>
+
+          }
+
           </div>
 
-        }
-
+          <button onClick={this.handleClickTrue}>Make review</button>
         </div>
+      );
+    } else {
 
+    }
+    return (
+      <div>
         <Makereview state={this.props.state}/>
       </div>
     );

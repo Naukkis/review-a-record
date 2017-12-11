@@ -27,15 +27,15 @@ app.get('/spotify/authcallback', spotify.authCallback);
 app.post('/login', db.login);
 app.post('/test-token', db.testToken);
 
-app.get('/users/get-all-users', db.getAllUsers);
+//app.get('/users/get-all-users', db.getAllUsers);
 app.get('/users/get-userid/:username', db.getUserId);
 app.get('/users/user-name-available/:username', db.userNameAvailable);
 app.post('/users/create-user', db.createUser);
-app.post('/users/delete-user', db.deleteUser);
+//app.post('/users/delete-user', db.deleteUser);
 
 
 app.get('/reviews/get-all-reviews', db.getAllReviews);
-app.post('/reviews/save-review', db.saveReview);
+//app.post('/reviews/save-review', db.saveReview);
 app.get('/reviews/artist/:spotifyid', db.getArtistReviews);
 app.get('/reviews/album/:spotifyid', db.getAlbumReviews);
 app.get('/reviews/latest', db.getLatestReviews);
@@ -47,10 +47,10 @@ app.get('/reviews/:userid', db.getUserReviews);
  * @api {get} /spotify/access/#current_album=:spotify_album_id Login window
  * @apiName RequestAccessToUserData
  * @apiGroup Spotify
- * 
+ *
  * @apiDescription
  * Renders page that redirects Spotify login. Saves the album to play to localStorage. Redirects to /spotify/auth
- * 
+ *
  * * @apiParam {String} Spotify_album_id Spotify album id to let the player know which album to play
  */
 app.get('/spotify/access/*', (req, res) => {
@@ -61,7 +61,7 @@ app.get('/spotify/access/*', (req, res) => {
  * @api {get} /spotify/player Web music player
  * @apiName MusicPlayer
  * @apiGroup Spotify
- * 
+ *
  * @apiDescription
  * Music player wrapper to Spotify Web playback SDK to play the albums on any album page.
  */

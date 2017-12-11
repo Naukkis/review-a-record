@@ -24,9 +24,9 @@ router.use(function(req, res, next) {
   }
 })
 
-router.get('/reviews/get-all-reviews', db.getAllReviews);
+
 router.post('/reviews/save-review', db.saveReview);
-router.post('/users/delete-user', db.deleteUser);
-router.get('/users/get-all-users', db.getAllUsers);
+//router.post('/users/delete-user', db.deleteUser);
+//router.get('/users/get-all-users', db.getAllUsers);
 
 module.exports = router;
