@@ -18,24 +18,24 @@ export default class Artistdisplay extends Component {
 
   render(){
     return (
-			<div id="headerwrap">
-      <div id="artist-display">
+			<div id="main-wrapper col-lg-12">
+      <div id="col-sm-3 col-md-6 col-lg-4">
 				{this.props.location.state.image.length > 0 &&
-					<img id="artist-img" src={this.props.location.state.image[0].url} width="200" height="200" alt="gitgud"></img>
+					<img src={this.props.location.state.image[0].url} alt="artist"></img>
 				}
-				<p id="artist-data">{this.props.location.state.name}</p>
+				<p>{this.props.location.state.name}</p>
 				<h4>Genres</h4>
-				<div id="genres-artist">
+				<div>
 				{this.props.location.state.genres.map(x =>
-					<p id="artist-data-minor" key={x} className="artist-genres">{x}</p>
+					<p key={x} >{x}</p>
 				)}
 				</div>
       </div>
 			<div>
 			{ store.getState().artistalbums.items &&
-			<div id="artistdisplay-albums">
-				<ul id="artistdisplay-albums-info">
-				<p id="artistdisplay-albums-header">Albums</p>
+			<div>
+				<ul>
+				<p>Albums</p>
 				{ store.getState().artistalbums.items.map((data) =>
 					<Link to={{
 						 pathname: `/album/${data.id}`,
@@ -48,12 +48,12 @@ export default class Artistdisplay extends Component {
 						 }
  				 	}} key={data.id}>
 					{
-						<li id="li-album" key={data.id}>
+						<li key={data.id}>
 
 										 { data.images.length > 0 &&
-											<div id="album-div">
-												<img id="artist-album-img" src={data.images[0].url} alt={data.name} />
-												<p id="artist-album-data">{data.name}</p>
+											<div>
+												<img src={data.images[0].url} alt={data.name} />
+												<p>{data.name}</p>
 											</div>
 										 }
 
