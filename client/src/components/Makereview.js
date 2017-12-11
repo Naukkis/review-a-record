@@ -8,15 +8,20 @@ export default class Reviews extends Component {
     this.state = {review: " "};
     this.onSubmit = this.onSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleReturn = this.handleReturn.bind(this);
   }
 
   handleChange(e) {
     store.dispatch({type: "WRITE_REVIEW", field: "writereview", payload: {user: localStorage.getItem("username"), review: e.target.value}});
   }
 
+  handleReturn() {
+    store.dispatch({type: "CHANGE_REDIRECT", field: "redirectbutton", payload: "false"});
+  }
+
  onSubmit(e) {
    e.preventDefault();
-   store.dispatch({type: "CHANGE_REDIRECT", field: "redirectbutton", payload: "false"})
+   store.dispatch({type: "CHANGE_REDIRECT", field: "redirectbutton", payload: "false"});
    axios.post('/test-token',
    {token: localStorage.getItem("token")})
    .then((response) => {
@@ -54,6 +59,7 @@ export default class Reviews extends Component {
           </textarea>
           <div>
             <input type="submit" value="Submit"/>
+            <button onClick={this.handleReturn}>Cancel</button>
           </div>
       </form>
 

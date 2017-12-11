@@ -7,7 +7,9 @@ const initialState = {
   config: "",
   reviews: "",
   writereview: "",
-  redirectbutton: "false"
+  redirectbutton: "false",
+  recentreviews: "",
+  loggedIn: "false"
 }
 
 const reducer = (state= initialState, action) => {
@@ -36,6 +38,11 @@ const reducer = (state= initialState, action) => {
       const E = R.compose(
         R.assocPath([action.field], action.payload))(state)
       return E
+
+    case 'RECENT_REVIEWS':
+      const F = R.compose(
+        R.assocPath([action.field], action.payload))(state)
+      return F
 
     default: return state;
   }

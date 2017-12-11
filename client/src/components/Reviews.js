@@ -52,8 +52,13 @@ export default class Reviews extends Component {
           }
 
           </div>
+          {
+            localStorage.getItem("token") ?
+              <button onClick={this.handleClickTrue}>Make review</button>:
+              <p>Login to make a review</p>
+            
+          }
 
-          <button onClick={this.handleClickTrue}>Make review</button>
         </div>
       );
     } else {
