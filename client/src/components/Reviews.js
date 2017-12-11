@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Makereview from "./Makereview";
 import { store } from '../store.js';
 import axios from 'axios';
-
+import Albumdisplay from './Albumdisplay'
+import '../css/reviews.css';
 
 
 export default class Reviews extends Component {
@@ -34,29 +35,31 @@ export default class Reviews extends Component {
     console.log(store.getState().writereview);
     if(store.getState().redirectbutton === "false" ) {
       return (
-        <div>
-          <div className="review-container">
+        <div className=" main-container container-fluid">
+        <div className="component-wrapper col-lg-offset-3">
+          <div className="artist-content-albums">
           {
             store.getState().reviews.data && store.getState().reviews.data[0].spotify_album_id === this.props.state.albumid &&
-            <div id="revies">
+            <div>
               {
                 store.getState().reviews.data.map(x =>
-                  <div className="review" key={x.reviewid}>
+                  <div key={x.reviewid}>
                     <p style={{color: "white" }}>{x.review_text}</p>
-                    <span className="time-right">{x.username} {date(x.date_time)}</span>
+                    <span >{x.username} {date(x.date_time)}</span>
                   </div>
                 )
               }
             </div>
 
-          }
 
+          }
+          </div>
           </div>
           {
             localStorage.getItem("token") ?
               <button onClick={this.handleClickTrue}>Make review</button>:
               <p>Login to make a review</p>
-            
+
           }
 
         </div>

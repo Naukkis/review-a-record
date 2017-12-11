@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Reviews from './Reviews';
+import '../css/albumdisplay.css';
+
 
 export default class AlbumDisplay extends Component {
   constructor(props) {
@@ -17,18 +19,32 @@ export default class AlbumDisplay extends Component {
 
   render(){
     return(
-      <div id="headerwrap">
-      <div id="album-display">
-        {this.props.location.state.albumname &&
-          <div>
-            <img id="album-img" src={this.props.location.state.image} alt="album"/>
-            <p>{this.props.location.state.albumname}</p>
-            <p>by {this.props.location.state.artistname}</p>
-            <a href="localhost:3002/spotify/auth" onClick={this.openPlayer}>Play album</a>
-
-          </div>
-        }
-      </div>
+      <div className=" main-container container-fluid">
+      	<div className="main-wrapper row">
+					<div className="main-wrapper col-lg-3 ">
+						<div className="main-wrapper row">
+							<div className="component-wrapper col-lg-12">
+								<div className="album-content">
+                  {this.props.location.state.albumname &&
+                    <div className="container-fluid">
+                      <img className="albumdisplay-album-img" src={this.props.location.state.image} alt="album"/>
+                    </div>
+                  }
+                  <div className="container-fluid">
+                  <h2>{this.props.location.state.albumname}</h2>
+                  </div>
+                  <div className="container-fluid">
+                  <h3>by {this.props.location.state.artistname}</h3>
+                  </div>
+                  <div className="play-wrapper container-fluid">
+                  <button id="playbutton" href="localhost:3002/spotify/auth" onClick={this.openPlayer}>Play album</button>
+                  </div>
+                </div>
+              </div>
+  					</div>
+  				</div>
+          <Reviews />
+        </div>
         <Reviews state={this.props.location.state} />
       </div>
 
