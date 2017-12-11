@@ -1,22 +1,20 @@
 .main-container {
-  height: 100vh;
-  padding-top: 85px;
-  padding-bottom: 85px;
+  height: 100%;
+  padding-top: 100px;
 }
 .main-wrapper {
   height: 100vh;
-  margin-bottom: 60px;
   background-color: #333;
 }
 .component-wrapper {
   height: 100vh;
-  padding-bottom: 180px;
 }
 .artist-content {
   padding: 12px;
   min-width: 100%;
   height: 100%;
   border: solid;
+  position: relative;
   border-radius: 2px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 2.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -36,15 +34,31 @@
 .ul-wrapper{
   position: absolute;
   top: 0;
+  padding-top: 90px;
+  padding-bottom: 12px;
+  padding-left: 12px;
+  padding-right: 12px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.artist-content-albums-ul {
+  position: relative;
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   overflow-y: auto;
-  padding: 12px;
-}
-.artist-content-albums-ul {
   list-style-type: none;
   padding: 0;
+}
+.artistdisplay-album-div-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100px;
+  width: 100%;
+  text-align: center;
 }
 .artistdisplay-album-div{
   height: 150px;
@@ -56,14 +70,23 @@
   border-radius: 2px;
   border-color: #222;
 }
-.artist-genres-div{
-  overflow: scroll;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 2.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+.artist-genres-div-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding-top: 450px;
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-bottom: 10%;
+  width: 100%;
+  height: 100%;
 }
-.artist-content-albums p {
-  color: pink;
-  font-size: 70px;
-  font-weight: 700;
+.genres-div {
+  overflow-y: auto;
+  height: 95%;
+  max-height: 800px;
+  width: 100%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 2.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .artistdisplay-album-div p{
   color: white;

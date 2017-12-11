@@ -38,7 +38,7 @@ header {
   padding: 40px;
 }
 
-#f {
+.f {
   position: absolute;
 	background: #222;
   right: 0;
@@ -50,20 +50,20 @@ header {
   box-shadow: 0px -4px 2px -2px rgba(0, 0, 0, 2.2);
 }
 
-#f h3 {
+.f h3 {
 	color: white;
 	font-size: 28px;
 	font-weight: 700;
 	letter-spacing: 1px;
 }
 
-#f i {
+.f i {
 	font-size: 8px;
 	color: #fff;
   padding: 3px;
 }
 
-#f p {
+.f p {
 	font-size: 20px;
 	color: #f2f2f2;
 }
