@@ -538,7 +538,11 @@ function getUserReviews(req, res, next) {
 }
 
 function getLatestReviews(req, res, next) {
-  db.any('select * from reviews order by date_time desc limit 20')
+  
+  db.any('select reviews.reviewid, reviews.spotify_album_id, reviews.review_text, reviews.date_time, users.username '
+       + 'from reviews '
+       + 'left join users on reviews.userid = users.userid '
+       + 'order by date_time desc limit 20')
     .then(function(data) {
       if (data.length > 0) {
        res.status(200)
