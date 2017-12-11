@@ -104,7 +104,7 @@
   window.onSpotifyPlayerAPIReady = () => {
     const token = localStorage.getItem('spotifyaccesstoken');
     const player = new Spotify.Player({
-      name: 'Web Playback SDK Quick Start Player',
+      name: 'Superb Record reviews player',
       getOAuthToken: cb => { cb(token); }
     });
 
@@ -133,21 +133,37 @@
     // Ready
     player.on('ready', data => {
       console.log('Ready with Device ID', data.device_id);
-      startPlaying();
+      getDevices();
     });
 
     // Connect to the player!
     player.connect();
 
-    function startPlaying() {
+    function startPlaying(device) {
       let currentAlbum = localStorage.getItem('currentAlbum');
       let token = localStorage.getItem('spotifyaccesstoken');
       let data = JSON.stringify({"context_uri": "spotify:album:" + currentAlbum});
-      var xhr = new XMLHttpRequest();
-      xhr.open("PUT", "https://api.spotify.com/v1/me/player/play");
+      let xhr = new XMLHttpRequest();
+      xhr.open("PUT", "https://api.spotify.com/v1/me/player/play?device_id=" + device);
       xhr.setRequestHeader(`Content-type`, `application/x-www-form-urlencoded`);
       xhr.setRequestHeader(`Authorization`, `Bearer ${token}`);
       xhr.send(data);
+    }
+
+    function getDevices() {
+      let token = localStorage.getItem('spotifyaccesstoken');
+      let xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+         if (this.readyState == 4 && this.status == 200) {
+            let devices = JSON.parse(this.responseText);
+            let webplayer = devices.devices.filter(x => x.name === "Superb Record reviews player");
+            startPlaying(webplayer[0].id);
+         }
+      }
+      xhr.open("GET", "https://api.spotify.com/v1/me/player/devices");
+      xhr.setRequestHeader(`Content-type`, `application/x-www-form-urlencoded`);
+      xhr.setRequestHeader(`Authorization`, `Bearer ${token}`);
+      xhr.send();
     }
 
     document.getElementById("toggle").onclick = function() {
