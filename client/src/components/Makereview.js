@@ -52,7 +52,7 @@ export default class Reviews extends Component {
   }
   render(){
     return (
-      <div className="user-review-container">
+      <div className="user-review-container container-fluid">
         <form id="review-form" onSubmit={this.onSubmit}>
           <textarea id="comment-area" rows="4" cols="50" name="comment" value={store.getState().writereview.review}
             onChange={this.handleChange} onSubmit={this.handleSubmit}>

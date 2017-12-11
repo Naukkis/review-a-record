@@ -43,9 +43,8 @@ export default class AlbumDisplay extends Component {
               </div>
   					</div>
   				</div>
-          <Reviews />
+          <Reviews state={this.props.location.state} />
         </div>
-        <Reviews state={this.props.location.state} />
       </div>
 
     );
