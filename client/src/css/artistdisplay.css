@@ -15,23 +15,22 @@
   background-color: #262626;
   padding: 12px;
   width: 100%;
-  height: 100%;
+  height: 90%;
   border: solid;
   border-color: #262626;
   position: relative;
-  overflow-y: auto;
   border-radius: 2px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 2.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .artistdisplay-artist-img {
   margin-top: 15px;
   margin-bottom: 15px;
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  height: 80%;
   border-radius: 50%;
 }
 .artist-content-albums {
-  height: 100%;
+  height: 90%;
   width: 100%;
   background-color: #262626;
   position: relative;
@@ -67,6 +66,8 @@
   width: 100%;
   text-align: center;
 }
+
+
 .artistdisplay-album-div{
   height: 150px;
   text-align: left;
