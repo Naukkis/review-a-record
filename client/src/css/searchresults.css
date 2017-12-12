@@ -8,10 +8,10 @@
   padding-top: 15px;
 }
 .main-searchresults-wrapper h1 {
-	margin-top: 60px;
+	margin-top: 20px;
   margin-bottom: 20px;
 	color: white;
-	font-size: 70px;
+	font-size: 40px;
 	font-weight: 700;
 }
 .main-searchresults-wrapper h3 {
@@ -24,7 +24,7 @@
 .main-searchresults-wrapper p {
   color: white;
   margin-top: 25px;
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 100;
   font-family: 'EB Garamond', serif;
   white-space: nowrap;
@@ -43,14 +43,14 @@
 }
 .searchresult-container-elements{
   display: inline-block;
-  padding: 40px;
+  padding: 20px;
 }
 .searchresults-artist-img {
-  width: 300px;
-  height: 300px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
 }
 .searchresults-album-img {
-  width: 300px;
-  height: 300px;
+  width: 200px;
+  height: 200px;
 }
