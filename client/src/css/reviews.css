@@ -21,12 +21,17 @@
   overflow-y: auto;
 }
 .user-review{
+  color: white;
   border: solid;
   border-radius: 10px;
   border-color: #222;
   background-color: #333;
   margin-top: 15px;
   padding: 12px;
+}
+
+.user {
+  color: #a2a3a5;
 }
 .user-review-container{
   position: absolute;

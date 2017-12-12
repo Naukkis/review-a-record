@@ -37,7 +37,7 @@ export default class Reviews extends Component {
                 store.getState().reviews.data.map(x =>
                   <div className="user-review" key={x.reviewid}>
                     <p>{x.review_text}</p>
-                    <span >{x.username} {date(x.date_time)}</span>
+                    <span className="user">{x.username} {date(x.date_time)}</span>
                   </div>
                 )
               }
