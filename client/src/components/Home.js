@@ -14,9 +14,9 @@ export default class Home extends Component {
            <br></br>
 				   <h1> Review App</h1>
 				   <br></br>
-				   <h3>Rewiew your favorite artists</h3>
+				   <h3>Rewiew and listen to your favorite artists</h3>
            <br></br>
-           <p>Start by using search bar</p>
+           <h2>Start by searching your favorite artist from the searchbar </h2>
            <br></br>
 				   <br></br>
 				   <br></br>

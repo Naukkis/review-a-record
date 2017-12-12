@@ -9,18 +9,12 @@ export default class Reviews extends Component {
 
   constructor(props){
     super(props);
-    this.handleClickTrue = this.handleClickTrue.bind(this);
     store.dispatch((dispatch) => {
       axios.get('/reviews/album/' + this.props.state.albumid)
       .then((res) => {
         dispatch({type: "LOAD_REVIEWS", field: "reviews", payload: res.data});
       })
     })
-  }
-
-
-  handleClickTrue() {
-    store.dispatch({type: "CHANGE_REDIRECT", field: "redirectbutton", payload: "true"});
   }
 
   render(){
@@ -52,12 +46,7 @@ export default class Reviews extends Component {
           }
 
           </div>
-          {
-            localStorage.getItem("token") ?
-              <button id="make-review-button" onClick={this.handleClickTrue}>Make review</button>:
-              <p>Login to make a review</p>
 
-          }
 
         </div>
       );
@@ -65,7 +54,7 @@ export default class Reviews extends Component {
 
     }
     return (
-      <div>
+      <div className="component-wrapper col-lg-offset-3">
         <Makereview state={this.props.state}/>
       </div>
     );

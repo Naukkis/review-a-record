@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import Reviews from './Reviews';
+import Makereview from "./Makereview";
+import { store } from '../store.js'
 import '../css/albumdisplay.css';
 
 
 export default class AlbumDisplay extends Component {
   constructor(props) {
     super(props);
+    this.handleClickTrue = this.handleClickTrue.bind(this);
     console.log(props)
     this.state = {
       currentAlbum: this.props.match.params.id
@@ -15,6 +18,9 @@ export default class AlbumDisplay extends Component {
 
   openPlayer(currentAlbum) {
    window.open('http://localhost:3002/spotify/access/#current_album=' + this.state.currentAlbum, 'Spotify Player','width=400 height=500');
+  }
+  handleClickTrue() {
+    store.dispatch({type: "CHANGE_REDIRECT", field: "redirectbutton", payload: "true"});
   }
 
   render(){
@@ -36,8 +42,15 @@ export default class AlbumDisplay extends Component {
                   <div className="container-fluid">
                   <h3>by {this.props.location.state.artistname}</h3>
                   </div>
-                  <div className="play-wrapper container-fluid">
+                  <div className="button-wrapper container-fluid">
                   <button id="playbutton" href="localhost:3002/spotify/auth" onClick={this.openPlayer}>Play album</button>
+                  </div>
+                  <div className="button-wrapper container-fluid">
+                  {
+                    localStorage.getItem("token") ?
+                      <button id="make-review-button" onClick={this.handleClickTrue}>Make review</button>:
+                      <p>Login to make a review</p>
+                  }
                   </div>
                 </div>
               </div>

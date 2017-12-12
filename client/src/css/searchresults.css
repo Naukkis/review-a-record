@@ -5,7 +5,7 @@
 }
 .searchresults-artist-wrapper {
   height: auto;
-  padding-top: 65px;
+  padding-top: 15px;
 }
 .main-searchresults-wrapper h1 {
 	margin-top: 60px;
@@ -36,6 +36,7 @@
 .searchresult-container {
   list-style-type: none;
   margin-top: 10px;
+  background-color: #262626;
   padding: 12px;
   text-align: center;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 2.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);

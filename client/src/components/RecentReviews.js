@@ -4,6 +4,7 @@ import { getSeveralAlbums } from '../spotify';
 import { store } from '../store.js';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import '../css/recentreviews.css';
 
 class RecentReviews extends React.Component {
 	constructor(props) {
@@ -31,7 +32,7 @@ class RecentReviews extends React.Component {
 
 	getAlbumIDs(reviews) {
 		let idset = new Set();
-		let albumids = ''; 
+		let albumids = '';
 		reviews.forEach(x => idset.add(x.spotify_album_id));
 		idset.forEach(id => albumids += id + ',');
 		return albumids.slice(0,albumids.length - 1);
@@ -54,15 +55,15 @@ class RecentReviews extends React.Component {
 
 		const albumInfo = store.getState().recentreviews.albums;
 		return (
-			<div className="container-fluid">
+			<div className="reviews-wrapper container-fluid">
 
 			{reviews.length > 0 && albumInfo && (
-				<Grid style={{marginTop: 150}}>	
-				<h1 style={{color: "white", fontSize: 70}}>Latest album reviews</h1>			      
+				<Grid className="grid-wrap">
+				<h1 style={{color: "white", fontSize: 70}}>Latest album reviews</h1>
 			            {
 			              this.state.reviews.map(x =>
-			              	<Row style={{borderStyle: "solid", borderColor: "white", maxHeight: 200, overflow: "hidden", padding: 20}} key={x.reviewid}>             	
-				                <Col lg={2} sm={2}>
+			              	<Row className="recent-review-div" key={x.reviewid}>
+				                <Col lg={3} sm={2}>
 				                <Link to={{
 				                	pathname: `/album/${x.spotify_album_id}`,
 						 					state: {
@@ -80,18 +81,18 @@ class RecentReviews extends React.Component {
 				                </Col>
 
 				                 <Col lg={5} sm={5}>
-				                  <p style={{color: "white" }}>{x.review_text}</p>  
-				                    
+				                  <p style={{color: "white" }}>{x.review_text}</p>
+
 				                </Col>
-				                <Col lg={2} sm={2}>
+				                <Col lg={3} sm={2}>
 				                <span style={{color: "white" }} className="time-right">{x.username} {date(x.date_time)}</span>
 				                </Col>
-				                
+
 			                </Row>
 			              )
 			            }
-          		</Grid>	)		
-			}	
+          		</Grid>	)
+			}
 			</div>
 		)
 	}

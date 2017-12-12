@@ -10,6 +10,12 @@
   border-color: #222;
   box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 2.2);
 }
+.togglemenu{
+  background-color: #222;
+  border: none;
+  margin-top: -19px;
+  width: 100%;
+}
 .navbar-elements-wrapper-ul{
   width: 100%;
   list-style-type: none;
