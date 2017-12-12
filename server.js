@@ -16,7 +16,8 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 process.env.SECRET_KEY = "badasskeyfortokens";
 
-app.use(express.static('client/src'));
+app.use(express.static('client/build'));
+//app.use(express.static('client/client'));
 
 app.use('/secure/', router);
 
