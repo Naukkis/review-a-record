@@ -42,7 +42,8 @@ export default class Navigationbar extends Component {
         <div className="togglemenu container-fluid">
           <Well className="togglemenu container-fluid">
           <ul className="navbar-elements-wrapper-ul col-lg-12">
-            <li className="navbar-elements-li col-lg-2"><Link to='/'>Home</Link></li>
+            <li className="navbar-elements-li col-lg-1"><Link to='/'>Home</Link></li>
+            <li className="navbar-elements-li col-lg-1"><Link to='/latest'>Latest</Link></li>
             <li className="col-lg-8"><Search /></li>
             {localStorage.getItem("token") ?
               <li className="navbar-elements-li col-lg-2" onClick={this.accountInfo}><a>Account info / Log out</a></li> :
@@ -69,7 +70,8 @@ export default class Navigationbar extends Component {
       </Collapse>
     </div>
         <ul className="navbar-elements-wrapper-ul col-lg-12 collapse navbar-collapse">
-          <li className="navbar-elements-li col-lg-2"><Link to='/'>Home</Link></li>
+          <li className="navbar-elements-li col-lg-1"><Link to='/'>Home</Link></li>
+          <li className="navbar-elements-li col-lg-1"><Link to='/latest'>Latest</Link></li>
           <li className="col-lg-8"><Search /></li>
           {localStorage.getItem("token") ?
             <li className="navbar-elements-li col-lg-2" onClick={this.accountInfo}><a>Account info / Log out</a></li> :
