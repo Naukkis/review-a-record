@@ -34,9 +34,6 @@ export default class AlbumDisplay extends Component {
                   <h3>by {this.props.location.state.artistname}</h3>
                   </div>
                   <div className="button-wrapper container-fluid">
-                  <button id="playbutton" href="localhost:3002/spotify/auth" onClick={this.openPlayer}>Play album</button>
-                  </div>
-                  <div className="button-wrapper container-fluid">
                   {
                     localStorage.getItem("token") ?
                       <button id="make-review-button" onClick={this.handleClickTrue}>Make review</button>:
