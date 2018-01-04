@@ -16,8 +16,9 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 process.env.SECRET_KEY = "badasskeyfortokens";
 
-app.use(express.static('client/build'));
-//app.use(express.static('client/client'));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
 
 app.use('/secure/', router);
 
@@ -28,15 +29,11 @@ app.get('/spotify/authcallback', spotify.authCallback);
 app.post('/login', db.login);
 app.post('/test-token', db.testToken);
 
-//app.get('/users/get-all-users', db.getAllUsers);
 app.get('/users/get-userid/:username', db.getUserId);
 app.get('/users/user-name-available/:username', db.userNameAvailable);
 app.post('/users/create-user', db.createUser);
-//app.post('/users/delete-user', db.deleteUser);
-
 
 app.get('/reviews/get-all-reviews', db.getAllReviews);
-//app.post('/reviews/save-review', db.saveReview);
 app.get('/reviews/artist/:spotifyid', db.getArtistReviews);
 app.get('/reviews/album/:spotifyid', db.getAlbumReviews);
 app.get('/reviews/latest', db.getLatestReviews);

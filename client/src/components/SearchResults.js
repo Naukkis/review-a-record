@@ -31,13 +31,11 @@ class SearchResults extends React.Component {
 									{
 										data.images.length === 0 &&
 										<div>
-											<img className="searchresults-artist-img" src={'../img/question-mark.jpg'} alt="404"/>
+											<img className="searchresults-artist-img" src={'/img/question-mark.jpg'} alt="404"/>
 											<p>{data.name}</p>
 										</div>
 									}
 									</li>
-								}
-				 			</Link>
 							)}
 						</ul>
 					</div>
