@@ -8,10 +8,16 @@ export default class AlbumDisplay extends Component {
   constructor(props) {
     super(props);
     this.handleClickTrue = this.handleClickTrue.bind(this);
-  }
+    this.state = { currentAlbum: this.props.match.params.id };
+    this.openPlayer = this.openPlayer.bind(this);
+   }
 
   handleClickTrue() {
     store.dispatch({type: "CHANGE_REDIRECT", field: "redirectbutton", payload: "true"});
+  }
+
+  openPlayer(currentAlbum) {
+    window.open('/auth.html/#current_album=' + this.state.currentAlbum, 'Spotify Player','width=400 height=500');
   }
 
   render(){
@@ -32,6 +38,9 @@ export default class AlbumDisplay extends Component {
                   </div>
                   <div className="container-fluid">
                   <h3>by {this.props.location.state.artistname}</h3>
+                  </div>
+                  <div className="button-wrapper container-fluid">
+                    <button id="playbutton" href="/auth.html" onClick={this.openPlayer}>Play album</button>
                   </div>
                   <div className="button-wrapper container-fluid">
                   {
