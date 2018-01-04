@@ -48,7 +48,7 @@ class RecentReviews extends React.Component {
 
 		const currentAlbum = (spotifyid) => {
 			return store.getState().recentreviews.albums.filter(x =>
-				x.id == spotifyid
+				x.id === spotifyid
 			)
 		}
 		const reviews = this.state.reviews;

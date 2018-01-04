@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Reviews from './Reviews';
-import Makereview from "./Makereview";
 import { store } from '../store.js'
 import '../css/albumdisplay.css';
 
@@ -9,16 +8,8 @@ export default class AlbumDisplay extends Component {
   constructor(props) {
     super(props);
     this.handleClickTrue = this.handleClickTrue.bind(this);
-    console.log(props)
-    this.state = {
-      currentAlbum: this.props.match.params.id
-    }
-    this.openPlayer = this.openPlayer.bind(this);
   }
 
-  openPlayer(currentAlbum) {
-   window.open('http://localhost:3002/spotify/access/#current_album=' + this.state.currentAlbum, 'Spotify Player','width=400 height=500');
-  }
   handleClickTrue() {
     store.dispatch({type: "CHANGE_REDIRECT", field: "redirectbutton", payload: "true"});
   }
