@@ -34,12 +34,16 @@ app.get('/users/user-name-available/:username', db.userNameAvailable);
 app.post('/users/create-user', db.createUser);
 
 app.get('/reviews/get-all-reviews', db.getAllReviews);
+
+app.get('/users/get-userid/:username', db.getUserId);
+app.get('/users/user-name-available/:username', db.userNameAvailable);
+app.post('/users/create-user', db.createUser);
+
+app.get('/reviews/get-all-reviews', db.getAllReviews);
 app.get('/reviews/artist/:spotifyid', db.getArtistReviews);
 app.get('/reviews/album/:spotifyid', db.getAlbumReviews);
 app.get('/reviews/latest', db.getLatestReviews);
 app.get('/reviews/:userid', db.getUserReviews);
-
-
 
 /**
  * @api {get} /spotify/access/#current_album=:spotify_album_id Login window
