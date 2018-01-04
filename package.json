@@ -17,8 +17,8 @@
     "querystring": "^0.2.0"
   },
   "scripts": {
-    "start": "concurrently \"npm run serverDev\" \"npm run client\"",
-    "server": "node server.js",
+    "start": "node server.js",
+    "server": "concurrently \"npm run serverDev\" \"npm run client\"",
     "client": "node start-client.js",
     "serverDev": "nodemon server.js",
     "test": "jasmine"
