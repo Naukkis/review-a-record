@@ -16,6 +16,8 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 process.env.SECRET_KEY = "badasskeyfortokens";
 
+app.set("port", process.env.PORT || 3001);
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
@@ -85,6 +87,6 @@ app.use(function(err, req, res, next) {
   console.log(err.message);
 });
 
-app.listen(3002,  function () {
-  console.log('server on port 3002');
+app.listen(app.get("port"), () => {
+  console.log(`Find the server at: http://localhost:${app.get("port")}/`);
 });
