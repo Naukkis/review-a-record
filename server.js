@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 process.env.SECRET_KEY = "badasskeyfortokens";
 
-app.set("port", process.env.PORT || 3001);
+app.set("port", process.env.PORT || 3002);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
