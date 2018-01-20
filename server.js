@@ -14,7 +14,6 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 app.use(morgan('dev'));
-process.env.SECRET_KEY = "badasskeyfortokens";
 
 app.set("port", process.env.PORT || 3002);
 
@@ -58,7 +57,7 @@ app.get('/reviews/:userid', db.getUserReviews);
  * * @apiParam {String} Spotify_album_id Spotify album id to let the player know which album to play
  */
 app.get('/spotify/access/*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'client', 'public', 'auth.html'));
+  res.sendFile(path.resolve(__dirname, 'client', 'build', 'auth.html'));
 });
 
 /**
@@ -70,7 +69,7 @@ app.get('/spotify/access/*', (req, res) => {
  * Music player wrapper to Spotify Web playback SDK to play the albums on any album page.
  */
 app.get('/spotify/player', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'client', 'public', 'player.html'));
+  res.sendFile(path.resolve(__dirname, 'client', 'build', 'player.html'));
 });
 
 app.get('*', (req, res) => {
