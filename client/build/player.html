@@ -171,11 +171,15 @@
     }
 
     document.getElementById("previous").onclick = function() {
-      player.previousTrack();
+      player.previousTrack().then(() => {
+        console.log("previous track");
+      });
     }
 
    document.getElementById("next").onclick = function() {
-      player.nextTrack()
+      player.nextTrack().then(() => {
+        console.log("Next track");
+      });
     }
 
   }
