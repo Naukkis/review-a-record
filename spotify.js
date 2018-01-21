@@ -130,7 +130,7 @@ function authCallback(req, res, next) {
 			}}
 		)
 		.then(function(response) {
-			res.redirect('/spotify/player/#' +
+			res.redirect('/player.html' +
 				querystring.stringify({
 				access_token: response.data.access_token,
 				refresh_token: response.data.refresh_token

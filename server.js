@@ -46,36 +46,6 @@ app.get('/reviews/album/:spotifyid', db.getAlbumReviews);
 app.get('/reviews/latest', db.getLatestReviews);
 app.get('/reviews/:userid', db.getUserReviews);
 
-/**
- * @api {get} /spotify/access/#current_album=:spotify_album_id Login window
- * @apiName RequestAccessToUserData
- * @apiGroup Spotify
- *
- * @apiDescription
- * Renders page that redirects Spotify login. Saves the album to play to localStorage. Redirects to /spotify/auth
- *
- * * @apiParam {String} Spotify_album_id Spotify album id to let the player know which album to play
- */
-app.get('/spotify/access/*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'client', 'public', 'auth.html'));
-});
-
-/**
- * @api {get} /spotify/player Web music player
- * @apiName MusicPlayer
- * @apiGroup Spotify
- *
- * @apiDescription
- * Music player wrapper to Spotify Web playback SDK to play the albums on any album page.
- */
-app.get('/spotify/player', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'client', 'public', 'player.html'));
-});
-
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'client', 'public', 'index.html'));
-});
-
 app.use(function(err, req, res, next) {
   res.status(err.status || 404)
   .json({
