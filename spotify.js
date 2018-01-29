@@ -6,7 +6,7 @@ const querystring = require('querystring');
  */
 const client_id = '51e6495069d64a758db210eabf85fbdb'; // Your client id
 const client_secret = process.env.SPOTIFY_SECRET; // Your secret
-const redirect_uri = 'http://review-a-record.herokuapp.com/spotify/authcallback/'
+const redirect_uri = 'https://review-a-record.herokuapp.com/spotify/authcallback/'
 
 const generateRandomString = function(length) {
   let text = '';
@@ -130,7 +130,7 @@ function authCallback(req, res, next) {
 			}}
 		)
 		.then(function(response) {
-			res.redirect('/player.html' +
+			res.redirect('/player.html/#' +
 				querystring.stringify({
 				access_token: response.data.access_token,
 				refresh_token: response.data.refresh_token
