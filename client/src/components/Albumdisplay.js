@@ -9,6 +9,7 @@ export default class AlbumDisplay extends Component {
     super(props);
     this.handleClickTrue = this.handleClickTrue.bind(this);
     this.state = { currentAlbum: this.props.match.params.id };
+    localStorage.setItem('currentAlbum',  this.props.match.params.id);
     this.openPlayer = this.openPlayer.bind(this);
    }
 
@@ -16,7 +17,7 @@ export default class AlbumDisplay extends Component {
     store.dispatch({type: "CHANGE_REDIRECT", field: "redirectbutton", payload: "true"});
   }
 
-  openPlayer(currentAlbum) {
+  openPlayer() {
     window.open('/auth.html', 'Spotify Player','width=400 height=500');
   }
 
