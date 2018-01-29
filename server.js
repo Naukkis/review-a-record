@@ -47,7 +47,7 @@ app.get('/reviews/latest', db.getLatestReviews);
 app.get('/reviews/:userid', db.getUserReviews);
 
 app.get('/spotify/player', (req, res) => {
-  res.sendFile(path.resolve('player.html'));
+  res.sendFile('player.html');
 });
 
 app.use(function(err, req, res, next) {
