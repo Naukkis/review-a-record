@@ -89,6 +89,9 @@ function userNameAvailable(req, res, next) {
  *
  * @apiParam {String} username username.
  * @apiParam {String} password password.
+ * @apiParam {String} email email.
+ * @apiParam {String} firstname firstname.
+ * @apiParam {String} surname surname;
  *
  * @apiSuccess {json} Created new User
  *
@@ -107,19 +110,18 @@ function createUser(req, res, next) {
     return next(new Error("Invalid input!"));
   }
 
-
   let psw = bcrypt.hashSync(req.body.password, salt);
-  db.none('insert into users(username, password)'
-        + 'values($1, $2)',
-        [req.body.username, psw])
+  db.none('insert into users(username, password, email, firstname, surname)'
+        + 'values($1, $2, $3, $4, $6)',
+        [req.body.username, psw, req.body.email, req.body.firstname, req.body.lastname])
     .then(function() {
       res.status(200)
      	.json({
-	        status: 'success',
-	        created_at: new Date(),
-	        message: 'created new user',
-	        user: req.body.username
-	    });
+         status: 'success',
+          created_at: new Date(),
+          message: 'created new user',
+          user: req.body.username
+      });
 	 })
     .catch(function(err) {
       return next(err);
