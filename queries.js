@@ -113,7 +113,7 @@ function createUser(req, res, next) {
   let psw = bcrypt.hashSync(req.body.password, salt);
   db.none('insert into users(username, password, email, firstname, surname)'
         + 'values($1, $2, $3, $4, $6)',
-        [req.body.username, psw, req.body.email, req.body.firstname, req.body.surname])
+        [req.body.username, psw, req.body.email, req.body.firstname, req.body.lastname])
     .then(function() {
       res.status(200)
      	.json({
