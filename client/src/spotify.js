@@ -23,6 +23,7 @@ export function searchArtist(search){
     }
   })
   .then(function(res) {
+    console.log(res.data);
     store.dispatch({type: "LOAD_ARTIST", field: "artists", payload: res.data.artists });
   })
   .catch(function(err) {
@@ -41,7 +42,8 @@ export function searchAlbum(search){
       'Authorization': 'Bearer ' + token
     }
   })
-  .then(function(res) {  
+  .then(function(res) {
+    console.log(res.data);
     store.dispatch({type: "LOAD_ALBUM", field: "albums", payload: res.data.albums });
   })
   .catch(function(err) {
@@ -61,7 +63,7 @@ export function getArtistAlbums(spotifyid) {
     }
   })
   .then(function(res) {
-    
+    console.log(res.data);
     store.dispatch({type: "LOAD_ALBUM", field: "artistalbums", payload: res.data });
   })
   .catch(function(err) {
