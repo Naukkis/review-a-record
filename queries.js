@@ -24,7 +24,7 @@ function getUserId(req, res, next) {
     .then(function(data) {
         res.status(200)
           .json({
-            userid: data.userid
+            userid: data.userid,
           })
     })
     .catch(function(err) {

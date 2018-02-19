@@ -1,15 +1,15 @@
 describe('DBqueries', function() {
-    /* var db = require('../queries');
+    var db = require('../queries');
     var server;
     beforeAll(() => {
         server = require('../server');
     });
-    */
+    
     var Request = require('request');
     
     var token = '';
     var userID;
-    var dbURL = 'https://review-a-record.herokuapp.com/';
+    var dbURL = 'http://localhost:3002/' || 'https://review-a-record.herokuapp.com/';
 
     describe('Create user', () => {
     var data = {};
@@ -78,6 +78,24 @@ describe('DBqueries', function() {
         });
     });
 
+    describe('Get user ID', () => {
+        var data = {};
+        beforeAll((done) => {
+            Request.get(dbURL + 'users/get-userid/jasmineTestUser',
+                        (error, response, body) => {
+                            data.status = response.statusCode;
+                            data.body = JSON.parse(body);
+                            done();
+                        });
+        });
+
+        it('should respond Status 200', () => {
+            expect(data.status).toBe(200);
+        });
+        it('Should receive correct user ID', () => {
+            expect(data.body.userid).toBe(userID);
+        });
+    });
 
     describe('Username available', () => {
     	var data = {};

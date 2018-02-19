@@ -26,6 +26,5 @@ describe('Spotify functions', function() {
           it('Should get a spotify access token', () => {
               expect(data.body.access_token.length).toBeGreaterThan(20);
           });
-
     });
 });
