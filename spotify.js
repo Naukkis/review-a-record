@@ -8,16 +8,6 @@ const client_id = '51e6495069d64a758db210eabf85fbdb'; // Your client id
 const client_secret = process.env.SPOTIFY_SECRET; // Your secret
 const redirect_uri = 'https://review-a-record.herokuapp.com/spotify/authcallback/'
 
-const generateRandomString = function(length) {
-  let text = '';
-  let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-  for (var i = 0; i < length; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
-};
-
 /**
  * @api {get} /spotify/access-token Request spotify access token
  * @apiName Access-token

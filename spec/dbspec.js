@@ -1,18 +1,20 @@
 describe('DBqueries', function() {
-    var db = require('../queries');
-    var Request = require('request');
+    /* var db = require('../queries');
     var server;
-    var token = '';
-    var userID;
-
     beforeAll(() => {
         server = require('../server');
     });
+    */
+    var Request = require('request');
+    
+    var token = '';
+    var userID;
+    var dbURL = 'https://review-a-record.herokuapp.com/';
 
     describe('Create user', () => {
     var data = {};
     beforeAll((done) => {
-        Request.post({url:'http://localhost:3002/users/create-user',
+        Request.post({url: dbURL + 'users/create-user',
                     form: {'username': 'jasmineTestUser', 'password': 'asdfg', 'email': 'mail@mail.com', 'firstname': 'etunimi', 'lastname': 'sukunimi'}},
                     (error, response, body) => {
                         data.status = response.statusCode;
@@ -31,7 +33,7 @@ describe('DBqueries', function() {
     describe('Login user', () => {
     	var data = {};
     	beforeAll((done) => {
-	        Request.post({url:'http://localhost:3002/login',
+	        Request.post({url:dbURL + 'login',
 	                    form: {'username': 'jasmineTestUser', 'password': 'asdfg'}},
 	                    (error, response, body) => {
 	                      data.status = response.statusCode;
@@ -60,7 +62,7 @@ describe('DBqueries', function() {
     describe('Username not available', () => {
     	var data = {};
     	beforeAll((done) => {
-	        Request.get('http://localhost:3002/users/user-name-available/jasmineTestUser',
+	        Request.get(dbURL + 'users/user-name-available/jasmineTestUser',
 	                    (error, response, body) => {
 	                        data.status = response.statusCode;
 	                        data.body = body;
@@ -80,7 +82,7 @@ describe('DBqueries', function() {
     describe('Username available', () => {
     	var data = {};
     	beforeAll((done) => {
-            Request.get('http://localhost:3002/users/user-name-available/dumdumddum',
+            Request.get(dbURL + 'users/user-name-available/dumdumddum',
                         (error, response, body) => {
                             data.status = response.statusCode;
                             data.body = body;
@@ -99,7 +101,7 @@ describe('DBqueries', function() {
     describe('Write a review', () => {
         let data = {};
         beforeAll((done) => {
-            Request.post({url:'http://localhost:3002/secure/reviews/save-review',
+            Request.post({url:dbURL + 'secure/reviews/save-review',
                         form: {'user_id': userID, 'artist_name': 'Metallica',
                                'album_name': 'ride',
                                'spotify_artist_id': '2ye2Wgw4gimLv2eAKyk1NB',
@@ -126,7 +128,7 @@ describe('DBqueries', function() {
     describe('Get all reviews by artist', () => {
         var data = {};
         beforeAll((done) => {
-        Request.get('http://localhost:3002/reviews/artist/2ye2Wgw4gimLv2eAKyk1NB',
+        Request.get(dbURL + 'reviews/artist/2ye2Wgw4gimLv2eAKyk1NB',
                     (error, response, body) => {
                         data.status = response.statusCode;
                         data.body = JSON.parse(body);
@@ -148,7 +150,7 @@ describe('DBqueries', function() {
     describe('Get all reviews by album', () => {
         var data = {};
         beforeAll((done) => {
-        Request.get('http://localhost:3002/reviews/album/5rFZcoCvmCaJ1gxTMU4JTm',
+        Request.get(dbURL + 'reviews/album/5rFZcoCvmCaJ1gxTMU4JTm',
                     (error, response, body) => {
                         data.status = response.statusCode;
                         data.body = JSON.parse(body);
@@ -170,7 +172,7 @@ describe('DBqueries', function() {
     describe('Get all reviews by user', () => {
         var data = {};
         beforeAll((done) => {
-        Request.get('http://localhost:3002/reviews/' + userID,
+        Request.get(dbURL + 'reviews/' + userID,
                     (error, response, body) => {
                         data.status = response.statusCode;
                         data.body = JSON.parse(body);
@@ -191,7 +193,7 @@ describe('DBqueries', function() {
         describe('Remove review', () => {
         var data = {};
         beforeAll((done) => {
-            Request.post({url:'http://localhost:3002/secure/reviews/delete-review',
+            Request.post({url: dbURL + 'secure/reviews/delete-review',
                         form: {'user_id': userID, 'spotify_album_id': '5rFZcoCvmCaJ1gxTMU4JTm', 'token': token}},
                         (error, response, body) => {
                             data.status = response.statusCode;
@@ -211,7 +213,7 @@ describe('DBqueries', function() {
     describe('Delete user', () => {
         var data = {};
         beforeAll((done) => {
-            Request.post({url:'http://localhost:3002/secure/users/delete-user',
+            Request.post({url:dbURL + 'secure/users/delete-user',
                         form: {'username': 'jasmineTestUser', 'password': 'asdfg', 'token': token}},
                         (error, response, body) => {
                             data.status = response.statusCode;
