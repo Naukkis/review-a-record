@@ -3,23 +3,6 @@ const bcrypt = require('bcryptjs');
 const salt = bcrypt.genSaltSync(5);
 const jwt = require('jsonwebtoken');
 
-
-function getAllUsers(req, res, next) {
-  db.any('select * from users')
-    .then(function (data) {
-      res.status(200)
-        .json({
-          status: 'success',
-          data: data,
-          received_at: new Date(),
-          message: 'Retrieved ALL users'
-        });
-    })
-    .catch(function(err) {
-      return next(err);
-    });
-}
-
 /**
  * @api {get} /users/:username Request users user ID
  * @apiName Request User ID
@@ -570,6 +553,19 @@ function getLatestReviews(req, res, next) {
     });
 }
 
+function deleteReview(req, res, next) {
+  db.any('delete from reviews where userid = $1 and spotify_album_id = $2', [req.body.user_id, req.body.spotify_album_id])
+    .then((data) => {
+      res.status(200)
+         .json({
+          status: 'success',
+          requested_at: new Date(),
+          message: 'review deleted',
+         })
+    })
+    .catch(err => next(err));
+}
+
 function deleteByUserId(userid){
 	db.none('delete from users where userid = $1', userid)
           	.then(function() {
@@ -581,7 +577,6 @@ function deleteByUserId(userid){
 }
 
 module.exports = {
-	getAllUsers,
   getUserId,
 	createUser,
 	login,
@@ -593,5 +588,6 @@ module.exports = {
   getAlbumReviews,
   getUserReviews,
   getLatestReviews,
-  testToken
+  testToken,
+  deleteReview
 }

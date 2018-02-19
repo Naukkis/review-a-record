@@ -3,6 +3,8 @@ describe('DBqueries', function() {
     var Request = require('request');
     var server;
     var token = '';
+    var userID;
+
     beforeAll(() => {
         server = require('../server');
     });
@@ -11,7 +13,7 @@ describe('DBqueries', function() {
     var data = {};
     beforeAll((done) => {
         Request.post({url:'http://localhost:3002/users/create-user',
-                    form: {'username': 'jasmineTestUser', 'password': 'asdfg'}},
+                    form: {'username': 'jasmineTestUser', 'password': 'asdfg', 'email': 'mail@mail.com', 'firstname': 'etunimi', 'lastname': 'sukunimi'}},
                     (error, response, body) => {
                         data.status = response.statusCode;
                         data.body = JSON.parse(body);
@@ -23,23 +25,6 @@ describe('DBqueries', function() {
         });
         it('Should greate one user', () => {
             expect(data.body.message).toBe('created new user');
-        });
-    });
-
-    describe('GET all users/', () => {
-    var data = {};
-    beforeAll((done) => {
-        Request.get('http://localhost:3002/users/get-all-users', (error, response, body) => {
-            data.status = response.statusCode;
-            data.body = JSON.parse(body);
-            done();
-            });
-        });
-        it('should respond Status 200', () => {
-            expect(data.status).toBe(200);
-        });
-        it('Should get all users', () => {
-            expect(data.body.message).toBe('Retrieved ALL users');
         });
     });
 
@@ -65,9 +50,14 @@ describe('DBqueries', function() {
         it('Shoud receive a token', () => {
         	expect(data.body.token).toBeTruthy();
         })
+
+        it('Should receive userID', () => {
+            expect(data.body.userid).toBeTruthy();
+            userID = data.body.userid;
+        })
     });
 
-    describe('Username', () => {
+    describe('Username not available', () => {
     	var data = {};
     	beforeAll((done) => {
 	        Request.get('http://localhost:3002/users/user-name-available/jasmineTestUser',
@@ -87,7 +77,7 @@ describe('DBqueries', function() {
     });
 
 
-    describe('Username', () => {
+    describe('Username available', () => {
     	var data = {};
     	beforeAll((done) => {
             Request.get('http://localhost:3002/users/user-name-available/dumdumddum',
@@ -106,45 +96,32 @@ describe('DBqueries', function() {
         });
     });
 
-    describe('Secure get-all-users', () => {
-    	var data = {};
-    	beforeAll((done) => {
-	        Request.get({url:'http://localhost:3002/secure/users/get-all-users',
-	                    headers: {'token': token}},
-	                    (error, response, body) => {
-	                        data.status = response.statusCode;
-	                        data.body = JSON.parse(body);
-	                        done();
-	                    });
+    describe('Write a review', () => {
+        let data = {};
+        beforeAll((done) => {
+            Request.post({url:'http://localhost:3002/secure/reviews/save-review',
+                        form: {'user_id': userID, 'artist_name': 'Metallica',
+                               'album_name': 'ride',
+                               'spotify_artist_id': '2ye2Wgw4gimLv2eAKyk1NB',
+                               'spotify_album_id': '5rFZcoCvmCaJ1gxTMU4JTm',
+                               'review_text': 'jeejee jee',
+                               'token': token
+                           }},
+                        (error, response, body) => {
+                            data.status = response.statusCode;
+                            data.body = JSON.parse(body);
+                            done();
+                        });
         });
 
         it('should respond Status 200', () => {
             expect(data.status).toBe(200);
         });
-        it('Should receive all users', () => {
-            expect(data.body.message).toBe('Retrieved ALL users');
+
+        it('Should save the review', () => {
+            expect(data.body.message).toBe('saved new review');
         });
     })
-
-
-    describe('Remove user', () => {
-    	var data = {};
-    	beforeAll((done) => {
-	        Request.post({url:'http://localhost:3002/users/delete-user',
-	                    form: {'username': 'jasmineTestUser', 'password': 'asdfg'}},
-	                    (error, response, body) => {
-	                        data.status = response.statusCode;
-	                        data.body = JSON.parse(body);
-	                        done();
-	                    });
-        });
-        it('should respond Status 200', () => {
-            expect(data.status).toBe(200);
-        });
-        it('Should be able to remove user', () => {
-            expect(data.body.message).toBe('user deleted');
-        });
-    });
 
     describe('Get all reviews by artist', () => {
         var data = {};
@@ -193,7 +170,7 @@ describe('DBqueries', function() {
     describe('Get all reviews by user', () => {
         var data = {};
         beforeAll((done) => {
-        Request.get('http://localhost:3002/reviews/1',
+        Request.get('http://localhost:3002/reviews/' + userID,
                     (error, response, body) => {
                         data.status = response.statusCode;
                         data.body = JSON.parse(body);
@@ -211,4 +188,42 @@ describe('DBqueries', function() {
         })
     });
 
+        describe('Remove review', () => {
+        var data = {};
+        beforeAll((done) => {
+            Request.post({url:'http://localhost:3002/secure/reviews/delete-review',
+                        form: {'user_id': userID, 'spotify_album_id': '5rFZcoCvmCaJ1gxTMU4JTm', 'token': token}},
+                        (error, response, body) => {
+                            data.status = response.statusCode;
+                            data.body = JSON.parse(body);
+                            done();
+                        });
+        });
+        it('should respond Status 200', () => {
+            expect(data.status).toBe(200);
+        });
+        it('Should be able to delete review', () => {
+            expect(data.body.message).toBe('review deleted');
+        });
+    });
+
+
+    describe('Delete user', () => {
+        var data = {};
+        beforeAll((done) => {
+            Request.post({url:'http://localhost:3002/secure/users/delete-user',
+                        form: {'username': 'jasmineTestUser', 'password': 'asdfg', 'token': token}},
+                        (error, response, body) => {
+                            data.status = response.statusCode;
+                            data.body = JSON.parse(body);
+                            done();
+                        });
+        });
+        it('should respond Status 200', () => {
+            expect(data.status).toBe(200);
+        });
+        it('Should be able to delete user', () => {
+            expect(data.body.message).toBe('user deleted');
+        });
+    });
 });

@@ -9,7 +9,7 @@ CREATE TABLE users(
 	password TEXT NOT NULL,
 	email TEXT NOT NULL,
 	firstName TEXT NOT NULL,
-	lastName TEXT NOT NULL,
+	lastName TEXT NOT NULL
 );
 
 CREATE TABLE reviews(

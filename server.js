@@ -7,7 +7,7 @@ const db          = require('./queries');
 const router      = require('./router');
 
 const app = express();
-
+process.env.SECRET_KEY = "badasskeyfortokens";
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -34,11 +34,6 @@ app.get('/users/get-userid/:username', db.getUserId);
 app.get('/users/user-name-available/:username', db.userNameAvailable);
 app.post('/users/create-user', db.createUser);
 
-app.get('/reviews/get-all-reviews', db.getAllReviews);
-
-app.get('/users/get-userid/:username', db.getUserId);
-app.get('/users/user-name-available/:username', db.userNameAvailable);
-app.post('/users/create-user', db.createUser);
 
 app.get('/reviews/get-all-reviews', db.getAllReviews);
 app.get('/reviews/artist/:spotifyid', db.getArtistReviews);
