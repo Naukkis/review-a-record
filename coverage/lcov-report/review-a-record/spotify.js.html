@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">42.86% </span>
+        <span class="strong">60% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>9/21</span>
+        <span class='fraction'>12/20</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -30,18 +30,18 @@
         <span class='fraction'>0/0</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">28.57% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/7</span>
+        <span class='fraction'>2/7</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">42.86% </span>
+        <span class="strong">60% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>9/21</span>
+        <span class='fraction'>12/20</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line medium'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -184,8 +184,7 @@
 139
 140
 141
-142
-143</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+142</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -225,8 +224,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -236,7 +235,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -300,7 +299,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -334,7 +332,7 @@ const querystring = require('querystring');
  * Set id and secret provided by Spotify api here
  */
 const client_id = '51e6495069d64a758db210eabf85fbdb'; // Your client id
-const client_secret = '19566336f360463d9f1a0e0d40465720'; // Your secret
+const client_secret = '19566336f360463d9f1a0e0d40465720'; // Your secret;
 const redirect_uri = 'https://review-a-record.herokuapp.com/spotify/authcallback/'
 &nbsp;
 /**
@@ -366,9 +364,9 @@ const redirect_uri = 'https://review-a-record.herokuapp.com/spotify/authcallback
       "message": "Error message"
    }
  */
-<span class="fstat-no" title="function not covered" >function accessToken(req, res, next) {</span>
-<span class="cstat-no" title="statement not covered" >	let grant_type = querystring.stringify({ grant_type: 'client_credentials' });</span>
-<span class="cstat-no" title="statement not covered" >	axios.post('https://accounts.spotify.com/api/token',</span>
+function accessToken(req, res, next) {
+	let grant_type = querystring.stringify({ grant_type: 'client_credentials' });
+	axios.post('https://accounts.spotify.com/api/token',
 			grant_type,
 			{
 				headers:
@@ -377,8 +375,8 @@ const redirect_uri = 'https://review-a-record.herokuapp.com/spotify/authcallback
 				}
 			}
 	)
-	.then(<span class="fstat-no" title="function not covered" >function (response) {</span>
-<span class="cstat-no" title="statement not covered" >		res.status(200)</span>
+	.then(function (response) {
+		res.status(200)
           .json({
             status: 'success',
             access_token: response.data.access_token,
@@ -442,7 +440,6 @@ const redirect_uri = 'https://review-a-record.herokuapp.com/spotify/authcallback
 		redirect_uri: redirect_uri,
 		grant_type: 'authorization_code'
 	});
-<span class="cstat-no" title="statement not covered" >	console.log(authOptions);</span>
 <span class="cstat-no" title="statement not covered" >	axios.post('https://accounts.spotify.com/api/token',</span>
 			authOptions,
 			{ headers:{
@@ -475,7 +472,7 @@ module.exports = {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Feb 19 2018 14:04:38 GMT+0200 (FLE Standard Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Feb 19 2018 16:01:06 GMT+0200 (FLE Standard Time)
 </div>
 </div>
 <script src="../prettify.js"></script>
