@@ -7,7 +7,8 @@ pipeline {
     }
     environment {
         CI = 'true'
-	DATABASE_URL = credentials('postgres-url') 
+	DATABASE_URL = credentials('postgres-url')
+	SPOTIFY_SECRET = credentials('spotify-secret') 
     }
     stages {
         stage('Build') {
