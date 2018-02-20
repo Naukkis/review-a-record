@@ -1,16 +1,16 @@
 describe('DBqueries', function() {
-    /*
+    
     var db = require('../queries');
     var server;
     beforeAll(() => {
         server = require('../server');
     });
-    */
+    
     var Request = require('request');
     
     var token = '';
     var userID;
-    var dbURL = 'https://review-a-record.herokuapp.com/';
+    var dbURL = 'https://localhost:3002/';
 
     describe('Create user', () => {
     var data = {};
