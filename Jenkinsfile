@@ -6,7 +6,8 @@ pipeline {
         }
     }
     environment {
-        CI = 'true' 
+        CI = 'true'
+	DATABASE_URL = credentials(postgres-url) 
     }
     stages {
         stage('Build') {
