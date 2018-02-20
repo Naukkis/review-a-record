@@ -9,7 +9,7 @@ describe('DBqueries', function() {
     
     var token = '';
     var userID;
-    var dbURL = 'http://localhost:3002/' || 'https://review-a-record.herokuapp.com/';
+    var dbURL = 'https://review-a-record.herokuapp.com/';
 
     describe('Create user', () => {
     var data = {};
