@@ -1,14 +1,14 @@
 describe('DBqueries', function() {
-    /*
     var server;
     beforeAll(() => {
         server = require('../server');
     });
-    */
+    
     var Request = require('request');
     
     var token = '';
     var userID;
+
     var dbURL = 'http://localhost:3002/';
 
     describe('Create user', () => {
