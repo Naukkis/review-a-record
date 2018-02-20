@@ -21,7 +21,7 @@
     "server": "node server.js",
     "client": "node start-client.js",
     "serverDev": "nodemon server.js",
-    "test": "istanbul cover node_modules/jasmine/bin/jasmine.js"
+    "test": "jasmine"
   },
   "devDependencies": {
     "babel": "^6.23.0",
