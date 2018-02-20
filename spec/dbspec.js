@@ -1,10 +1,11 @@
 describe('DBqueries', function() {
+    /*
     var db = require('../queries');
     var server;
     beforeAll(() => {
         server = require('../server');
     });
-    
+    */
     var Request = require('request');
     
     var token = '';
