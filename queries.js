@@ -27,9 +27,7 @@ function getUserId(req, res, next) {
             userid: data.userid,
           })
     })
-    .catch(function(err) {
-      return next(err);
-    });
+    .catch(err => next(err));
 }
 
 /**
@@ -60,9 +58,7 @@ function userNameAvailable(req, res, next) {
 	  			res.status(200).send(false);
 	  		}
 	  })
-	  .catch(function(err) {
-	  	 return next(err);
-	  });
+	  .catch(err => next(err));
 }
 
 /**
@@ -106,9 +102,7 @@ function createUser(req, res, next) {
           user: req.body.username
       });
 	 })
-    .catch(function(err) {
-      return next(err);
-    });
+    .catch(err => next(err));
 }
 
 /**
@@ -162,9 +156,7 @@ function login(req, res, next){
             })
         }
     })
-    .catch(function(err){
-      return next(err);
-    })
+    .catch(err => next(err));
 }
 
 function testToken(req, res){
@@ -220,9 +212,7 @@ function deleteUser(req, res, next) {
             })
         }
     })
-    .catch(function(err){
-      return next(err);
-    })
+    .catch(err => next(err));
 }
 
 /**
@@ -283,9 +273,7 @@ function getAllReviews(req, res, next) {
 	          message: 'Retrieved ALL reviews'
 	        });
 	    })
-	    .catch(function(err) {
-	      return next(err);
-	    });
+	    .catch(err => next(err));
 }
 
 /**
@@ -361,9 +349,7 @@ function getArtistReviews(req, res, next) {
       }
 
     })
-    .catch(function(err) {
-      return next(err);
-    })
+    .catch(err => next(err));
 }
 
 
@@ -441,9 +427,7 @@ function getAlbumReviews(req, res, next) {
           });
       }
     })
-    .catch(function(err) {
-      return next(err);
-    })
+    .catch(err => next(err));
 }
 
 /**
@@ -519,13 +503,10 @@ function getUserReviews(req, res, next) {
           });
       }
     })
-    .catch(function(err) {
-      return next(err);
-    })
+    .catch(err => next(err));
 }
 
 function getLatestReviews(req, res, next) {
-  
   db.any('select reviews.reviewid, reviews.spotify_album_id, reviews.review_text, reviews.date_time, users.username '
        + 'from reviews '
        + 'left join users on reviews.userid = users.userid '
@@ -548,9 +529,7 @@ function getLatestReviews(req, res, next) {
           });
       }
     })
-    .catch(function(err) {
-      return next(err);
-    });
+    .catch(err => next(err));
 }
 
 function deleteReview(req, res, next) {
@@ -568,12 +547,10 @@ function deleteReview(req, res, next) {
 
 function deleteByUserId(userid){
 	db.none('delete from users where userid = $1', userid)
-          	.then(function() {
-          		return 'success';
-          	})
-          	.catch(function(err) {
-          		return next(err);
-          	})
+    .then(() => {
+       return 'success';
+    })
+    .catch(err => next(err));
 }
 
 module.exports = {
