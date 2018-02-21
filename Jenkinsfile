@@ -21,5 +21,10 @@ pipeline {
                 sh 'npm test' 
             }
         }
+        stage('Deploy') {
+            steps {
+                sh 'git push git@heroku.com:review-a-record.git master'
+            }
+        }
     }
 }
