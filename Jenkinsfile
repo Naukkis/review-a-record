@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'git push git@heroku.com:review-a-record.git master'
+                echo 'Deploying'
             }
         }
     }
