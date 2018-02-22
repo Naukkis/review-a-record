@@ -18,10 +18,10 @@
   },
   "scripts": {
     "start": "concurrently \"npm run serverDev\" \"npm run client\"",
-    "server": "node server.js",
+    "server": "node server/server.js",
     "client": "node start-client.js",
-    "serverDev": "nodemon server.js",
-    "test": "jasmine"
+    "serverDev": "nodemon server/server.js",
+    "test": "istanbul cover node_modules/jasmine/bin/jasmine.js"
   },
   "devDependencies": {
     "babel": "^6.23.0",

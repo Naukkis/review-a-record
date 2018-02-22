@@ -1,7 +1,7 @@
 describe('DBqueries', function() {
     var server;
     beforeAll(() => {
-        server = require('../server');
+        server = require('../server/server');
     });
     
     var Request = require('request');
@@ -12,22 +12,41 @@ describe('DBqueries', function() {
     var dbURL = 'http://localhost:3002/';
 
     describe('Create user', () => {
-    var data = {};
-    beforeAll((done) => {
-        Request.post({url: dbURL + 'users/create-user',
-                    form: {'username': 'jasmineTestUser', 'password': 'asdfg', 'email': 'mail@mail.com', 'firstname': 'etunimi', 'lastname': 'sukunimi'}},
-                    (error, response, body) => {
-                        data.status = response.statusCode;
-                        data.body = JSON.parse(body);
-                        done();
-                    });
-        });
-        it('should respond Status 200', () => {
-            expect(data.status).toBe(200);
-        });
-        it('Should greate one user', () => {
-            expect(data.body.message).toBe('created new user');
-        });
+        var data = {};
+        beforeAll((done) => {
+            Request.post({url: dbURL + 'users/create-user',
+                        form: {'username': 'jasmineTestUser', 'password': 'asdfg', 'email': 'mail@mail.com', 'firstname': 'etunimi', 'lastname': 'sukunimi'}},
+                        (error, response, body) => {
+                            data.status = response.statusCode;
+                            data.body = JSON.parse(body);
+                            done();
+                        });
+            });
+            it('should respond Status 200', () => {
+                expect(data.status).toBe(200);
+            });
+            it('Should greate one user', () => {
+                expect(data.body.message).toBe('created new user');
+            });
+    });
+
+    describe('Create user error handling', () => {
+        var data = {};
+        beforeAll((done) => {
+            Request.post({url: dbURL + 'users/create-user',
+                        form: {}},
+                        (error, response, body) => {
+                            data.status = response.statusCode;
+                            data.body = JSON.parse(body);
+                            done();
+                        });
+            });
+            it('should respond Status 200', () => {
+                expect(data.status).toBe(404);
+            });
+            it('should respond Status 200', () => {
+                expect(data.body.status).toBe('error');
+            });
     });
 
     describe('Login user', () => {
