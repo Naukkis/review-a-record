@@ -5,7 +5,7 @@ const querystring = require('querystring');
  * Set id and secret provided by Spotify api here
  */
 const client_id = '51e6495069d64a758db210eabf85fbdb'; // Your client id
-const client_secret = ''; // Your secret;
+const client_secret = 'process.env.SPOTIFY_SECRET'; // Your secret;
 const redirect_uri = 'https://review-a-record.herokuapp.com/spotify/authcallback/'
 
 /**
