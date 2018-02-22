@@ -3,7 +3,7 @@ const path        = require('path');
 const morgan      = require('morgan');
 const bodyParser  = require('body-parser');
 const spotify 		= require('./spotify');
-const db          = require('./queries-test.js');
+const db          = require('./queries');
 const router      = require('./router');
 
 const app = express();
@@ -18,7 +18,7 @@ app.use(morgan('dev'));
 app.set('port', process.env.PORT || 3002);
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
+  app.use(express.static('/../client/build'));
 }
 
 app.use('/secure/', router);

@@ -1,10 +1,9 @@
 describe('Spotify functions', function() {
-    var spotify = require('../spotify');
     var Request = require('request');
     var server;
 
     beforeAll(() => {
-        server = require('../server');
+        server = require('../server/server');
     });
 
     describe('it should receive Spotify access token', () => {

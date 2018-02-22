@@ -47,9 +47,6 @@ function getUserId(req, res, next) {
  *
  */
 function userNameAvailable(req, res, next) {
-  if (!req.params.username) {
-    return next(new Error("Empty username"))
-  }
 	db.any('select 1 from users where username = $1', [req.params.username])
 	  .then(function(data) {
 	  		if (data.length == 0) {
