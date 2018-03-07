@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>18/18</span>
+        <span class='fraction'>30/30</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>18/18</span>
+        <span class='fraction'>30/30</span>
       </div>
     </div>
   </div>
@@ -71,7 +71,27 @@
 26
 27
 28
-29</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -99,41 +119,81 @@
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">describe('Spotify functions', function() {
-    var Request = require('request');
-    var server;
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">describe('Spotify functions', function () {
+  var Request = require('request');
+  var server;
 &nbsp;
-    beforeAll(() =&gt; {
-        server = require('../server/server');
+  beforeAll(() =&gt; {
+    server = require('../server/server');
+  });
+&nbsp;
+  describe('it should receive Spotify access token', () =&gt; {
+    let data = {};
+    beforeAll((done) =&gt; {
+      Request.get('http://localhost:3002/spotify/access-token',
+        (error, response, body) =&gt; {
+          data.status = response.statusCode;
+          data.body = JSON.parse(body);
+          done();
+        });
+    });
+    it('should respond Status 200', () =&gt; {
+      expect(data.status).toBe(200);
+    });
+    it('Should tell to have retrieved new token', () =&gt; {
+      expect(data.body.message).toBe('Retrieved new token');
+    });
+    it('Should get a spotify access token', () =&gt; {
+      expect(data.body.access_token.length).toBeGreaterThan(20);
+    });
+  });
+&nbsp;
+  describe('it should redirect to Spotify login', () =&gt; {
+    let data = {};
+    beforeAll((done) =&gt; {
+      Request.get('http://localhost:3002/spotify/auth',
+        (error, response, body) =&gt; {
+          data.status = response.statusCode;
+          data.body = response.body;
+          data.headers = response.headers;
+          done();
+        });
+    });
+    it('should respond Status 200', () =&gt; {
+      expect(data.status).toBe(200);
+    });
+    it('should respond with correct content-type', () =&gt; {
+      expect(data.headers['content-type']).toBe('text/html;charset=utf-8');
     });
 &nbsp;
-    describe('it should receive Spotify access token', () =&gt; {
-        let data = {};
-        beforeAll((done) =&gt; {
-          Request.get('http://localhost:3002/spotify/access-token',
-                      (error, response, body) =&gt; {
-                          data.status = response.statusCode;
-                          data.body = JSON.parse(body);
-                          done();
-                      });
-          });
-          it('should respond Status 200', () =&gt; {
-              expect(data.status).toBe(200);
-          });
-          it('Should tell to have retrieved new token', () =&gt; {
-              expect(data.body.message).toBe('Retrieved new token');
-          });
-          it('Should get a spotify access token', () =&gt; {
-              expect(data.body.access_token.length).toBeGreaterThan(20);
-          });
-    });
+  })
 });</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Feb 22 2018 18:13:21 GMT+0200 (FLE Standard Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Mar 07 2018 12:48:52 GMT+0200 (FLE Standard Time)
 </div>
 </div>
 <script src="../prettify.js"></script>

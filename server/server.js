@@ -42,7 +42,7 @@ app.get('/reviews/latest', db.getLatestReviews);
 app.get('/reviews/:userid', db.getUserReviews);
 
 app.get('/spotify/player', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'client', 'build', 'player.html'));
+  res.sendFile(path.resolve(__dirname, '../', 'client', 'build', 'player.html'));
 });
 
 app.use(function(err, req, res, next) {
