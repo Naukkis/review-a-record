@@ -67,7 +67,7 @@ function userNameAvailable(req, res, next) {
  * @apiParam {String} password password.
  * @apiParam {String} email email.
  * @apiParam {String} firstname firstname.
- * @apiParam {String} surname surname;
+ * @apiParam {String} lastname lastname;
  *
  * @apiSuccess {json} Created new User
  *
@@ -87,9 +87,9 @@ function createUser(req, res, next) {
   }
 
   let psw = bcrypt.hashSync(req.body.password, salt);
-  db.none('insert into users(username, password, email, firstname, lastname)'
-        + 'values($1, $2, $3, $4, $5)',
-        [req.body.username, psw, req.body.email, req.body.firstname, req.body.lastname])
+  db.none('insert into users(username, password, email, firstname, lastname, admin)'
+        + 'values($1, $2, $3, $4, $5, $6)',
+        [req.body.username, psw, req.body.email, req.body.firstname, req.body.lastname, false])
     .then(function() {
       res.status(200)
      	.json({
@@ -503,12 +503,71 @@ function getUserReviews(req, res, next) {
     .catch(err => next(err));
 }
 
+
+/**
+ * @api {get} /reviews/latest Request latest 20 reviews
+ * @apiName Latest
+ * @apiGroup Reviews
+ *
+ *
+ * @apiSuccess {string} status query status.
+ * @apiSuccess {Array} data latest reviews.
+ * @apiSuccess {Date} requested_at time of request
+ * @apiSuccess {message} message result description.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+  {
+    "status": "success",
+    "data": [
+        {
+            "reviewid": 36,
+            "spotify_album_id": "5u551V6w8sHMeLwycipEIG",
+            "review_text": "hsjsjd",
+            "date_time": "2018-03-14T13:34:40.399Z",
+            "username": "pekis"
+        },
+        {
+            "reviewid": 35,
+            "spotify_album_id": "0M8Ki2Dc3MkuIS0OLBKUrK",
+            "review_text": "Kissat kon koiria",
+            "date_time": "2018-03-14T11:26:37.086Z",
+            "username": "pekis"
+        },
+        {
+            "reviewid": 34,
+            "spotify_album_id": "3lYZwB8YHVLhTlpIbGVn5p",
+            "review_text": "liirum laarum",
+            "date_time": "2018-03-14T11:13:01.935Z",
+            "username": "pekis"
+        },
+        {
+            "reviewid": 33,
+            "spotify_album_id": "0M8Ki2Dc3MkuIS0OLBKUrK",
+            "review_text": "liiiirumlaaaaarum",
+            "date_time": "2018-03-14T09:16:42.893Z",
+            "username": "pekis"
+        },
+        "requested_at": "2018-03-24T09:00:01.185Z",
+        "message": "received latest 20 reviews"
+  }
+ *
+ * @apiError InvalidRequest Invalid request
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not OK
+  {
+      "status": "error",
+      "time": "2017-11-29T12:15:30.486Z",
+      "message": "Error message"
+  }
+ */
 function getLatestReviews(req, res, next) {
   db.any('select reviews.reviewid, reviews.spotify_album_id, reviews.review_text, reviews.date_time, users.username '
        + 'from reviews '
        + 'left join users on reviews.userid = users.userid '
        + 'order by date_time desc limit 20')
-    .then(function(data) {
+    .then((data) => {
       if (data.length > 0) {
        res.status(200)
           .json({
@@ -525,6 +584,63 @@ function getLatestReviews(req, res, next) {
            message: 'No reviews found',
           });
       }
+    })
+    .catch(err => next(err));
+}
+
+/**
+ * @api {get} admin-status/:userid Request admin status
+ * @apiName Admin Status
+ * @apiGroup Admin
+ * 
+ * @apiSuccess {boolean} admin True if user is admin.
+ * @apiSuccess {Date} requested_at time of request
+ * @apiSuccess {message} message result description.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+  {
+    "status": "success",
+    "admin": true,
+    "requested_at": "2018-03-24T09:00:01.185Z",
+    "message": "received admin status for userid",
+  }
+ *
+ * @apiError NotFound Not Found
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not Found
+  {
+      "status": "error",
+      "time": "2017-11-29T12:15:30.486Z",
+       "message": "No data returned from the query. 
+  }
+ * @apiError InvalidToken requested without a token
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not Found
+  {
+    please send token
+  }
+ * @apiError InvalidToken invalid token
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not Found
+  {
+    Invalid token
+  }
+
+ */
+function adminStatus(req, res, next) {
+  db.one('select admin from users where userid = $1', req.params.userid)
+    .then((data) => {
+      res.status(200)
+          .json({
+           status: 'success',
+           admin: data.admin,
+           requested_at: new Date(),
+           message: 'received admin status for userid ' + req.params.userid,
+          });
     })
     .catch(err => next(err));
 }
@@ -551,6 +667,7 @@ function deleteByUserId(userid){
 }
 
 module.exports = {
+  adminStatus,
   getUserId,
 	createUser,
 	login,
@@ -563,5 +680,5 @@ module.exports = {
   getUserReviews,
   getLatestReviews,
   testToken,
-  deleteReview
+  deleteReview,
 }

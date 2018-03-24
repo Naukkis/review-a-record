@@ -381,6 +381,27 @@ describe('DBqueries', function () {
     });
   });
 
+  describe('check admin status', () => {
+    let data = {};
+    beforeAll((done) => {
+      Request.get(dbURL + 'admin-status/' + userID,
+        (error, response, body) => {
+          data.status = response.statusCode;
+          data.body = JSON.parse(body);
+          data.headers = response.headers;
+          console.log(data.admin);
+          done();
+        });
+    });
+    it('should respond Status 200', () => {
+      expect(data.status).toBe(200);
+    });
+    
+    it('should respond with admin status', () => {
+      expect(data.body.admin).toBe(false);
+    });
+  })
+
   describe('Delete user', () => {
     var data = {};
     beforeAll((done) => {
@@ -421,5 +442,6 @@ describe('DBqueries', function () {
     });
   })
 
+  
   
 });
