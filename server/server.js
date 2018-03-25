@@ -29,11 +29,10 @@ app.get('/spotify/authcallback', spotify.authCallback);
 
 app.post('/login', db.login);
 app.post('/test-token', db.testToken);
-
+app.post('/users/create-user', db.createUser);
 app.get('/users/get-userid/:username', db.getUserId);
 app.get('/users/user-name-available/:username', db.userNameAvailable);
-app.post('/users/create-user', db.createUser);
-
+app.get('/admin-status/:userid', db.adminStatus);
 
 app.get('/reviews/get-all-reviews', db.getAllReviews);
 app.get('/reviews/artist/:spotifyid', db.getArtistReviews);
