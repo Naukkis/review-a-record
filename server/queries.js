@@ -617,19 +617,6 @@ function getLatestReviews(req, res, next) {
   }
  * @apiError InvalidToken requested without a token
  *
- * @apiErrorExample Error-Response:
- *     HTTP/1.1 404 Not Found
-  {
-    please send token
-  }
- * @apiError InvalidToken invalid token
- *
- * @apiErrorExample Error-Response:
- *     HTTP/1.1 404 Not Found
-  {
-    Invalid token
-  }
-
  */
 function adminStatus(req, res, next) {
   db.one('select admin from users where userid = $1', req.params.userid)
