@@ -16,7 +16,7 @@ describe('DBqueries', function () {
     beforeAll((done) => {
       Request.post({
         url: dbURL + 'users/create-user',
-        form: { 'username': 'jasmineTestUser', 'password': 'asdfg', 'email': 'mail@mail.com', 'firstname': 'etunimi', 'lastname': 'sukunimi' }
+        form: { 'username': 'jasmineTestUser', 'password': 'asdfg', 'email': 'mail@mail.com', 'firstname': 'etunimi', 'lastname': 'sukunimi', 'admin': 'true' }
       },
         (error, response, body) => {
           data.status = response.statusCode;
@@ -398,10 +398,11 @@ describe('DBqueries', function () {
     });
     
     it('should respond with admin status', () => {
-      expect(data.body.admin).toBe(false);
+      expect(data.body.admin).toBe(true);
     });
   })
 
+  
   describe('Delete user', () => {
     var data = {};
     beforeAll((done) => {
