@@ -233,24 +233,26 @@ function deleteUser(req, res, next) {
         "status": "success",
         "created_at": "2017-11-29T12:49:46.495Z",
         "message": "created new user",
+        "reviewid": "12",
         "user": "username"
     }
  *
  */
 function saveReview(req, res, next) {
   let data = req.body;
-  db.none('insert into reviews (userID, artist_name, album_name,'
+  db.one('insert into reviews (userID, artist_name, album_name,'
     + 'spotify_artist_id, spotify_album_id, review_text, date_time)'
-    + 'values ($1, $2, $3, $4, $5, $6, current_timestamp)',
+    + 'values ($1, $2, $3, $4, $5, $6, current_timestamp) returning reviewid',
     [data.user_id, data.artist_name, data.album_name,
     data.spotify_artist_id, data.spotify_album_id, data.review_text])
 
-    .then(function () {
+    .then(function (data) {
       res.status(200)
         .json({
           status: 'success',
           created_at: new Date(),
           message: 'saved new review',
+          reviewid: data.reviewid,
           user: req.body.username
         });
     })
@@ -634,9 +636,12 @@ function adminStatus(req, res, next) {
 }
 
 /**
- * @api {get} secure/reviews/delete-review/ Delete review
+ * @api {post} secure/reviews/delete-review/ Delete review
  * @apiName DeleteReview
  * @apiGroup Reviews
+ * 
+ * @apiParam {String} user_id current user's userid.
+ * @apiParam {Number} reviewid id of the review to be removed.
  * 
  * @apiSuccess {String} status result of request
  * @apiSuccess {Date} requested_at time of request
@@ -666,7 +671,7 @@ function deleteReview(req, res, next) {
     return t.any('select admin from users where userid = $1', req.body.user_id)
       .then((result) => {
         if (result[0].admin) {
-          return t.any('delete from reviews where userid = $1 and spotify_album_id = $2', [req.body.user_id, req.body.spotify_album_id])
+          return t.any('delete from reviews where userid = $1 and reviewid = $2', [req.body.user_id, req.body.reviewid])
         }
         return 'Not an admin';
       })
