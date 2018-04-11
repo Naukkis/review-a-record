@@ -8,6 +8,7 @@ describe('DBqueries', function () {
 
   var token = '';
   var userID;
+  var reviewid;
 
   var dbURL = 'http://localhost:3002/';
 
@@ -16,7 +17,7 @@ describe('DBqueries', function () {
     beforeAll((done) => {
       Request.post({
         url: dbURL + 'users/create-user',
-        form: { 'username': 'jasmineTestUser', 'password': 'asdfg', 'email': 'mail@mail.com', 'firstname': 'etunimi', 'lastname': 'sukunimi' }
+        form: { 'username': 'jasmineTestUser', 'password': 'asdfg', 'email': 'mail@mail.com', 'firstname': 'etunimi', 'lastname': 'sukunimi', 'admin': 'true' }
       },
         (error, response, body) => {
           data.status = response.statusCode;
@@ -203,6 +204,7 @@ describe('DBqueries', function () {
         (error, response, body) => {
           data.status = response.statusCode;
           data.body = JSON.parse(body);
+          reviewid = data.body.reviewid;
           done();
         });
     });
@@ -328,7 +330,7 @@ describe('DBqueries', function () {
     beforeAll((done) => {
       Request.post({
         url: dbURL + 'secure/reviews/delete-review',
-        form: { 'user_id': userID, 'spotify_album_id': '5rFZcoCvmCaJ1gxTMU4JTm', 'token': token }
+        form: { 'user_id': userID, 'reviewid': reviewid, 'token': token }
       },
         (error, response, body) => {
           data.status = response.statusCode;
@@ -398,10 +400,11 @@ describe('DBqueries', function () {
     });
     
     it('should respond with admin status', () => {
-      expect(data.body.admin).toBe(false);
+      expect(data.body.admin).toBe(true);
     });
   })
 
+  
   describe('Delete user', () => {
     var data = {};
     beforeAll((done) => {

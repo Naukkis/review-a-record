@@ -21,11 +21,11 @@ const jwt = require('jsonwebtoken');
  */
 function getUserId(req, res, next) {
   db.one('select userID from users where username = $1', [req.params.username])
-    .then(function(data) {
-        res.status(200)
-          .json({
-            userid: data.userid,
-          })
+    .then(function (data) {
+      res.status(200)
+        .json({
+          userid: data.userid,
+        })
     })
     .catch(err => next(err));
 }
@@ -47,15 +47,15 @@ function getUserId(req, res, next) {
  *
  */
 function userNameAvailable(req, res, next) {
-	db.any('select 1 from users where username = $1', [req.params.username])
-	  .then(function(data) {
-	  		if (data.length == 0) {
-	  			res.status(200).send(true);
-	  		} else {
-	  			res.status(200).send(false);
-	  		}
-	  })
-	  .catch(err => next(err));
+  db.any('select 1 from users where username = $1', [req.params.username])
+    .then(function (data) {
+      if (data.length == 0) {
+        res.status(200).send(true);
+      } else {
+        res.status(200).send(false);
+      }
+    })
+    .catch(err => next(err));
 }
 
 /**
@@ -86,19 +86,20 @@ function createUser(req, res, next) {
     return next(new Error("Invalid input!"));
   }
 
-  let psw = bcrypt.hashSync(req.body.password, salt);
+  const psw = bcrypt.hashSync(req.body.password, salt);
+  const admin = req.body.admin || false;
   db.none('insert into users(username, password, email, firstname, lastname, admin)'
-        + 'values($1, $2, $3, $4, $5, $6)',
-        [req.body.username, psw, req.body.email, req.body.firstname, req.body.lastname, false])
-    .then(function() {
+    + 'values($1, $2, $3, $4, $5, $6)',
+    [req.body.username, psw, req.body.email, req.body.firstname, req.body.lastname, admin])
+    .then(function () {
       res.status(200)
-     	.json({
-         status: 'success',
+        .json({
+          status: 'success',
           created_at: new Date(),
           message: 'created new user',
           user: req.body.username
-      });
-	 })
+        });
+    })
     .catch(err => next(err));
 }
 
@@ -128,41 +129,41 @@ function createUser(req, res, next) {
     }
  *
  */
-function login(req, res, next){
+function login(req, res, next) {
   let submittedPsw = req.body.password;
   db.one('select * from users where username = $1', [req.body.username])
-    .then(function(data) {
-       	let verified = bcrypt.compareSync(submittedPsw, data.password);
-        var token = jwt.sign({data: data}, process.env.SECRET_KEY, {
-          expiresIn: 60*60
-        })
-        if (verified){
-          delete data.password;
-          res.status(200)
-          	 .json({
-	            username: req.body.username,
-              userid: data.userid,
-	            token: token,
-	            login_at: new Date(),
-	            message: 'login successful'
-          	 })
-        } else {
-          res.status(400)
-            .json({
-              message: 'entered wrong password'
-            })
-        }
+    .then(function (data) {
+      let verified = bcrypt.compareSync(submittedPsw, data.password);
+      var token = jwt.sign({ data: data }, process.env.SECRET_KEY, {
+        expiresIn: 60 * 60
+      })
+      if (verified) {
+        delete data.password;
+        res.status(200)
+          .json({
+            username: req.body.username,
+            userid: data.userid,
+            token: token,
+            login_at: new Date(),
+            message: 'login successful'
+          })
+      } else {
+        res.status(400)
+          .json({
+            message: 'entered wrong password'
+          })
+      }
     })
     .catch(err => next(err));
 }
 
-function testToken(req, res){
+function testToken(req, res) {
   var token = req.body.token || req.headers['token'];
 
   if (token) {
-    jwt.verify(token, process.env.SECRET_KEY, function(err, decoded){
+    jwt.verify(token, process.env.SECRET_KEY, function (err, decoded) {
       delete decoded.data.password;
-      if (err){
+      if (err) {
         res.status(401)
           .json({
             data: false,
@@ -187,27 +188,27 @@ function testToken(req, res){
 }
 
 function deleteUser(req, res, next) {
- let submittedPsw = req.body.password;
+  let submittedPsw = req.body.password;
   db.one('select * from users where username = $1', [req.body.username])
-    .then(function(data) {
-       	let verified = bcrypt.compareSync(submittedPsw, data.password);
+    .then(function (data) {
+      let verified = bcrypt.compareSync(submittedPsw, data.password);
 
-        if (verified){
-          delete data.password;
-          deleteByUserId(data.userid);
-          res.status(200)
-          	 .json({
-			    username: req.body.username,
-			    deleted_at: new Date(),
-			    message: 'user deleted'
-	         })
+      if (verified) {
+        delete data.password;
+        deleteByUserId(data.userid);
+        res.status(200)
+          .json({
+            username: req.body.username,
+            deleted_at: new Date(),
+            message: 'user deleted'
+          })
 
-        } else {
-          res.status(400)
-            .json({
-              message: 'entered wrong password'
-            })
-        }
+      } else {
+        res.status(400)
+          .json({
+            message: 'entered wrong password'
+          })
+      }
     })
     .catch(err => next(err));
 }
@@ -232,45 +233,47 @@ function deleteUser(req, res, next) {
         "status": "success",
         "created_at": "2017-11-29T12:49:46.495Z",
         "message": "created new user",
+        "reviewid": "12",
         "user": "username"
     }
  *
  */
 function saveReview(req, res, next) {
-	let data = req.body;
-	db.none('insert into reviews (userID, artist_name, album_name,'
-			+ 'spotify_artist_id, spotify_album_id, review_text, date_time)'
-			+ 'values ($1, $2, $3, $4, $5, $6, current_timestamp)',
-			[data.user_id, data.artist_name, data.album_name,
-			data.spotify_artist_id, data.spotify_album_id, data.review_text])
+  let data = req.body;
+  db.one('insert into reviews (userID, artist_name, album_name,'
+    + 'spotify_artist_id, spotify_album_id, review_text, date_time)'
+    + 'values ($1, $2, $3, $4, $5, $6, current_timestamp) returning reviewid',
+    [data.user_id, data.artist_name, data.album_name,
+    data.spotify_artist_id, data.spotify_album_id, data.review_text])
 
-		.then(function() {
-		    res.status(200)
-		       .json({
-			        status: 'success',
-			        created_at: new Date(),
-			        message: 'saved new review',
-			        user: req.body.username
-			    });
-			 })
-		.catch(function(err) {
-		    return next(err);
-		});
+    .then(function (data) {
+      res.status(200)
+        .json({
+          status: 'success',
+          created_at: new Date(),
+          message: 'saved new review',
+          reviewid: data.reviewid,
+          user: req.body.username
+        });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
 }
 
 function getAllReviews(req, res, next) {
-	db.any('select * from reviews')
+  db.any('select * from reviews')
 
-		.then(function (data) {
-	      res.status(200)
-	        .json({
-	          status: 'success',
-	          data: data,
-	          received_at: new Date(),
-	          message: 'Retrieved ALL reviews'
-	        });
-	    })
-	    .catch(err => next(err));
+    .then(function (data) {
+      res.status(200)
+        .json({
+          status: 'success',
+          data: data,
+          received_at: new Date(),
+          message: 'Retrieved ALL reviews'
+        });
+    })
+    .catch(err => next(err));
 }
 
 /**
@@ -327,21 +330,21 @@ function getAllReviews(req, res, next) {
  */
 function getArtistReviews(req, res, next) {
   db.any('select * from reviews where spotify_artist_id = $1', [req.params.spotifyid])
-    .then(function(data) {
+    .then(function (data) {
       if (data.length > 0) {
-         res.status(200)
+        res.status(200)
           .json({
-           status: 'success',
-           data: data,
-           requested_at: new Date(),
-           message: 'received all reviews by artist',
+            status: 'success',
+            data: data,
+            requested_at: new Date(),
+            message: 'received all reviews by artist',
           });
       } else {
         res.status(200)
           .json({
-           status: 'fail',
-           requested_at: new Date(),
-           message: 'No reviews found',
+            status: 'fail',
+            requested_at: new Date(),
+            message: 'No reviews found',
           });
       }
 
@@ -402,25 +405,25 @@ function getArtistReviews(req, res, next) {
  */
 function getAlbumReviews(req, res, next) {
   db.any('select reviews.reviewid, reviews.spotify_album_id, reviews.review_text, reviews.date_time, users.username '
-        + 'from reviews '
-        + 'left join users on reviews.userid = users.userid '
-        + 'where reviews.spotify_album_id = $1', [req.params.spotifyid])
-    .then(function(data) {
+    + 'from reviews '
+    + 'left join users on reviews.userid = users.userid '
+    + 'where reviews.spotify_album_id = $1', [req.params.spotifyid])
+    .then(function (data) {
 
       if (data.length > 0) {
-         res.status(200)
+        res.status(200)
           .json({
-           status: 'success',
-           data: data,
-           requested_at: new Date(),
-           message: 'received all reviews by album',
+            status: 'success',
+            data: data,
+            requested_at: new Date(),
+            message: 'received all reviews by album',
           });
       } else {
         res.status(200)
           .json({
-           status: 'fail',
-           requested_at: new Date(),
-           message: 'No reviews found',
+            status: 'fail',
+            requested_at: new Date(),
+            message: 'No reviews found',
           });
       }
     })
@@ -482,21 +485,21 @@ function getAlbumReviews(req, res, next) {
 function getUserReviews(req, res, next) {
   let userid = parseInt(req.params.userid);
   db.any('select * from reviews where userid = $1', [userid])
-    .then(function(data) {
+    .then(function (data) {
       if (data.length > 0) {
-         res.status(200)
+        res.status(200)
           .json({
-           status: 'success',
-           data: data,
-           requested_at: new Date(),
-           message: 'received all reviews by user',
+            status: 'success',
+            data: data,
+            requested_at: new Date(),
+            message: 'received all reviews by user',
           });
       } else {
         res.status(200)
           .json({
-           status: 'fail',
-           requested_at: new Date(),
-           message: 'No reviews found',
+            status: 'fail',
+            requested_at: new Date(),
+            message: 'No reviews found',
           });
       }
     })
@@ -564,24 +567,24 @@ function getUserReviews(req, res, next) {
  */
 function getLatestReviews(req, res, next) {
   db.any('select reviews.reviewid, reviews.spotify_album_id, reviews.review_text, reviews.date_time, users.username '
-       + 'from reviews '
-       + 'left join users on reviews.userid = users.userid '
-       + 'order by date_time desc limit 20')
+    + 'from reviews '
+    + 'left join users on reviews.userid = users.userid '
+    + 'order by date_time desc limit 20')
     .then((data) => {
       if (data.length > 0) {
-       res.status(200)
+        res.status(200)
           .json({
-           status: 'success',
-           data: data,
-           requested_at: new Date(),
-           message: 'received latest 20 reviews',
+            status: 'success',
+            data: data,
+            requested_at: new Date(),
+            message: 'received latest 20 reviews',
           });
       } else {
         res.status(200)
           .json({
-           status: 'fail',
-           requested_at: new Date(),
-           message: 'No reviews found',
+            status: 'fail',
+            requested_at: new Date(),
+            message: 'No reviews found',
           });
       }
     })
@@ -622,46 +625,96 @@ function adminStatus(req, res, next) {
   db.one('select admin from users where userid = $1', req.params.userid)
     .then((data) => {
       res.status(200)
-          .json({
-           status: 'success',
-           admin: data.admin,
-           requested_at: new Date(),
-           message: 'received admin status for userid ' + req.params.userid,
-          });
-    })
-    .catch(err => next(err));
-}
-
-function deleteReview(req, res, next) {
-  db.any('delete from reviews where userid = $1 and spotify_album_id = $2', [req.body.user_id, req.body.spotify_album_id])
-    .then((data) => {
-      res.status(200)
-         .json({
+        .json({
           status: 'success',
+          admin: data.admin,
           requested_at: new Date(),
-          message: 'review deleted',
-         })
+          message: 'received admin status for userid ' + req.params.userid,
+        });
     })
     .catch(err => next(err));
 }
 
-function deleteByUserId(userid){
-	db.none('delete from users where userid = $1', userid)
-    .then(() => {
-       return 'success';
+/**
+ * @api {post} secure/reviews/delete-review/ Delete review
+ * @apiName DeleteReview
+ * @apiGroup Reviews
+ * 
+ * @apiParam {String} user_id current user's userid.
+ * @apiParam {Number} reviewid id of the review to be removed.
+ * 
+ * @apiSuccess {String} status result of request
+ * @apiSuccess {Date} requested_at time of request
+ * @apiSuccess {message} message result description.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+  {
+    "status": "success",
+    "requested_at": "2018-03-24T09:00:01.185Z",
+    "message": "review deleted",
+  }
+ *
+ * @apiError NotAuthorized Not Authorized
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 401 Not Authorized
+  {
+      "status": "error",
+      "time": "2017-11-29T12:15:30.486Z",
+      "message": "Not an admin, this incident will be reported. 
+  }
+ *
+ */
+function deleteReview(req, res, next) {
+  db.task((t) => {
+    return t.any('select admin from users where userid = $1', req.body.user_id)
+      .then((result) => {
+        if (result[0].admin) {
+          return t.any('delete from reviews where userid = $1 and reviewid = $2', [req.body.user_id, req.body.reviewid])
+        }
+        return 'Not an admin';
+      })
+      .catch(err => err);
+  })
+    .then((data) => {
+      if (data === 'Not an admin') {
+        res.status(401)
+          .json({
+            status: 'error',
+            requested_at: new Date(),
+            message: 'Not an admin, this incident will be reported',
+          })
+
+      } else {
+        res.status(200)
+          .json({
+            status: 'success',
+            requested_at: new Date(),
+            message: 'review deleted',
+          })
+      }
     })
     .catch(err => next(err));
+}
+
+function deleteByUserId(userid, next) {
+  db.none('delete from users where userid = $1', userid)
+    .then(() => {
+      return 'success';
+    })
+    .catch(err => err);
 }
 
 module.exports = {
   adminStatus,
   getUserId,
-	createUser,
-	login,
-	userNameAvailable,
-	deleteUser,
-	saveReview,
-	getAllReviews,
+  createUser,
+  login,
+  userNameAvailable,
+  deleteUser,
+  saveReview,
+  getAllReviews,
   getArtistReviews,
   getAlbumReviews,
   getUserReviews,
