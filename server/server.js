@@ -18,7 +18,7 @@ app.use(morgan('dev'));
 app.set('port', process.env.PORT || 3002);
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('/../client/build'));
+  app.use(express.static('../client/build'));
 }
 
 app.use('/secure/', router);
