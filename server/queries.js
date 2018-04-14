@@ -698,6 +698,103 @@ function deleteReview(req, res, next) {
     .catch(err => next(err));
 }
 
+/**
+ * @api {post} secure/reviews/rate-album/ Rate album
+ * @apiName RateAlbum
+ * @apiGroup Reviews
+ * 
+ * @apiParam {String} user_id current user's userid.
+ * @apiParam {String} spotify_album_id album's Spotify id
+ * @apiParam {Integer} rating rating for the album, 0-5
+ * 
+ * @apiSuccess {String} status result of request
+ * @apiSuccess {Date} rated_at time of request
+ * @apiSuccess {message} message result description.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+  {
+    "status": "success",
+    "rated_at": "2018-03-24T09:00:01.185Z",
+    "message": "rated album",
+    "album": "5rFZcoCvmCaJ1gxTMU4JTm",
+    "rating": 4
+  }
+ *
+ * @apiError NotFound Not Found
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not Found
+  {
+      "status": "error",
+      "time": "2017-11-29T12:15:30.486Z",
+      "message": "Invalid request". 
+  }
+ *
+ */
+function rateAlbum(req, res, next) {
+  db.none(
+    'insert into album_ratings(spotify_album_ID, userID, rating) values($1, $2, $3)',
+    [req.body.spotify_album_id, req.body.user_id, req.body.rating])
+    .then(function () {
+      res.status(200)
+        .json({
+          status: 'success',
+          rated_at: new Date(),
+          message: 'rated album',
+          album: req.spotify_album_id,
+          rating: req.body.rating
+        });
+    })
+    .catch(err => next(err));
+}
+
+/**
+ * @api {get} /reviews/rate-album/:spotifyid Album rating
+ * @apiName AlbumRating
+ * @apiGroup Reviews
+ * 
+ * @apiParam {String} spotifyid album's Spotify id.
+ * 
+ * @apiSuccess {String} status result of request
+ * @apiSuccess {Date} rated_at time of request
+ * @apiSuccess {message} message result description.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+  {
+    "status": "success",
+    "requested_at": "2018-04-14T15:50:42.133Z",
+    "message": "album rating fetched",
+    "ratingAverage": 4.5
+  }
+ *
+ * @apiError NotFound Not Found
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not Found
+  {
+      "status": "error",
+      "time": "2017-11-29T12:15:30.486Z",
+      "message": "Invalid request". 
+  }
+ *
+ */
+function albumRating(req, res, next) {
+  db.any('select rating from album_ratings where spotify_album_ID = $1', req.params.spotifyid)
+    .then((data) => {
+      const average = data.map(data => data.rating).reduce((total, rating) => total + rating) / data.length;
+      res.status(200)
+        .json({
+          status: 'success',
+          requested_at: new Date(),
+          message: 'album rating fetched',
+          album: req.spotify_album_id,
+          ratingAverage: average
+        })
+    })
+}
+
 function deleteByUserId(userid, next) {
   db.none('delete from users where userid = $1', userid)
     .then(() => {
@@ -721,4 +818,6 @@ module.exports = {
   getLatestReviews,
   testToken,
   deleteReview,
+  rateAlbum,
+  albumRating
 }

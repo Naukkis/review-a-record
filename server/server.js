@@ -8,11 +8,12 @@ const router      = require('./router');
 
 const app = express();
 process.env.SECRET_KEY = "badasskeyfortokens";
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-app.use(bodyParser.json());
+
 app.use(morgan('dev'));
 
 app.set('port', process.env.PORT || 3002);
@@ -39,6 +40,7 @@ app.get('/reviews/artist/:spotifyid', db.getArtistReviews);
 app.get('/reviews/album/:spotifyid', db.getAlbumReviews);
 app.get('/reviews/latest', db.getLatestReviews);
 app.get('/reviews/:userid', db.getUserReviews);
+app.get('/reviews/album-rating/:spotifyid', db.albumRating);
 
 app.get('/spotify/player', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../', 'client', 'build', 'player.html'));

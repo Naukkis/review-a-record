@@ -10,14 +10,38 @@ describe('DBqueries', function () {
   var userID;
   var reviewid;
 
+  var regularToken = '';
+  var regularUserID;
+
   var dbURL = 'http://localhost:3002/';
 
-  describe('Create user', () => {
+  describe('Create admin user', () => {
     var data = {};
     beforeAll((done) => {
       Request.post({
         url: dbURL + 'users/create-user',
         form: { 'username': 'jasmineTestUser', 'password': 'asdfg', 'email': 'mail@mail.com', 'firstname': 'etunimi', 'lastname': 'sukunimi', 'admin': 'true' }
+      },
+        (error, response, body) => {
+          data.status = response.statusCode;
+          data.body = JSON.parse(body);
+          done();
+        });
+    });
+    it('should respond Status 200', () => {
+      expect(data.status).toBe(200);
+    });
+    it('Should greate one user', () => {
+      expect(data.body.message).toBe('created new user');
+    });
+  });
+
+  describe('Create regular user', () => {
+    var data = {};
+    beforeAll((done) => {
+      Request.post({
+        url: dbURL + 'users/create-user',
+        form: { 'username': 'jasmineRegularTestUser', 'password': 'asdfg', 'email': 'testmail@mail.com', 'firstname': 'etunimi', 'lastname': 'sukunimi', 'admin': 'true' }
       },
         (error, response, body) => {
           data.status = response.statusCode;
@@ -54,7 +78,7 @@ describe('DBqueries', function () {
     });
   });
 
-  describe('Login user', () => {
+  describe('Login admin user', () => {
     var data = {};
     beforeAll((done) => {
       Request.post({
@@ -82,6 +106,37 @@ describe('DBqueries', function () {
     it('Should receive userID', () => {
       expect(data.body.userid).toBeTruthy();
       userID = data.body.userid;
+    })
+  });
+
+  describe('Login regular user', () => {
+    var data = {};
+    beforeAll((done) => {
+      Request.post({
+        url: dbURL + 'login',
+        form: { 'username': 'jasmineRegularTestUser', 'password': 'asdfg' }
+      },
+        (error, response, body) => {
+          data.status = response.statusCode;
+          data.body = JSON.parse(body);
+          regularToken = data.body.token;
+          done();
+        });
+    });
+    it('should respond Status 200', () => {
+      expect(data.status).toBe(200);
+    });
+    it('Should be able to login', () => {
+      expect(data.body.message).toBe('login successful');
+    });
+
+    it('Shoud receive a token', () => {
+      expect(data.body.token).toBeTruthy();
+    })
+
+    it('Should receive userID', () => {
+      expect(data.body.userid).toBeTruthy();
+      regularUserID = data.body.userid;
     })
   });
 
@@ -283,6 +338,67 @@ describe('DBqueries', function () {
     })
   });
 
+  describe('Rate album by admin user', () => {
+    var data = {};
+    beforeAll((done) => {
+      Request.post({ 
+        url: dbURL + 'secure/reviews/rate-album',
+        form: { 'user_id': userID, 'spotify_album_id': '5rFZcoCvmCaJ1gxTMU4JTm', 'token': token, 'rating': 4 }},
+        (error, response, body) => {
+          data.status = response.statusCode;
+          data.body = JSON.parse(body);
+          done();
+        });
+    });
+    it('should respond Status 200', () => {
+      expect(data.status).toBe(200);
+    });
+    it('Should rate album', () => {
+      expect(data.body.message).toBe('rated album');
+    });
+  });
+
+  describe('Rate album by regular user', () => {
+    var data = {};
+    beforeAll((done) => {
+      Request.post({ 
+        url: dbURL + 'secure/reviews/rate-album',
+        form: { 'user_id': regularUserID, 'spotify_album_id': '5rFZcoCvmCaJ1gxTMU4JTm', 'token': regularToken, 'rating': 5 }},
+        (error, response, body) => {
+          data.status = response.statusCode;
+          data.body = JSON.parse(body);
+          done();
+        });
+    });
+    it('should respond Status 200', () => {
+      expect(data.status).toBe(200);
+    });
+    it('Should rate album', () => {
+      expect(data.body.message).toBe('rated album');
+    });
+  });
+
+  describe('Get album rating', () => {
+    var data = {};
+    beforeAll((done) => {
+      Request.get(dbURL + 'reviews/album-rating/5rFZcoCvmCaJ1gxTMU4JTm',
+      (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = JSON.parse(body);
+        done();
+      });
+    });
+    it('should respond Status 200', () => {
+      expect(data.status).toBe(200);
+    });
+    it('Should receive reviews', () => {
+      expect(data.body.message).toBe('album rating fetched');
+    });
+    it('Should contain review data', () => {
+      expect(data.body.ratingAverage).toBe(4.5);
+    });
+  });
+
   describe('Get latest reviews', () => {
     var data = {};
     beforeAll((done) => {
@@ -426,6 +542,27 @@ describe('DBqueries', function () {
     });
   });
 
+  describe('Delete regular user', () => {
+    var data = {};
+    beforeAll((done) => {
+      Request.post({
+        url: dbURL + 'secure/users/delete-user',
+        form: { 'username': 'jasmineRegularTestUser', 'password': 'asdfg', 'token': regularToken }
+      },
+        (error, response, body) => {
+          data.status = response.statusCode;
+          data.body = JSON.parse(body);
+          done();
+        });
+    });
+    it('should respond Status 200', () => {
+      expect(data.status).toBe(200);
+    });
+    it('Should be able to delete user', () => {
+      expect(data.body.message).toBe('user deleted');
+    });
+  });
+
   describe('receive music player', () => {
     let data = {};
     beforeAll((done) => {
@@ -443,8 +580,6 @@ describe('DBqueries', function () {
     it('should respond with correct content-type', () => {
       expect(data.headers['content-type']).toBe('text/html; charset=UTF-8');
     });
-  })
+  });
 
-  
-  
 });
