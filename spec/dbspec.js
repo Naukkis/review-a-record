@@ -283,6 +283,26 @@ describe('DBqueries', function () {
     })
   });
 
+  describe('Rate album', () => {
+    var data = {};
+    beforeAll((done) => {
+      Request.post({ 
+        url: dbURL + 'secure/reviews/rate-album',
+        form: { 'user_id': userID, 'spotify_album_id': reviewid, 'token': token, 'rating': 4 }},
+        (error, response, body) => {
+          data.status = response.statusCode;
+          data.body = JSON.parse(body);
+          done();
+        });
+    });
+    it('should respond Status 200', () => {
+      expect(data.status).toBe(200);
+    });
+    it('Should rate album', () => {
+      expect(data.body.message).toBe('rated album');
+    });
+  });
+
   describe('Get latest reviews', () => {
     var data = {};
     beforeAll((done) => {

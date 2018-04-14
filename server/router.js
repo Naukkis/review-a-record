@@ -20,11 +20,11 @@ router.use(function(req, res, next) {
       }
     })
   } else {
-    res.send("please send token");
+    res.status(401).send("please send token");
   }
 })
 
-
+router.post('/reviews/rate-album', db.rateAlbum);
 router.post('/reviews/save-review', db.saveReview);
 router.post('/reviews/delete-review', db.deleteReview);
 router.post('/users/delete-user', db.deleteUser);

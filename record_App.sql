@@ -22,3 +22,10 @@ CREATE TABLE reviews(
 	review_text TEXT NOT NULL,
 	date_time timestamp
 );
+
+CREATE TABLE album_ratings(
+  spotify_album_ID TEXT,
+  userID INTEGER NOT NULL REFERENCES users(userID),
+  rating SMALLINT NOT NULL,
+  PRIMARY KEY (spotify_album_ID, userID)
+);
