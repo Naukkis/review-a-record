@@ -5,12 +5,8 @@ var jwt = require('jsonwebtoken');
 
 var router = express.Router();
 
-router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({extended: true}));
-
 router.use(function(req, res, next) {
   var token = req.body.token || req.headers['token'];
-
   if(token) {
     jwt.verify(token, process.env.SECRET_KEY, function(err, decoded) {
       if(err) {

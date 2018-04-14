@@ -25,7 +25,7 @@ CREATE TABLE reviews(
 
 CREATE TABLE album_ratings(
   spotify_album_ID TEXT,
-  userID INTEGER NOT NULL REFERENCES users(userID),
+  userID INTEGER NOT NULL REFERENCES users(userID) ON DELETE CASCADE,
   rating SMALLINT NOT NULL,
   PRIMARY KEY (spotify_album_ID, userID)
 );

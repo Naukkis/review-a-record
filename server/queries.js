@@ -704,8 +704,8 @@ function deleteReview(req, res, next) {
  * @apiGroup Reviews
  * 
  * @apiParam {String} user_id current user's userid.
- * @apiParam {String} Spotify album id
- * @apiParam {Integer} Rating for the album, 0-5
+ * @apiParam {String} spotify_album_id album's Spotify id
+ * @apiParam {Integer} rating rating for the album, 0-5
  * 
  * @apiSuccess {String} status result of request
  * @apiSuccess {Date} rated_at time of request
@@ -721,7 +721,7 @@ function deleteReview(req, res, next) {
     "rating": 4
   }
  *
- * @apiError NotAuthorized Not Authorized
+ * @apiError NotFound Not Found
  *
  * @apiErrorExample Error-Response:
  *     HTTP/1.1 404 Not Found
@@ -749,6 +749,52 @@ function rateAlbum(req, res, next) {
     .catch(err => next(err));
 }
 
+/**
+ * @api {get} /reviews/rate-album/:spotifyid Album rating
+ * @apiName AlbumRating
+ * @apiGroup Reviews
+ * 
+ * @apiParam {String} spotifyid album's Spotify id.
+ * 
+ * @apiSuccess {String} status result of request
+ * @apiSuccess {Date} rated_at time of request
+ * @apiSuccess {message} message result description.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+  {
+    "status": "success",
+    "requested_at": "2018-04-14T15:50:42.133Z",
+    "message": "album rating fetched",
+    "ratingAverage": 4.5
+  }
+ *
+ * @apiError NotFound Not Found
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not Found
+  {
+      "status": "error",
+      "time": "2017-11-29T12:15:30.486Z",
+      "message": "Invalid request". 
+  }
+ *
+ */
+function albumRating(req, res, next) {
+  db.any('select rating from album_ratings where spotify_album_ID = $1', req.params.spotifyid)
+    .then((data) => {
+      const average = data.map(data => data.rating).reduce((total, rating) => total + rating) / data.length;
+      res.status(200)
+        .json({
+          status: 'success',
+          requested_at: new Date(),
+          message: 'album rating fetched',
+          album: req.spotify_album_id,
+          ratingAverage: average
+        })
+    })
+}
+
 function deleteByUserId(userid, next) {
   db.none('delete from users where userid = $1', userid)
     .then(() => {
@@ -773,4 +819,5 @@ module.exports = {
   testToken,
   deleteReview,
   rateAlbum,
+  albumRating
 }
