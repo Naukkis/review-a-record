@@ -1,11 +1,18 @@
-describe('Spotify functions', function () {
-  var Request = require('request');
-  var server;
+/* 
+* Integration tests to test all Spotify related API-endpoints with test database.
+*/
 
+describe('Spotify functions', function () {
+  // request module to perform http-requests
+  var Request = require('request');
+
+  // Start server to run tests on
+  var server;
   beforeAll(() => {
     server = require('../server/server');
   });
 
+  // access token should be received from Spotify Web api
   describe('it should receive Spotify access token', () => {
     let data = {};
     beforeAll((done) => {
