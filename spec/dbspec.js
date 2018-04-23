@@ -329,6 +329,32 @@ describe('DBqueries', function () {
     })
   });
 
+  describe('Edit a review', () => {
+    let data = {};
+    beforeAll((done) => {
+      Request.post({
+        url: dbURL + 'secure/reviews/edit-review',
+        form: {
+          'user_id': userID,
+          'review_text': 'jeejee edited',
+          'reviewid': reviewid,
+          'token': token
+        }
+      },
+        (error, response, body) => {
+          data.status = response.statusCode;
+          data.body = JSON.parse(body);
+          done();
+        });
+    });
+    it('should respond Status 200', () => {
+      expect(data.status).toBe(200);
+    });
+    it('Should receive reviews', () => {
+      expect(data.body.message).toBe('review with id ' + reviewid +  ' edited');
+    });
+  })
+
   describe('Get all reviews by user', () => {
     var data = {};
     beforeAll((done) => {
