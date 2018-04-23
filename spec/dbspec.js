@@ -1,18 +1,29 @@
+/* 
+* Integration tests to test all database related API-endpoints with test database.
+*/
+
 describe('DBqueries', function () {
+  // Start server to run tests on
   var server;
   beforeAll(() => {
     server = require('../server/server');
   });
 
+  // request module to perform http-requests
   var Request = require('request');
 
+  // token to be received after login for admin and regular user
   var token = '';
-  var userID;
-  var reviewid;
-
   var regularToken = '';
+  
+  // save userID for created users
+  var userID;
   var regularUserID;
 
+  // save review id for review made in tests, so we can search/modify/delete the review later
+  var reviewid;
+
+  // test environment database address
   var dbURL = 'http://localhost:3002/';
 
   describe('Create admin user', () => {
@@ -57,6 +68,7 @@ describe('DBqueries', function () {
     });
   });
 
+  // test if error handling on creating user is workin as expected with empty from
   describe('Create user error handling', () => {
     var data = {};
     beforeAll((done) => {
@@ -317,6 +329,32 @@ describe('DBqueries', function () {
     })
   });
 
+  describe('Edit a review', () => {
+    let data = {};
+    beforeAll((done) => {
+      Request.post({
+        url: dbURL + 'secure/reviews/edit-review',
+        form: {
+          'user_id': userID,
+          'review_text': 'jeejee edited',
+          'reviewid': reviewid,
+          'token': token
+        }
+      },
+        (error, response, body) => {
+          data.status = response.statusCode;
+          data.body = JSON.parse(body);
+          done();
+        });
+    });
+    it('should respond Status 200', () => {
+      expect(data.status).toBe(200);
+    });
+    it('Should receive reviews', () => {
+      expect(data.body.message).toBe('review with id ' + reviewid +  ' edited');
+    });
+  })
+
   describe('Get all reviews by user', () => {
     var data = {};
     beforeAll((done) => {
@@ -462,6 +500,7 @@ describe('DBqueries', function () {
     });
   });
 
+  // test empty results
   describe('no reviews for artist', () => {
     var data = {};
     beforeAll((done) => {

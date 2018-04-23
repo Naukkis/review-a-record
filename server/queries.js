@@ -757,17 +757,16 @@ function rateAlbum(req, res, next) {
  * @apiParam {String} spotifyid album's Spotify id.
  * 
  * @apiSuccess {String} status result of request
- * @apiSuccess {Date} rated_at time of request
+ * @apiSuccess {Date} edited_at time of request
  * @apiSuccess {message} message result description.
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK
-  {
+{
     "status": "success",
-    "requested_at": "2018-04-14T15:50:42.133Z",
-    "message": "album rating fetched",
-    "ratingAverage": 4.5
-  }
+    "requested_at": "2018-04-23T11:50:23.886Z",
+    "message": "review with id 113 edited"
+}
  *
  * @apiError NotFound Not Found
  *
@@ -793,6 +792,54 @@ function albumRating(req, res, next) {
           ratingAverage: average
         })
     })
+    .catch(err => err);
+}
+
+/**
+ * @api {post} secure/reviews/edit-review/ Edit review
+ * @apiName EditReview
+ * @apiGroup Reviews
+ * 
+ * @apiParam {String} userid id of the user whose review to edit
+ * @apiParam {Integer} reviewid id of the review to edit
+ * @apiParam {String} review_text edited review text
+ * 
+ * @apiSuccess {String} status result of request
+ * @apiSuccess {Date} rated_at time of request
+ * @apiSuccess {message} message result description.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+  {
+    "status": "success",
+    "edited_at": "2018-04-14T15:50:42.133Z",
+    "message": "album rating fetched",
+    "ratingAverage": 4.5
+  }
+ *
+ * @apiError NotFound Not Found
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not Found
+  {
+      "status": "error",
+      "time": "2017-11-29T12:15:30.486Z",
+      "message": "Invalid request". 
+  }
+ *
+ */
+function editReview(req, res, next) {
+  db.one('update reviews set review_text = $1 where reviewID = $2 and userID = $3 returning reviewID',
+    [req.body.review_text, req.body.reviewid, req.body.user_id])
+    .then((data) => {
+      res.status(200)
+        .json({
+          status: 'success',
+          edited_at: new Date(),
+          message: "review with id " + data.reviewid + " edited"
+        })
+    })
+    .catch(err => err);
 }
 
 function deleteByUserId(userid, next) {
@@ -811,6 +858,7 @@ module.exports = {
   userNameAvailable,
   deleteUser,
   saveReview,
+  editReview,
   getAllReviews,
   getArtistReviews,
   getAlbumReviews,
