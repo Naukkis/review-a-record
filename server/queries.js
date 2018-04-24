@@ -484,7 +484,7 @@ function getAlbumReviews(req, res, next) {
  */
 function getUserReviews(req, res, next) {
   let userid = parseInt(req.params.userid);
-  db.any('select * from reviews where userid = $1', [userid])
+  db.any('select * from reviews where userid = $1 order by date_time', [userid])
     .then(function (data) {
       if (data.length > 0) {
         res.status(200)
