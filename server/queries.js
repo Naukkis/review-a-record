@@ -187,32 +187,6 @@ function testToken(req, res) {
   }
 }
 
-function deleteUser(req, res, next) {
-  let submittedPsw = req.body.password;
-  db.one('select * from users where username = $1', [req.body.username])
-    .then(function (data) {
-      let verified = bcrypt.compareSync(submittedPsw, data.password);
-
-      if (verified) {
-        delete data.password;
-        deleteByUserId(data.userid);
-        res.status(200)
-          .json({
-            username: req.body.username,
-            deleted_at: new Date(),
-            message: 'user deleted'
-          })
-
-      } else {
-        res.status(400)
-          .json({
-            message: 'entered wrong password'
-          })
-      }
-    })
-    .catch(err => next(err));
-}
-
 /**
  * @api {post} reviews/save-review Save new review
  * @apiName Save-review
@@ -842,12 +816,76 @@ function editReview(req, res, next) {
     .catch(err => err);
 }
 
-function deleteByUserId(userid, next) {
-  db.none('delete from users where userid = $1', userid)
-    .then(() => {
-      return 'success';
-    })
-    .catch(err => err);
+/**
+ * @api {post} secure/users/delete-user/ Delete user
+ * @apiName DeleteReview
+ * @apiGroup Reviews
+ * 
+ * @apiParam {String} user_id current user's userid.
+ * @apiParam {Number} user_to_delete id of the user to be removed.
+ * 
+ * @apiSuccess {String} status result of request
+ * @apiSuccess {Date} requested_at time of request
+ * @apiSuccess {message} message result description.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+  {
+    "status": "success",
+    "requested_at": "2018-03-24T09:00:01.185Z",
+    "message": "user 567 deleted",
+  }
+ *
+ * @apiError NotAuthorized Not Authorized
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 401 Not Authorized
+  {
+      "status": "error",
+      "time": "2017-11-29T12:15:30.486Z",
+      "message": "Not an admin, this incident will be reported. 
+  }
+ *
+ */
+function deleteUser(req, res, next) {
+  let submittedPsw = req.body.password;
+  let userID;
+  db.one('select * from users where username = $1', [req.body.username])
+    .then(function (data) {
+      let verified = bcrypt.compareSync(submittedPsw, data.password);
+      if (verified) {
+        userID = data.userid;
+        delete data.password;
+        db.task((t) => {
+          return t.any('select admin from users where userid = $1', userID)
+            .then((result) => {
+              if (result[0].admin) {
+                return t.any('delete from users where userid = $1', req.body.user_to_delete)
+              }
+              return 'Not an admin';
+            })
+            .catch(err => err);
+        })
+          .then((data) => {
+            if (data === 'Not an admin') {
+              res.status(401)
+                .json({
+                  status: 'error',
+                  requested_at: new Date(),
+                  message: 'Not an admin, this incident will be reported',
+                })
+              } else {
+                res.status(200)
+                  .json({
+                    status: 'success',
+                    requested_at: new Date(),
+                    message: `user ${req.body.user_to_delete} deleted`,
+                  })
+              }
+            })
+            .catch(err => next(err));
+      }
+    });
 }
 
 module.exports = {
