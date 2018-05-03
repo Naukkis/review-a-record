@@ -559,34 +559,16 @@ describe('DBqueries', function () {
     });
   })
 
-  
-  describe('Delete user', () => {
-    var data = {};
-    beforeAll((done) => {
-      Request.post({
-        url: dbURL + 'secure/users/delete-user',
-        form: { 'username': 'jasmineTestUser', 'password': 'asdfg', 'token': token }
-      },
-        (error, response, body) => {
-          data.status = response.statusCode;
-          data.body = JSON.parse(body);
-          done();
-        });
-    });
-    it('should respond Status 200', () => {
-      expect(data.status).toBe(200);
-    });
-    it('Should be able to delete user', () => {
-      expect(data.body.message).toBe('user deleted');
-    });
-  });
-
   describe('Delete regular user', () => {
     var data = {};
     beforeAll((done) => {
       Request.post({
         url: dbURL + 'secure/users/delete-user',
-        form: { 'username': 'jasmineRegularTestUser', 'password': 'asdfg', 'token': regularToken }
+        form: { 'username': 'jasmineTestUser',
+        'password': 'asdfg',
+        'token': token,
+        'user_to_delete': regularUserID
+      }
       },
         (error, response, body) => {
           data.status = response.statusCode;
@@ -598,7 +580,32 @@ describe('DBqueries', function () {
       expect(data.status).toBe(200);
     });
     it('Should be able to delete user', () => {
-      expect(data.body.message).toBe('user deleted');
+      expect(data.body.message).toBe(`user ${regularUserID} deleted`);
+    });
+  });
+
+  describe('Delete admin', () => {
+    var data = {};
+    beforeAll((done) => {
+      Request.post({
+        url: dbURL + 'secure/users/delete-user',
+        form: { 'username': 'jasmineTestUser',
+        'password': 'asdfg',
+        'token': token,
+        'user_to_delete': userID
+      }
+      },
+        (error, response, body) => {
+          data.status = response.statusCode;
+          data.body = JSON.parse(body);
+          done();
+        });
+    });
+    it('should respond Status 200', () => {
+      expect(data.status).toBe(200);
+    });
+    it('Should be able to delete user', () => {
+      expect(data.body.message).toBe(`user ${userID} deleted`);
     });
   });
 
