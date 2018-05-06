@@ -22,6 +22,7 @@ router.use(function(req, res, next) {
 
 router.post('/users/admin-true', db.adminTrue);
 router.post('/users/admin-false', db.adminFalse);
+router.get('/users/all', db.getAllUsers);
 router.post('/reviews/rate-album', db.rateAlbum);
 router.post('/reviews/save-review', db.saveReview);
 router.post('/reviews/edit-review', db.editReview);
