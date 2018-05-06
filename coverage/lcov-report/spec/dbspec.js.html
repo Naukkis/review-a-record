@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>336/336</span>
+        <span class='fraction'>348/348</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>336/336</span>
+        <span class='fraction'>348/348</span>
       </div>
     </div>
   </div>
@@ -667,7 +667,37 @@
 622
 623
 624
-625</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+625
+626
+627
+628
+629
+630
+631
+632
+633
+634
+635
+636
+637
+638
+639
+640
+641
+642
+643
+644
+645
+646
+647
+648
+649
+650
+651
+652
+653
+654
+655</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -912,6 +942,27 @@
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -920,6 +971,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1127,6 +1179,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
@@ -1225,7 +1278,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1237,6 +1289,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
@@ -1254,6 +1310,10 @@
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1528,6 +1588,27 @@ describe('DBqueries', function () {
     });
   });
 &nbsp;
+  describe('Get all users', () =&gt; {
+    var data = {};
+    beforeAll((done) =&gt; {
+      Request.get({url: dbURL + 'secure/users/all', headers: { 'token': token } },
+        (error, response, body) =&gt; {
+          data.status = response.statusCode;
+          data.body = JSON.parse(body);
+          console.log(data.body);
+          done();
+        });
+    });
+&nbsp;
+    it('should respond Status 200', () =&gt; {
+      expect(data.status).toBe(200);
+    });
+    it('Should receive all users', () =&gt; {
+      expect(data.body.all_users.length).toBeGreaterThan(2);
+    });
+  });
+  
+&nbsp;
   describe('Username available', () =&gt; {
     var data = {};
     beforeAll((done) =&gt; {
@@ -1546,6 +1627,7 @@ describe('DBqueries', function () {
       expect(data.body).toBe('true');
     });
   });
+&nbsp;
 &nbsp;
   describe('Write a review', () =&gt; {
     let data = {};
@@ -1751,6 +1833,7 @@ describe('DBqueries', function () {
     })
   });
 &nbsp;
+&nbsp;
   describe('Get all reviews', () =&gt; {
     var data = {};
     beforeAll((done) =&gt; {
@@ -1852,34 +1935,16 @@ describe('DBqueries', function () {
     });
   })
 &nbsp;
-  
-  describe('Delete user', () =&gt; {
-    var data = {};
-    beforeAll((done) =&gt; {
-      Request.post({
-        url: dbURL + 'secure/users/delete-user',
-        form: { 'username': 'jasmineTestUser', 'password': 'asdfg', 'token': token }
-      },
-        (error, response, body) =&gt; {
-          data.status = response.statusCode;
-          data.body = JSON.parse(body);
-          done();
-        });
-    });
-    it('should respond Status 200', () =&gt; {
-      expect(data.status).toBe(200);
-    });
-    it('Should be able to delete user', () =&gt; {
-      expect(data.body.message).toBe('user deleted');
-    });
-  });
-&nbsp;
   describe('Delete regular user', () =&gt; {
     var data = {};
     beforeAll((done) =&gt; {
       Request.post({
         url: dbURL + 'secure/users/delete-user',
-        form: { 'username': 'jasmineRegularTestUser', 'password': 'asdfg', 'token': regularToken }
+        form: { 'username': 'jasmineTestUser',
+        'password': 'asdfg',
+        'token': token,
+        'user_to_delete': regularUserID
+      }
       },
         (error, response, body) =&gt; {
           data.status = response.statusCode;
@@ -1891,7 +1956,32 @@ describe('DBqueries', function () {
       expect(data.status).toBe(200);
     });
     it('Should be able to delete user', () =&gt; {
-      expect(data.body.message).toBe('user deleted');
+      expect(data.body.message).toBe(`user ${regularUserID} deleted`);
+    });
+  });
+&nbsp;
+  describe('Delete admin', () =&gt; {
+    var data = {};
+    beforeAll((done) =&gt; {
+      Request.post({
+        url: dbURL + 'secure/users/delete-user',
+        form: { 'username': 'jasmineTestUser',
+        'password': 'asdfg',
+        'token': token,
+        'user_to_delete': userID
+      }
+      },
+        (error, response, body) =&gt; {
+          data.status = response.statusCode;
+          data.body = JSON.parse(body);
+          done();
+        });
+    });
+    it('should respond Status 200', () =&gt; {
+      expect(data.status).toBe(200);
+    });
+    it('Should be able to delete user', () =&gt; {
+      expect(data.body.message).toBe(`user ${userID} deleted`);
     });
   });
 &nbsp;
@@ -1921,7 +2011,7 @@ describe('DBqueries', function () {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Apr 23 2018 15:07:06 GMT+0300 (FLE Daylight Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun May 06 2018 21:49:58 GMT+0300 (FLE Daylight Time)
 </div>
 </div>
 <script src="../prettify.js"></script>
