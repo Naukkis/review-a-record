@@ -235,6 +235,27 @@ describe('DBqueries', function () {
     });
   });
 
+  describe('Get all users', () => {
+    var data = {};
+    beforeAll((done) => {
+      Request.get({url: dbURL + 'secure/users/all', headers: { 'token': token } },
+        (error, response, body) => {
+          data.status = response.statusCode;
+          data.body = JSON.parse(body);
+          console.log(data.body);
+          done();
+        });
+    });
+
+    it('should respond Status 200', () => {
+      expect(data.status).toBe(200);
+    });
+    it('Should receive all users', () => {
+      expect(data.body.all_users.length).toBeGreaterThan(2);
+    });
+  });
+  
+
   describe('Username available', () => {
     var data = {};
     beforeAll((done) => {
@@ -253,6 +274,7 @@ describe('DBqueries', function () {
       expect(data.body).toBe('true');
     });
   });
+
 
   describe('Write a review', () => {
     let data = {};
@@ -457,6 +479,7 @@ describe('DBqueries', function () {
       expect(data.body.data[0].review_text).toBeTruthy();
     })
   });
+
 
   describe('Get all reviews', () => {
     var data = {};
