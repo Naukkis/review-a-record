@@ -23,11 +23,11 @@ router.use(function(req, res, next) {
 router.post('/users/admin-true', db.adminTrue);
 router.post('/users/admin-false', db.adminFalse);
 router.get('/users/all', db.getAllUsers);
+router.get('/users/find/:username', db.findUser);
 router.post('/reviews/rate-album', db.rateAlbum);
 router.post('/reviews/save-review', db.saveReview);
 router.post('/reviews/edit-review', db.editReview);
 router.post('/reviews/delete-review', db.deleteReview);
 router.post('/users/delete-user', db.deleteUser);
-//router.get('/users/get-all-users', db.getAllUsers);
 
 module.exports = router;

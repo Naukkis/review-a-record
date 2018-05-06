@@ -961,6 +961,48 @@ function getAllUsers(req, res, next) {
     })
     .catch(err => next(err));
 }
+
+/**
+ * @api {get} /users/find:username search for user
+ * @apiName search user by name
+ * @apiGroup User
+ *
+ * @apiSuccess {Array} user all found users
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+    {
+        "status": "success",
+        "requested_at": "2018-05-06T18:59:09.584Z",
+        "user": [
+            {
+                "userid": 33,
+                "firstname": "plaah",
+                "lastname": "puuh",
+                "username": "pelle",
+                "email": "gaga",
+                "admin": false
+            }
+        ],
+        "message": "received users"
+    }
+
+ *
+ */
+function findUser(req, res, next) {
+  db.manyOrNone('select userid, firstname, lastname, username, email, admin from users where username = $1', [req.params.username])
+    .then((data) => {
+      res.status(200)
+      .json({
+        status: 'success',
+        requested_at: new Date(),
+        user: data,
+        message: `received users`,
+      })
+    })
+    .catch(err => next(err));
+}
+ 
  
 module.exports = {
   adminFalse,
@@ -979,6 +1021,7 @@ module.exports = {
   getAlbumReviews,
   getUserReviews,
   getLatestReviews,
+  findUser,
   testToken,
   deleteReview,
   rateAlbum,

@@ -242,7 +242,6 @@ describe('DBqueries', function () {
         (error, response, body) => {
           data.status = response.statusCode;
           data.body = JSON.parse(body);
-          console.log(data.body);
           done();
         });
     });
@@ -254,7 +253,24 @@ describe('DBqueries', function () {
       expect(data.body.all_users.length).toBeGreaterThan(2);
     });
   });
-  
+
+  describe('find regular user by name', () => {
+    var data = {};
+    beforeAll((done) => {
+      Request.get({url: dbURL + 'secure/users/find/jasmineTestUser', headers: { 'token': token } },
+        (error, response, body) => {
+          data.status = response.statusCode;
+          data.body = JSON.parse(body);
+          done();
+        });
+    });
+    it('should respond Status 200', () => {
+      expect(data.status).toBe(200);
+    });
+    it('Should receive all users', () => {
+      expect(data.body.user[0].username).toBe('jasmineTestUser');
+    });
+  });
 
   describe('Username available', () => {
     var data = {};
