@@ -914,11 +914,60 @@ function deleteUser(req, res, next) {
     });
 }
 
+/**
+ * @api {get} /users/all Request all users
+ * @apiName Request all users
+ * @apiGroup User
+ *
+ * @apiSuccess {Array} all_users user data
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+      {
+        "status": "success",
+        "requested_at": "2018-05-06T18:03:40.503Z",
+        "all_users": [
+            {
+                "userid": 72,
+                "firstname": "dsghfh",
+                "lastname": "fdsfgg",
+                "username": "admin",
+                "email": "asdd",
+                "admin": true
+            },
+            {
+                "userid": 33,
+                "firstname": "plaah",
+                "lastname": "puuh",
+                "username": "pelle",
+                "email": "gaga",
+                "admin": false
+            }
+        ],
+        "message": "received all users"
+      }
+ *
+ */
+function getAllUsers(req, res, next) {
+  db.any('select userid, firstname, lastname, username, email, admin from users')
+    .then((data) => {
+      res.status(200)
+      .json({
+        status: 'success',
+        requested_at: new Date(),
+        all_users: data,
+        message: `received all users`,
+      })
+    })
+    .catch(err => next(err));
+}
+ 
 module.exports = {
   adminFalse,
   adminTrue,
   adminStatus,
   getUserId,
+  getAllUsers,
   createUser,
   login,
   userNameAvailable,
