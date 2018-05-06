@@ -609,6 +609,32 @@ function adminStatus(req, res, next) {
     .catch(err => next(err));
 }
 
+function adminTrue(req, res, next) {
+  db.one('update users set admin = True where userid = $1' + req.params.userid)
+    .then((data) => {
+      res.status(200)
+        .json({
+          status: 'success',
+          admin: data.admin,
+          requested_at: new Date(),
+          message: 'user  ' + req.params.userid + ' is now admin',
+        })
+    })
+}
+
+function adminFalse(req, res, next) {
+  db.one('update users set admin = False where userid = $1' + req.params.userid)
+    .then((data) => {
+      res.status(200)
+        .json({
+          status: 'success',
+          admin: data.admin,
+          requested_at: new Date(),
+          message: 'user  ' + req.params.userid + ' is not admin anymore',
+        })
+    })
+}
+
 /**
  * @api {post} secure/reviews/delete-review/ Delete review
  * @apiName DeleteReview
@@ -889,6 +915,8 @@ function deleteUser(req, res, next) {
 }
 
 module.exports = {
+  adminFalse,
+  adminTrue,
   adminStatus,
   getUserId,
   createUser,
