@@ -604,7 +604,6 @@ describe('DBqueries', function () {
       Request.post({
         url: dbURL + 'secure/users/delete-user',
         form: { 'username': 'jasmineTestUser',
-        'password': 'asdfg',
         'token': token,
         'user_to_delete': regularUserID
       }
