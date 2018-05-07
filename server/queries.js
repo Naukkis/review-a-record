@@ -1008,8 +1008,7 @@ function getAllUsers(req, res, next) {
 function findUser(req, res, next) {
   db
     .manyOrNone(
-      "select userid, firstname, lastname, username, email, admin from users where username = $1",
-      [req.params.username]
+      "select userid, firstname, lastname, username, email, admin from users where username like $1", ['%' + req.params.username + '%']
     )
     .then(data => {
       res.status(200).json({
