@@ -765,7 +765,7 @@ function rateAlbum(req, res, next) {
 }
 
 /**
- * @api {get} /reviews/rate-album/:spotifyid Album rating
+ * @api {get} /reviews/album-rating/:spotifyidd Album rating
  * @apiName AlbumRating
  * @apiGroup Reviews
  * 
@@ -796,21 +796,22 @@ function rateAlbum(req, res, next) {
  */
 function albumRating(req, res, next) {
   db
-    .any(
-      "select rating from album_ratings where spotify_album_ID = $1",
+    .oneOrNone(
+      "select avg(rating) from album_ratings where spotify_album_ID = $1",
       req.params.spotifyid
     )
     .then(data => {
-      const average =
-        data
-          .map(data => data.rating)
-          .reduce((total, rating) => total + rating) / data.length;
+      let average = 0;
+      if (data.avg) {
+        average = parseFloat(data.avg).toPrecision(2);
+      }
+      console.log(average);
       res.status(200).json({
         status: "success",
         requested_at: new Date(),
         message: "album rating fetched",
         album: req.spotify_album_id,
-        ratingAverage: average
+        ratingAverage: average,
       });
     })
     .catch(err => err);
