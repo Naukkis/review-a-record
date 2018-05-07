@@ -622,29 +622,29 @@ function adminStatus(req, res, next) {
 }
 
 function adminTrue(req, res, next) {
-  db
-    .one("update users set admin = True where userid = $1" + req.params.userid)
-    .then(data => {
-      res.status(200).json({
-        status: "success",
-        admin: data.admin,
-        requested_at: new Date(),
-        message: "user  " + req.params.userid + " is now admin"
-      });
-    });
+  db.one('update users set admin = True where userid = $1' + req.body.userid)
+    .then((data) => {
+      res.status(200)
+        .json({
+          status: 'success',
+          admin: data.admin,
+          requested_at: new Date(),
+          message: 'user  ' + req.body.userid + ' is now admin',
+        })
+    })
 }
 
 function adminFalse(req, res, next) {
-  db
-    .one("update users set admin = False where userid = $1" + req.params.userid)
-    .then(data => {
-      res.status(200).json({
-        status: "success",
-        admin: data.admin,
-        requested_at: new Date(),
-        message: "user  " + req.params.userid + " is not admin anymore"
-      });
-    });
+  db.one('update users set admin = False where userid = $1' + req.body.userid)
+    .then((data) => {
+      res.status(200)
+        .json({
+          status: 'success',
+          admin: data.admin,
+          requested_at: new Date(),
+          message: 'user  ' + req.body.userid + ' is not admin anymore',
+        })
+    })
 }
 
 /**
