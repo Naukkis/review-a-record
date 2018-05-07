@@ -471,7 +471,7 @@ describe('DBqueries', function () {
       expect(data.body.message).toBe('album rating fetched');
     });
     it('Should contain review data', () => {
-      expect(data.body.ratingAverage).toBe(4.5);
+      expect(data.body.ratingAverage).toBe('4.5');
     });
   });
 
