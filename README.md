@@ -5,5 +5,8 @@ Made by [Hannu Havila](https://github.com/hanhav), [Ville Naukkarinen](https://g
 Check it out at:
 https://review-a-record.herokuapp.com/
 
+React Native version at:
+https://github.com/Pek1s/otp2-rn-review-record
+
 ### REST API Docs
 http://users.metropolia.fi/~villenau/recorddocs/
